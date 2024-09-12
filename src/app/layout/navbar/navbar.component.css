@@ -1,0 +1,7 @@
+aside{
+    outline: 2px solid blue;
+    height: 100%;
+    width: 300px;
+    background-color: var(--grey900);
+    border-radius: 0px 16px 16px 0px;
+}

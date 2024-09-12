@@ -1,0 +1,8 @@
+.flex-container{
+    height: 100%;
+    display: flex;
+}
+main{
+    outline: 2px solid red;
+    width: 100%;
+}
