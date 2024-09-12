@@ -1,0 +1,13 @@
+button{
+    height: 56px;
+}
+h2{
+    font-weight: 700;
+    color: var(--grey300);
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+}
+img{
+    width: 24px;
+    height: 25px;
+}

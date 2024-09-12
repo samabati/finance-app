@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 *, *::before, *::after {
     box-sizing: border-box;
   }
   * {
     margin: 0;
+    font-family: 'Public Sans';
   }
   body {
     line-height: 1.5;
@@ -44,7 +46,119 @@
 
     /*spacing*/
     --spacing200: 16px;
+    --spacing400: 32px;
     --spacing300: 24px;
     --spacing500: 40px;
 
+}
+
+button{
+  background: none;
+  border-style: none;
+  cursor: pointer;
+}
+
+/* Utility classes */
+
+/* Padding top */
+.p-t-5{
+  padding-top: var(--spacing500);
+}
+.p-t-3{
+  padding-top: var(--spacing300);
+}
+.p-t-2{
+  padding-top: var(--spacing200);
+}
+
+/* Padding bottom */
+
+.p-b-5{
+  padding-bottom: var(--spacing500);
+}
+.p-b-3{
+  padding-bottom: var(--spacing300);
+}
+.p-b-2{
+  padding-bottom: var(--spacing200);
+}
+
+/* Padding left */
+.p-l-5{
+  padding-left: var(--spacing500);
+}
+.p-l-4{
+  padding-left: var(--spacing400);
+}
+.p-l-3{
+  padding-left: var(--spacing300);
+}
+.p-l-2{
+  padding-left: var(--spacing200);
+}
+
+/* Padding right */
+.p-r-5{
+  padding-right: var(--spacing500);
+}
+.p-r-4{
+  padding-right: var(--spacing400);
+}
+.p-r-3{
+  padding-right: var(--spacing300);
+}
+.p-r-2{
+  padding-right: var(--spacing200);
+}
+
+/* Margin left */
+.m-l-5{
+  margin-left: var(--spacing500);
+}
+.m-l-4{
+  margin-left: var(--spacing400);
+}
+.m-l-3{
+  margin-left: var(--spacing300);
+}
+.m-l-2{
+  margin-left: var(--spacing200);
+}
+
+/* Margin bottom */
+.m-b-5{
+  margin-bottom: var(--spacing500);
+}
+.m-b-4{
+  margin-bottom: var(--spacing400);
+}
+.m-b-3{
+  margin-bottom: var(--spacing300);
+}
+.m-b-2{
+  margin-bottom: var(--spacing200);
+}
+
+/* Width */
+.w-100{
+  width: 100%;
+}
+
+/* Height */
+.h-100{
+  height: 100%;
+}
+
+/* Flexbox */
+.flex{
+  display: flex;
+}
+.flex-d-c{
+  flex-direction: column;
+}
+.align-c{
+  align-items: center;
+}
+.just-c{
+  justify-content: center;
 }

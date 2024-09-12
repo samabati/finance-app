@@ -1,0 +1,10 @@
+button{
+    margin-bottom: 58px;
+}
+
+h2{
+    font-weight: 700;
+    color: var(--grey300);
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+}

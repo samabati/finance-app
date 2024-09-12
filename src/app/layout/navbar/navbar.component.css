@@ -5,3 +5,8 @@ aside{
     background-color: var(--grey900);
     border-radius: 0px 16px 16px 0px;
 }
+
+img{
+    width: 122px;
+    height: 22px;
+}
