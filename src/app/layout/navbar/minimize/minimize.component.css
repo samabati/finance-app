@@ -9,7 +9,7 @@ h2{
     line-height: 2.4rem;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
     button:hover > img{
         filter: brightness(120%) contrast(90%);
     }
@@ -22,7 +22,7 @@ h2{
 
 /* Previously 768px*/
 
-@media (max-width: 1055px){
+@media (max-width: 65.94rem){
     button{
         display: none;
     }

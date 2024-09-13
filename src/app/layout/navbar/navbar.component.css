@@ -12,7 +12,7 @@ img{
 
 /* Previously 768px*/
 
-@media (max-width: 1055px) {
+@media (max-width: 65.94rem) {
     aside{
         height: 74px;
         width: 100%;
@@ -37,7 +37,7 @@ img{
 
 /* Previously 600 */
 
-@media (max-width: 754px){
+@media (max-width: 47.125rem){
     aside{
         height: 52px;
         padding: var(--spacing100, 8px) var(--spacing200, 16px) 0px var(--spacing200, 16px);

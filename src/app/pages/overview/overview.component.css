@@ -27,7 +27,7 @@ app-transactions-overview{
 }
 
 /* Mobile */
-@media (max-width: 754px){
+@media (max-width: 47.125rem){
     h1{
         margin-top: 0px;
         margin-bottom: 0px;

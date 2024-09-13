@@ -41,7 +41,7 @@ img{
 
 /* Previously 768px*/
 
-@media (max-width: 1055px) {
+@media (max-width: 65.94rem) {
     button{
         height: 100%;
     }
@@ -71,7 +71,7 @@ img{
 
 /* Previously 600 */
 
-@media (max-width: 754px){
+@media (max-width: 47.125rem){
     button{
         height: 100%;
     }
@@ -88,7 +88,7 @@ img{
 
 /* Hover styles */
 
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
     .inactive:hover > img{
         filter: brightness(120%) contrast(90%);
     }
