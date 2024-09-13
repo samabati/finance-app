@@ -37,25 +37,21 @@ img{
     filter: brightness(0) saturate(100%) invert(40%) sepia(29%) saturate(1066%) hue-rotate(140deg) brightness(92%) contrast(88%);
 }
 
-/* Hover styles */
-
-@media (min-width: 1024px) {
-    .inactive:hover > img{
-        filter: brightness(120%) contrast(90%);
-    }
-
-    .inactive:hover > h2{
-        color: #F2F2F2;
-    }
-}
-
+/* Media queries */
 
 @media (max-width: 768px) {
     button{
         height: 100%;
-        width: 104px !important;
+    }
+
+    .inactive, .active{
+        width: 104px ;
         flex-direction: column;
-        padding: var(--spacing100) 0px var(--spacing150) 0px !important;
+        padding: var(--spacing100) 0px var(--spacing150) 0px;
+        gap: var(--spacing50);
+    }
+
+    img{
     }
 
     h2{
@@ -73,12 +69,27 @@ img{
 
 @media (max-width: 600px){
     button{
-        height: 44px;
-        width: 100% !important;
-        min-width: 60px !important;
-        padding: var(--spacing-100, 8px) 0px var(--spacing-150, 12px) 0px !important;
+        height: 100%;
     }
+
+    .inactive, .active{
+        width: 100%;
+        padding: var(--spacing-100, 8px) 0px var(--spacing-150, 12px) 0px;
+    }
+
     h2{
         display: none;
+    }
+}
+
+/* Hover styles */
+
+@media (min-width: 1024px) {
+    .inactive:hover > img{
+        filter: brightness(120%) contrast(90%);
+    }
+
+    .inactive:hover > h2{
+        color: #F2F2F2;
     }
 }

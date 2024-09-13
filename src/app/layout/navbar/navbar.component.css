@@ -1,5 +1,4 @@
 aside{
-    outline: 2px solid blue;
     height: 100%;
     width: 300px;
     background-color: var(--grey900);
@@ -31,7 +30,6 @@ img{
         width: 100%;
         display: flex;
         justify-content: space-between;
-        border: 2px solid red;
     }
 }
 
@@ -41,5 +39,10 @@ img{
         padding: var(--spacing100, 8px) var(--spacing200, 16px) 0px var(--spacing200, 16px);
     }
     nav{
+        justify-content: unset;
+    }
+
+    app-nav-button{
+        width: 100%;
     }
 }
