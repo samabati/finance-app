@@ -1,7 +1,15 @@
-.flex-container{
-    height: 100%;
-    display: flex;
-}
 main{
-    width: 100%;
+    border: 2px solid red;
+}
+
+@media (max-width: 768px){
+    .flex-container{
+        flex-direction: column;
+    }
+    main{
+        order: 1;
+    }
+    app-navbar{
+        order: 2;
+    }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavButtonComponent } from './nav-button/nav-button.component';
 import { MinimizeComponent } from './minimize/minimize.component';
+import NavItems from '../../types/navItems';
 
 @Component({
   selector: 'app-navbar',
@@ -9,4 +10,6 @@ import { MinimizeComponent } from './minimize/minimize.component';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  NavItems = NavItems;
+}

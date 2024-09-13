@@ -45,11 +45,12 @@
     --green: #277C78;
 
     /*spacing*/
+    --spacing100: 8px;
+    --spacing150: 12px;
     --spacing200: 16px;
     --spacing400: 32px;
     --spacing300: 24px;
     --spacing500: 40px;
-
 }
 
 button{

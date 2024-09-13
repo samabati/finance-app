@@ -2,23 +2,23 @@
   <img class="m-l-4 m-b-5" src="assets/layout/navbar/finance.svg" alt="" />
   <nav class="p-t-3 m-b-3 p-r-3 h-100">
     <app-nav-button
-      name="Overview"
+      [name]="NavItems.OVERVIEW"
       icon="assets/layout/navbar/nav-button/overview.svg"
     ></app-nav-button>
     <app-nav-button
-      name="Transactions"
+      [name]="NavItems.TRANSACTIONS"
       icon="assets/layout/navbar/nav-button/transactions.svg"
     ></app-nav-button>
     <app-nav-button
-      name="Budgets"
+      [name]="NavItems.BUDGETS"
       icon="assets/layout/navbar/nav-button/budgets.svg"
     ></app-nav-button>
     <app-nav-button
-      name="Pots"
+      [name]="NavItems.POTS"
       icon="assets/layout/navbar/nav-button/pots.svg"
     ></app-nav-button>
     <app-nav-button
-      name="Recurring Bills"
+      [name]="NavItems.RECURRING"
       icon="assets/layout/navbar/nav-button/recurring.svg"
     ></app-nav-button>
   </nav>
