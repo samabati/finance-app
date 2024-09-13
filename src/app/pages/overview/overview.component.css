@@ -2,6 +2,30 @@ section{
     outline: 2px solid red;
 }
 
+section:nth-of-type(2){
+    outline: 2px solid blue;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+app-pots-overview{
+    outline: 2px solid green;
+    grid-column: 1 / 3;
+    /* This height should be removed once component is completed */
+    height: 218px;
+}
+
+app-budgets-overview{
+    outline: 2px solid purple;
+    grid-column: 3/5;
+    /* This height should be removed once component is completed */
+    height: 410px;
+}
+
+app-transactions-overview{
+    outline: 2px solid black;
+    height: 519px;
+}
+
 /* Mobile */
 @media (max-width: 754px){
     h1{

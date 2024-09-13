@@ -214,6 +214,11 @@ button{
   gap: var(--spacing400)
 }
 
+/* Grid */
+.grid{
+  display: grid;
+}
+
 /* Border-radius */
 .border-r-50{
   border-radius: var(--spacing50);
