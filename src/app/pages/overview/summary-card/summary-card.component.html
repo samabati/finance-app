@@ -1,0 +1,26 @@
+<article
+  [ngClass]="
+    dark
+      ? 'p-t-3 p-b-3 p-l-3 p-r-3 flex flex-d-c bg-g-9 gap-150 border-r-150'
+      : 'p-t-3 p-b-3 p-l-3 p-r-3 flex flex-d-c bg-w gap-150 border-r-150'
+  "
+>
+  <h2
+    [ngClass]="
+      dark
+        ? 'font-s-4 font-w-4 color-w font-lh-150'
+        : 'font-s-4 font-w-4 color-g-9 font-lh-150'
+    "
+  >
+    {{ heading }}
+  </h2>
+  <p
+    [ngClass]="
+      dark
+        ? 'font-s-1 font-w-7 color-w font-lh-120'
+        : 'font-s-1 font-w-7 color-g-9 font-lh-120'
+    "
+  >
+    {{ amount | currency }}
+  </p>
+</article>

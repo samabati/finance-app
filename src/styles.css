@@ -49,9 +49,14 @@
     --spacing100: 8px;
     --spacing150: 12px;
     --spacing200: 16px;
-    --spacing400: 32px;
+    --spacing250: 20px;
     --spacing300: 24px;
+    --spacing400: 32px;
     --spacing500: 40px;
+
+    /*font sizes*/
+    --font1: 3.2rem;
+    --font4: 1.4rem;
 }
 
 button{
@@ -66,6 +71,9 @@ button{
 .p-t-5{
   padding-top: var(--spacing500);
 }
+.p-t-4{
+  padding-top: var(--spacing400);
+}
 .p-t-3{
   padding-top: var(--spacing300);
 }
@@ -77,6 +85,9 @@ button{
 
 .p-b-5{
   padding-bottom: var(--spacing500);
+}
+.p-b-4{
+  padding-bottom: var(--spacing400);
 }
 .p-b-3{
   padding-bottom: var(--spacing300);
@@ -127,6 +138,23 @@ button{
   margin-left: var(--spacing200);
 }
 
+/* Margin top */
+.m-t-5{
+  margin-top: var(--spacing500);
+}
+.m-t-4{
+  margin-top: var(--spacing400);
+}
+.m-t-3{
+  margin-top: var(--spacing300);
+}
+.m-t-2{
+  margin-top: var(--spacing200);
+}
+.m-t-1{
+  margin-top: var(--spacing100);
+}
+
 /* Margin bottom */
 .m-b-5{
   margin-bottom: var(--spacing500);
@@ -139,6 +167,9 @@ button{
 }
 .m-b-2{
   margin-bottom: var(--spacing200);
+}
+.m-b-1{
+  margin-bottom: var(--spacing100);
 }
 
 /* Width */
@@ -163,4 +194,84 @@ button{
 }
 .just-c{
   justify-content: center;
+}
+.gap-50{
+  gap: var(--spacing50)
+}
+.gap-100{
+  gap: var(--spacing100)
+}
+.gap-150{
+  gap: var(--spacing150)
+}
+.gap-200{
+  gap: var(--spacing200)
+}
+.gap-300{
+  gap: var(--spacing300)
+}
+.gap-400{
+  gap: var(--spacing400)
+}
+
+/* Border-radius */
+.border-r-50{
+  border-radius: var(--spacing50);
+}
+.border-r-100{
+  border-radius: var(--spacing100);
+}
+.border-r-150{
+  border-radius: var(--spacing150);
+}
+.border-r-200{
+  border-radius: var(--spacing200);
+}
+.border-r-300{
+  border-radius: var(--spacing300);
+}
+.border-r-400{
+  border-radius: var(--spacing400);
+}
+
+/* Font sizes */
+.font-s-1{
+  font-size: var(--font1, 3.2rem);
+}
+.font-s-4{
+  font-size: var(--font4, 1.4rem);
+}
+
+/* Font weight */
+.font-w-7{
+  font-weight: 700;
+}
+.font-w-4{
+  font-weight: 400;
+}
+
+/* Font line height */
+.font-lh-120{
+  line-height: 120%;
+}
+
+.font-lh-150{
+  line-height: 150%;
+}
+
+/* Colors */
+.color-g-9{
+  color: var(--grey900);
+}
+.color-w{
+  color: #FFF;
+}
+
+/* Background colors */
+.bg-g-9{
+  background-color: var(--grey900);
+}
+
+.bg-w{
+  background-color: #FFF;
 }

@@ -1,0 +1,15 @@
+section{
+    outline: 2px solid red;
+}
+
+/* Mobile */
+@media (max-width: 754px){
+    h1{
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    section:nth-of-type(1){
+        flex-direction: column;
+        gap: var(--spacing150);
+    }
+}

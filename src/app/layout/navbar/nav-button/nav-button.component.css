@@ -39,7 +39,9 @@ img{
 
 /* Media queries */
 
-@media (max-width: 768px) {
+/* Previously 768px*/
+
+@media (max-width: 1055px) {
     button{
         height: 100%;
     }
@@ -67,7 +69,9 @@ img{
     }
 }
 
-@media (max-width: 600px){
+/* Previously 600 */
+
+@media (max-width: 754px){
     button{
         height: 100%;
     }

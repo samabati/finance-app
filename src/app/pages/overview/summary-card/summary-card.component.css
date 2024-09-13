@@ -1,0 +1,10 @@
+article{
+    outline: 2px solid red;
+}
+
+/* Mobile */
+@media (max-width: 754px){
+    article{
+        padding: var(--spacing250) var(--spacing250) var(--spacing250) var(--spacing250);
+    }
+}

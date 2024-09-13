@@ -19,7 +19,10 @@ h2{
     }
 }
 
-@media (max-width: 768px){
+
+/* Previously 768px*/
+
+@media (max-width: 1055px){
     button{
         display: none;
     }

@@ -2,7 +2,9 @@ main{
     border: 2px solid red;
 }
 
-@media (max-width: 768px){
+/* Tablet - Previously 768px*/
+
+@media (max-width: 1055px){
     .flex-container{
         flex-direction: column;
     }
@@ -11,5 +13,13 @@ main{
     }
     app-navbar{
         order: 2;
+    }
+}
+
+/* Mobile - Previously 600 */
+
+@media (max-width: 754px){
+    main{
+        padding: var(--spacing300) var(--spacing200) var(--spacing300) var(--spacing200);
     }
 }

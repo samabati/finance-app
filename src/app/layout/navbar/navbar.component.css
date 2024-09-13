@@ -10,7 +10,9 @@ img{
     height: 22px;
 }
 
-@media (max-width: 768px) {
+/* Previously 768px*/
+
+@media (max-width: 1055px) {
     aside{
         height: 74px;
         width: 100%;
@@ -33,7 +35,9 @@ img{
     }
 }
 
-@media (max-width: 600px){
+/* Previously 600 */
+
+@media (max-width: 754px){
     aside{
         height: 52px;
         padding: var(--spacing100, 8px) var(--spacing200, 16px) 0px var(--spacing200, 16px);
