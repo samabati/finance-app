@@ -39,10 +39,14 @@
 :root{
     /* colors */
     --grey900: #201F24;
+    --grey500: #696868;
     --grey300: #B3B3B3;
     --white: #FFFFFF;
     --beige100: #F8F4F0;
     --green: #277C78;
+    --cyan: #82C9D7;
+    --navy: #626070;
+    --yellow: #F2CDAC;
 
     /*spacing*/
     --spacing50: 4px;
@@ -134,8 +138,17 @@ button{
 .m-l-3{
   margin-left: var(--spacing300);
 }
+.m-l-250{
+  margin-left: var(--spacing250);
+}
 .m-l-2{
   margin-left: var(--spacing200);
+}
+.m-l-150{
+  margin-left: var(--spacing150);
+}
+.m-l-1{
+  margin-left: var(--spacing100);
 }
 
 /* Margin top */
@@ -164,6 +177,9 @@ button{
 }
 .m-b-3{
   margin-bottom: var(--spacing300);
+}
+.m-b-250{
+  margin-bottom: var(--spacing250);
 }
 .m-b-2{
   margin-bottom: var(--spacing200);
@@ -194,6 +210,9 @@ button{
 }
 .just-c{
   justify-content: center;
+}
+.just-s-b{
+  justify-content: space-between;
 }
 .gap-50{
   gap: var(--spacing50)
@@ -243,8 +262,14 @@ button{
 .font-s-1{
   font-size: var(--font1, 3.2rem);
 }
+.font-s-2{
+  font-size: var(2.0rem);
+}
 .font-s-4{
   font-size: var(--font4, 1.4rem);
+}
+.font-s-5{
+  font-size: 1.2rem;
 }
 
 /* Font weight */
@@ -268,6 +293,9 @@ button{
 .color-g-9{
   color: var(--grey900);
 }
+.color-g-5{
+  color: var(--grey500)
+}
 .color-w{
   color: #FFF;
 }
@@ -276,7 +304,31 @@ button{
 .bg-g-9{
   background-color: var(--grey900);
 }
-
+.bg-g{
+  background-color: var(--green);
+}
+.bg-cyan{
+  background-color: var(--cyan);
+}
+.bg-navy{
+  background-color: var(--navy);
+}
+.bg-yellow{
+  background-color: var(--yellow);
+}
+.bg-b-1{
+  background-color: var(--beige100);
+}
 .bg-w{
   background-color: #FFF;
+}
+
+/* Overflow */
+.overflow-h{
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.text-ellipses{
+  text-overflow: ellipsis;
 }

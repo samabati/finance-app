@@ -1,3 +1,42 @@
 article{
     height: 218px;
+    outline: 2px solid red;
+}
+
+.gap-11{
+    gap:11px;
+}
+
+.p-r-89{
+    padding-right: 89px;
+}
+
+/* Money bag image */
+img:nth-of-type(2){
+    width: 40px;
+    height: 40px;
+}
+
+.grid{
+    grid-gap: var(--spacing200);
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-item{
+    gap: var(--spacing200);
+}
+
+.grid-item > div{
+    gap: 4px;
+}
+
+.green-border{
+    border-left: 4px solid var(--green);
+    border-top-left-radius: 8px;
+}
+
+.color-tag{
+    height: 100%;
+    width: 4px;
+    border-radius: 8px;
 }
