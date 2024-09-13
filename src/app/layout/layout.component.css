@@ -5,7 +5,7 @@ main{
 
 /* Tablet - Previously 768px*/
 
-@media (max-width: 1055px){
+@media (max-width: 65.94rem){
     .flex-container{
         flex-direction: column;
     }
@@ -19,7 +19,7 @@ main{
 
 /* Mobile - Previously 600 */
 
-@media (max-width: 754px){
+@media (max-width: 47.125rem){
     main{
         padding: var(--spacing300) var(--spacing200) var(--spacing300) var(--spacing200);
     }
