@@ -350,7 +350,11 @@ button{
   white-space: nowrap;
 }
 
-.text-ellipses{
+/* Text Truncate */
+
+.text-truncate{
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
