@@ -13,36 +13,25 @@
     </div>
     <div class="outline w-100">
       <div class="grid">
-        <div class="grid-item w-100 flex">
-          <div class="color-tag bg-g"></div>
-          <div class="flex flex-d-c">
-            <h2 class="font-s-5 font-w-4 font-lh-150 color-g-5">Savings</h2>
-            <p class="color-g-9 font-s-4 font-w-7 font-lh-150">$159</p>
-          </div>
-        </div>
-        <div class="grid-item w-100 flex">
-          <div class="color-tag bg-cyan"></div>
-          <div class="flex flex-d-c">
-            <h2 class="font-s-5 font-w-4 font-lh-150 color-g-5">Gift</h2>
-            <p class="color-g-9 font-s-4 font-w-7 font-lh-150">$40</p>
-          </div>
-        </div>
-        <div class="grid-item w-100 flex">
-          <div class="color-tag bg-navy"></div>
-          <div class="flex flex-d-c">
-            <h2 class="font-s-5 font-w-4 font-lh-150 color-g-5">
-              Concert Ticket
-            </h2>
-            <p class="color-g-9 font-s-4 font-w-7 font-lh-150">$110</p>
-          </div>
-        </div>
-        <div class="grid-item w-100 flex">
-          <div class="color-tag bg-yellow"></div>
-          <div class="flex flex-d-c">
-            <h2 class="font-s-5 font-w-4 font-lh-150 color-g-5">New Laptop</h2>
-            <p class="color-g-9 font-s-4 font-w-7 font-lh-150">$10</p>
-          </div>
-        </div>
+        <app-pots-savings-micro
+          title="Savings"
+          amount="$159"
+          bgColor="bg-g"
+        ></app-pots-savings-micro>
+        <app-pots-savings-micro title="Gift" amount="$40" bgColor="bg-cyan">
+        </app-pots-savings-micro>
+        <app-pots-savings-micro
+          title="Concert Ticket"
+          amount="$110"
+          bgColor="bg-navy"
+        >
+        </app-pots-savings-micro>
+        <app-pots-savings-micro
+          title="New Laptop"
+          amount="$10"
+          bgColor="bg-yellow"
+        >
+        </app-pots-savings-micro>
       </div>
     </div>
   </section>

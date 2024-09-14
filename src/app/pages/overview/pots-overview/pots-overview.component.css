@@ -22,20 +22,6 @@ img:nth-of-type(2){
     grid-template-columns: repeat(2, 1fr);
 }
 
-.grid-item{
-    gap: var(--spacing200);
-}
-
-.grid-item > div{
-    gap: 4px;
-}
-
-.color-tag{
-    height: 100%;
-    width: 4px;
-    border-radius: 8px;
-}
-
 /* Mobile */
 
 @media (max-width: 47.125rem){
