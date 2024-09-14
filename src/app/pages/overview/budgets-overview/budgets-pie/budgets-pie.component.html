@@ -1,1 +1,14 @@
-<p class="">budgets-pie works!</p>
+<div class="doughnut-container h-100">
+  <canvas
+    baseChart
+    [datasets]="doughnutChartDatasets"
+    [options]="doughnutChartOptions"
+    [legend]="true"
+    [type]="'doughnut'"
+  >
+  </canvas>
+  <div class="text-container">
+    <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">$338</h2>
+    <p class="color-g-5 font-s-5 font-w-4 font-lh-150">of $975 limit</p>
+  </div>
+</div>
