@@ -238,6 +238,9 @@ button{
 .gap-150{
   gap: var(--spacing150)
 }
+.gap-250{
+  gap: var(--spacing250)
+}
 .gap-200{
   gap: var(--spacing200)
 }

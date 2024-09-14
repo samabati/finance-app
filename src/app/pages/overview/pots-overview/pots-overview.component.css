@@ -30,11 +30,6 @@ img:nth-of-type(2){
     gap: 4px;
 }
 
-.green-border{
-    border-left: 4px solid var(--green);
-    border-top-left-radius: 8px;
-}
-
 .color-tag{
     height: 100%;
     width: 4px;
