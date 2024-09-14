@@ -40,3 +40,16 @@ img:nth-of-type(2){
     width: 4px;
     border-radius: 8px;
 }
+
+/* Mobile */
+
+@media (max-width: 47.125rem){
+    article{
+        padding: var(--spacing300) var(--spacing250) var(--spacing300) var(--spacing250);
+        height: 100%;
+    }
+    section{
+        flex-direction: column;
+        gap: var(--spacing250);
+    }
+}

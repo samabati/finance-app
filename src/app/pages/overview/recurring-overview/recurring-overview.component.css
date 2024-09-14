@@ -1,3 +1,26 @@
 article{
     height: 327px;
 }
+
+app-recurring-item:nth-of-type(1){
+    border-left: var(--spacing-50, 4px) solid var(--color-green, #277C78);
+    border-radius: 8px;
+}
+
+app-recurring-item:nth-of-type(2){
+    border-left: var(--spacing-50, 4px) solid var(--color-yellow, #F2CDAC);
+    border-radius: 8px;
+}
+
+app-recurring-item:nth-of-type(3){
+    border-left: var(--spacing-50, 4px) solid var(--color-cyan, #82C9D7);
+    border-radius: 8px;
+}
+
+/* Mobile */
+
+@media (max-width: 47.125rem){
+    article{
+        padding: var(--spacing300) var(--spacing250) var(--spacing300) var(--spacing250);
+    }
+}

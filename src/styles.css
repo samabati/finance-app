@@ -33,6 +33,12 @@
   body{
     height: 100%;
   }
+  ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
 
   /* Global styles */
 
@@ -81,6 +87,9 @@ button{
 .p-t-3{
   padding-top: var(--spacing300);
 }
+.p-t-250{
+  padding-top: var(--spacing250);
+}
 .p-t-2{
   padding-top: var(--spacing200);
 }
@@ -95,6 +104,9 @@ button{
 }
 .p-b-3{
   padding-bottom: var(--spacing300);
+}
+.p-b-250{
+  padding-bottom: var(--spacing250);
 }
 .p-b-2{
   padding-bottom: var(--spacing200);
@@ -160,6 +172,9 @@ button{
 }
 .m-t-3{
   margin-top: var(--spacing300);
+}
+.m-t-250{
+  margin-top: var(--spacing250);
 }
 .m-t-2{
   margin-top: var(--spacing200);
@@ -293,6 +308,9 @@ button{
 .color-g-9{
   color: var(--grey900);
 }
+.color-green{
+  color: var(--green);
+}
 .color-g-5{
   color: var(--grey500)
 }
@@ -331,4 +349,9 @@ button{
 
 .text-ellipses{
   text-overflow: ellipsis;
+}
+
+/*Outline*/
+.outline{
+  outline: 2px solid red;
 }

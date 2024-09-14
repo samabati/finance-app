@@ -1,1 +1,63 @@
-<article>TRANSACTIONS</article>
+<article class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150">
+  <app-overview-card-header
+    title="Transactions"
+    navTitle="View All"
+  ></app-overview-card-header>
+  <section class="m-t-4">
+    <app-transaction-item
+      src="assets/overview/emma.svg"
+      name="Emma Richardson"
+      amount="+$75.50"
+      date="19 Aug 2024"
+      [positive]="true"
+    ></app-transaction-item>
+    <img
+      class="w-100 m-t-250 m-b-250"
+      src="assets/overview/hr.svg"
+      alt="horizontal-line"
+    />
+    <app-transaction-item
+      src="assets/overview/savory.svg"
+      name="Savory Bites Bistro"
+      amount="-$55.50"
+      date="19 Aug 2024"
+      [positive]="false"
+    ></app-transaction-item>
+    <img
+      class="w-100 m-t-250 m-b-250"
+      src="assets/overview/hr.svg"
+      alt="horizontal-line"
+    />
+    <app-transaction-item
+      src="assets/overview/daniel.svg"
+      name="Daniel Carter"
+      amount="-$42.30"
+      date="18 Aug 2024"
+      [positive]="false"
+    ></app-transaction-item>
+    <img
+      class="w-100 m-t-250 m-b-250"
+      src="assets/overview/hr.svg"
+      alt="horizontal-line"
+    />
+    <app-transaction-item
+      src="assets/overview/sun.svg"
+      name="Sun Park"
+      amount="+$120.00"
+      date="17 Aug 2024"
+      [positive]="true"
+    ></app-transaction-item>
+    <img
+      class="w-100 m-t-250 m-b-250"
+      src="assets/overview/hr.svg"
+      alt="horizontal-line"
+    />
+    <app-transaction-item
+      src="assets/overview/urban.svg"
+      name="Urban Services Hub"
+      amount="-$65.00"
+      date="17 Aug 2024"
+      [positive]="false"
+    ></app-transaction-item>
+  </section>
+</article>

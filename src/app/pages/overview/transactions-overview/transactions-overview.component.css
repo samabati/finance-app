@@ -1,3 +1,11 @@
 article{
-    height: 519px;
+    height: 100%;
+}
+
+/* Mobile */
+
+@media (max-width: 47.125rem) {
+    article{
+        padding: var(--spacing300) var(--spacing250) var(--spacing300) var(--spacing250);
+    }
 }

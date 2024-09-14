@@ -3,7 +3,7 @@ import { OverviewComponent } from './pages/overview/overview.component';
 
 export const routes: Routes = [
   {
-    path: 'overview',
+    path: '',
     component: OverviewComponent,
   },
 ];
