@@ -1,6 +1,44 @@
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration } from 'chart.js';
+import { ChartConfiguration, Chart, Plugin } from 'chart.js';
+
+// Define your custom plugin
+const centerTextPlugin: Plugin<'doughnut'> = {
+  id: 'centerTextPlugin',
+  beforeDraw: (chart) => {
+    const ctx = chart.ctx;
+    const width = chart.width;
+    const height = chart.height;
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    ctx.save();
+
+    // Set text properties
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#201F24'; // Text color
+    ctx.font = '700 32px Public Sans'; // Text font and size
+
+    // Define the text to be displayed
+    const text = '$338';
+    const firstTextY = centerY; // Move this slightly up
+
+    // Draw the text in the center
+    ctx.fillText(text, centerX, firstTextY);
+
+    // Set properties for the second text
+    ctx.fillStyle = '#696868'; // Text color for the second text
+    ctx.font = '400 12px Public Sans'; // Normal weight, 16px font size
+
+    // Second text (with an 8px gap between the two lines)
+    const secondText = 'of $975 limit';
+    const secondTextY = firstTextY + 20 + 8; // 20px for first text size, 8px gap
+    ctx.fillText(secondText, centerX, secondTextY);
+
+    ctx.restore();
+  },
+};
 
 @Component({
   selector: 'app-budgets-pie',
@@ -22,16 +60,14 @@ export class BudgetsPieComponent {
   lightNavy = '#898893';
 
   // Doughnut
-  // Labels (None currently)
   public doughnutChartLabels: string[] = [];
-  // Data for doughnut chart with colors
   public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] =
     [
       {
         data: [50, 750, 75, 100],
         label: 'Series A',
         backgroundColor: [this.green, this.cyan, this.yellow, this.navy],
-        weight: 1, // Thicker dataset
+        weight: 1,
       },
       {
         data: [50, 750, 75, 100],
@@ -42,14 +78,14 @@ export class BudgetsPieComponent {
           this.lightYellow,
           this.lightNavy,
         ],
-        weight: 0.5, // Thinner dataset
+        weight: 0.5,
       },
     ];
 
   public doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
-    maintainAspectRatio: false, // Allows the chart to adjust its size based on the container
-    cutout: '65%', // Adjust this value for the center size
+    maintainAspectRatio: false,
+    cutout: '65%',
     plugins: {
       legend: {
         display: true,
@@ -57,13 +93,18 @@ export class BudgetsPieComponent {
     },
     elements: {
       arc: {
-        borderWidth: 0, // Remove border between segments
+        borderWidth: 0,
       },
     },
     datasets: {
       doughnut: {
-        spacing: 0, // Reduce or remove gap between datasets (set to 0 to remove completely)
+        spacing: 0,
       },
     },
   };
+
+  // Register the plugin
+  constructor() {
+    Chart.register(centerTextPlugin);
+  }
 }
