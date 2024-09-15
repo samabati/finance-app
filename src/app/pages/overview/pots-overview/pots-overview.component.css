@@ -1,6 +1,5 @@
 /* Potentially change this to height 100%? */
 article{
-    outline: 2px solid red;
 }
 
 .gap-11{
@@ -26,7 +25,6 @@ img:nth-of-type(2){
 
 @media (min-width: 66rem) and (max-width: 86.31rem) {
     section{
-        outline: 2px solid purple;
         flex-direction: column;
     }
 }
