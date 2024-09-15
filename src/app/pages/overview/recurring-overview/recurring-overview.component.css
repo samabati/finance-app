@@ -1,6 +1,3 @@
-article{
-    height: 327px;
-}
 
 app-recurring-item:nth-of-type(1){
     border-left: var(--spacing-50, 4px) solid var(--color-green, #277C78);

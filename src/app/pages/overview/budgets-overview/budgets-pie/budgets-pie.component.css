@@ -6,6 +6,9 @@ canvas{
     position: relative;
     height: 100%;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .text-container{
     top: 0px;
@@ -18,4 +21,12 @@ canvas{
     z-index: 2;
     outline: 2px solid blue;
     flex-direction: column;
+}
+
+/* Tablet */
+
+@media (max-width: 65.94rem){
+    .doughnut-container{
+        max-height: 240px;
+    }
 }
