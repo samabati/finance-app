@@ -1,0 +1,6 @@
+header{
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+}
+header > h3:nth-child(4){
+    text-align: right;
+}

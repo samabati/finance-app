@@ -1,0 +1,32 @@
+<div class="flex gap-100 align-c">
+  <h2 class="color-g-5 font-s-4 font-w-4 font-lh-150">{{ type }}</h2>
+  <div
+    [ngStyle]="{ 'max-width': maxWidth }"
+    (click)="toggleContent()"
+    class="dropdown flex p-t-150 p-r-250 p-b-150 p-l-250 gap-200 border-r-100 border-1-b-5"
+  >
+    <p class="color-g-9 font-s-4 font-w-4 font-lh-150">{{ selected }}</p>
+    <img
+      [src]="
+        showContent
+          ? 'assets/shared/down-arrow.svg'
+          : 'assets/shared/up-arrow.svg'
+      "
+      alt="down-arrow"
+    />
+    <ul
+      [ngStyle]="{ display: showContent ? 'block' : 'none' }"
+      class="dropdown-content p-r-250 p-l-250 flex flex-d-c bg-w border-r-100"
+    >
+      @for(option of options; track option){
+      <li
+        [ngStyle]="{ 'font-weight': selected === option ? '700' : '400' }"
+        (click)="select(option)"
+        class="color-g-9 font-s-4 font-lh-150 p-t-150 p-b-150"
+      >
+        {{ option }}
+      </li>
+      }
+    </ul>
+  </div>
+</div>

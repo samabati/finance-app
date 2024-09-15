@@ -1,0 +1,20 @@
+<ul class="outline m-t-3">
+  <header class="outline p-t-150 p-r-2 p-b-150 p-l-2 grid">
+    <h3 class="color-g-5 font-s-5 font-w-4 font-lh-150">Recipient / Sender</h3>
+    <h3 class="color-g-5 font-s-5 font-w-4 font-lh-150">Category</h3>
+    <h3 class="color-g-5 font-s-5 font-w-4 font-lh-150">Transaction Date</h3>
+    <h3 class="color-g-5 font-s-5 font-w-4 font-lh-150">Amount</h3>
+  </header>
+  <section class="m-t-3">
+    @for(item of transactions | async; track item){
+    <app-table-item
+      [src]="item.avatar"
+      [name]="item.name"
+      [category]="item.category"
+      [date]="item.date"
+      [amount]="item.amount"
+    ></app-table-item>
+    <img class="w-100 m-t-2 m-b-2" src="assets/overview/hr.svg" alt="" />
+    }
+  </section>
+</ul>

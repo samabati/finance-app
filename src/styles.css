@@ -139,6 +139,9 @@ button{
 .p-l-2{
   padding-left: var(--spacing200);
 }
+.p-l-150{
+  padding-left: var(--spacing150);
+}
 
 /* Padding right */
 .p-r-5{
@@ -155,6 +158,9 @@ button{
 }
 .p-r-2{
   padding-right: var(--spacing200);
+}
+.p-r-150{
+  padding-right: var(--spacing150);
 }
 
 /* Margin left */
@@ -178,6 +184,9 @@ button{
 }
 .m-l-1{
   margin-left: var(--spacing100);
+}
+.m-l-a{
+  margin-left: auto;
 }
 
 /* Margin top */

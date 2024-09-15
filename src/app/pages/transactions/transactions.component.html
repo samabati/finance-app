@@ -2,9 +2,13 @@
   Transactions
 </h1>
 <section class="bg-w border-r-150 outline m-t-4 p-t-4 p-r-4 p-b-4 p-l-4">
-  <header>
-    <app-search-bar></app-search-bar>
+  <header class="flex just-s-b">
+    <app-search-bar class="outline"></app-search-bar>
+    <div class="outline flex gap-300 align-c">
+      <app-sort-by type="Sort By"></app-sort-by>
+      <app-sort-by type="Category"></app-sort-by>
+    </div>
   </header>
-  <ul></ul>
+  <app-transactions-table class="outline"></app-transactions-table>
   <nav></nav>
 </section>

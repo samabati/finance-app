@@ -11,4 +11,16 @@ export const routes: Routes = [
     path: 'transactions',
     component: TransactionsComponent,
   },
+  {
+    path: 'budgets',
+    component: TransactionsComponent,
+  },
+  {
+    path: 'pots',
+    component: TransactionsComponent,
+  },
+  {
+    path: 'recurring-bills',
+    component: TransactionsComponent,
+  },
 ];

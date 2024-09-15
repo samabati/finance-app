@@ -1,13 +1,10 @@
 .search-container{
-    position: relative;
-    outline: 1px solid red;
     max-width: 320px;
 }
 
 .search-container > img {
-    position: absolute;
-    top: 50%;
-    outline: 1px solid red;
-    transform: translateY(-50%);
-    right: 10px;
+
+}
+input{
+    border: none;
 }
