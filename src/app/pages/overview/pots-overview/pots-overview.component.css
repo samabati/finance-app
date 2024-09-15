@@ -22,6 +22,15 @@ img:nth-of-type(2){
     grid-template-columns: repeat(2, 1fr);
 }
 
+/* Savings breakpoint */
+
+@media (min-width: 66rem) and (max-width: 86.31rem) {
+    section{
+        outline: 2px solid purple;
+        flex-direction: column;
+    }
+}
+
 /* Mobile */
 
 @media (max-width: 47.125rem){

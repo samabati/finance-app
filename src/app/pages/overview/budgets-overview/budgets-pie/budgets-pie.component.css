@@ -1,5 +1,6 @@
 canvas{
     z-index: 1;
+    max-height: 240px;
 }
 
 .doughnut-container{
