@@ -38,6 +38,9 @@
     padding: 0;
     margin: 0;
   }
+  input{
+    outline: none;
+  }
 
 
   /* Global styles */
@@ -49,6 +52,7 @@
     --grey300: #B3B3B3;
     --white: #FFFFFF;
     --beige100: #F8F4F0;
+    --beige500: #98908B;
     --green: #277C78;
     --cyan: #82C9D7;
     --navy: #626070;
@@ -93,6 +97,9 @@ button{
 .p-t-2{
   padding-top: var(--spacing200);
 }
+.p-t-150{
+  padding-top: var(--spacing150);
+}
 
 /* Padding bottom */
 
@@ -111,6 +118,10 @@ button{
 .p-b-2{
   padding-bottom: var(--spacing200);
 }
+.p-b-150{
+  padding-bottom: var(--spacing150);
+}
+
 
 /* Padding left */
 .p-l-5{
@@ -121,6 +132,9 @@ button{
 }
 .p-l-3{
   padding-left: var(--spacing300);
+}
+.p-l-250{
+  padding-left: var(--spacing250);
 }
 .p-l-2{
   padding-left: var(--spacing200);
@@ -135,6 +149,9 @@ button{
 }
 .p-r-3{
   padding-right: var(--spacing300);
+}
+.p-r-250{
+  padding-right: var(--spacing250);
 }
 .p-r-2{
   padding-right: var(--spacing200);
@@ -276,6 +293,12 @@ button{
   border-radius: var(--spacing400);
 }
 
+/* Border */
+.border-1-b-5{
+  border: 1px solid var(--beige500, #98908B);
+
+}
+
 /* Font sizes */
 .font-s-1{
   font-size: var(--font1, 3.2rem);
@@ -319,6 +342,9 @@ button{
 }
 .color-w{
   color: #FFF;
+}
+.color-b-5{
+  color: var(--beige500)
 }
 
 /* Background colors */
