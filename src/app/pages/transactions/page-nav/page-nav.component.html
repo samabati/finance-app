@@ -1,4 +1,7 @@
-<button class="flex align-c just-s-b border-1-b-5 border-r-100 gap-200">
+<button
+  class="flex align-c just-s-b border-1-b-5 border-r-100 gap-200"
+  (click)="onClick()"
+>
   @if(type === 'prev'){
   <img src="assets/transactions/left-arrow.svg" alt="left-arrow" />
   <p class="color-g-9 font-s-4 font-w-4 font-lh-150">Prev</p>

@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, take } from 'rxjs';
 import { Transactions } from '../../types/transactions';
 import { HttpClient } from '@angular/common/http';
-import { resolve } from 'chart.js/helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +11,26 @@ export class TransactionsService {
     Transactions[]
   >([]);
   transactions$ = this.transactions.asObservable();
-  dataLoaded = false;
+
+  /* Page Number Behavior Subject */
+  private pageNumber: BehaviorSubject<Number> = new BehaviorSubject<Number>(1);
+  pageNumber$ = this.pageNumber.asObservable();
+
+  /* Sorting Behavior Subject */
+  private sort: BehaviorSubject<String> = new BehaviorSubject<String>('Latest');
+  sort$ = this.sort.asObservable();
+
+  /* Category Behavior Subject */
+  private category: BehaviorSubject<String> = new BehaviorSubject<String>(
+    'All Transactions'
+  );
+  category$ = this.category.asObservable();
+
+  /* Total pages (For button rendering) */
+  private totalPages: BehaviorSubject<Number[]> = new BehaviorSubject<Number[]>(
+    []
+  );
+  totalPages$ = this.totalPages.asObservable();
 
   http = inject(HttpClient);
 
@@ -20,26 +38,119 @@ export class TransactionsService {
     this.loadTransactions();
   }
 
-  loadTransactions(): Promise<boolean> {
-    return new Promise((resolve) => {
-      console.log('load Transactions ran');
-      this.http
-        .get<any>('/assets/data/data.json')
-        .pipe(map((value) => value.transactions))
-        .subscribe((value) => {
-          this.transactions.next(value);
-          this.dataLoaded = true;
-          resolve(true);
-        });
-    });
+  /* Load Transactions */
+
+  loadTransactions() {
+    this.http
+      .get<any>('/assets/data/data.json')
+      .pipe(
+        take(1),
+        map((value) => value.transactions)
+      )
+      .subscribe((value) => {
+        this.sortCategory(value);
+      });
   }
 
-  getTransactions(page: number = 1) {
+  /* Page methods */
+  changePage(page: Number) {
+    this.pageNumber.next(page);
+    this.loadTransactions();
+  }
+
+  incrementPage() {
+    let currentPage = Number(this.pageNumber.getValue());
+    currentPage = currentPage + 1;
+    if (!(currentPage > this.totalPages.getValue().length)) {
+      this.changePage(currentPage);
+    }
+  }
+
+  decrementPage() {
+    let currentPage = Number(this.pageNumber.getValue());
+    currentPage = currentPage - 1;
+    if (!(currentPage < 1)) {
+      this.changePage(currentPage);
+    }
+  }
+
+  /* Update sort */
+
+  updateSort(sort: String) {
+    this.sort.next(sort);
+    console.log(
+      'Sorting function called in service class: ',
+      this.sort.getValue()
+    );
+    this.loadTransactions();
+  }
+
+  /* Update Category */
+
+  updateCategory(category: String) {
+    this.category.next(category);
+    this.loadTransactions();
+  }
+
+  /* Filter Category */
+  sortCategory(value: Transactions[]) {
+    let data = value;
+
+    if (this.category.getValue() !== 'All Transactions') {
+      data = data.filter(
+        (value) => value.category === this.category.getValue()
+      );
+    }
+    this.generatePageButtons(data);
+    this.sortData(data);
+  }
+
+  /* Generate Page Buttons */
+
+  generatePageButtons(data: Transactions[]) {
+    this.totalPages.next(this.createArray(Math.ceil(data.length / 10)));
+
+    /* If current page is greater than total page numbers revert to page 1*/
+    if (
+      Number(this.pageNumber.getValue()) > this.totalPages.getValue().length
+    ) {
+      this.pageNumber.next(1);
+    }
+  }
+
+  /* Sort transactions */
+
+  sortData(value: Transactions[]) {
+    let data = value;
+    if (this.sort.getValue() === 'Latest') {
+      data = data.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+    } else if (this.sort.getValue() === 'Oldest') {
+      data = data.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+    } else if (this.sort.getValue() === 'A to Z') {
+      data = data.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (this.sort.getValue() === 'Z to A') {
+      data = data.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (this.sort.getValue() === 'Highest') {
+      data = data.sort((a, b) => b.amount - a.amount);
+    } else if (this.sort.getValue() === 'Lowest') {
+      data = data.sort((a, b) => a.amount - b.amount);
+    }
+    this.paginateData(data);
+  }
+
+  /*Paginate data*/
+
+  paginateData(value: Transactions[]) {
+    let page = Number(this.pageNumber.getValue());
     let limit = 10;
     let start = (page - 1) * 10;
-    return this.http.get<any>('/assets/data/data.json').pipe(
-      map((value) => value.transactions),
-      map((value) => value.slice(start, start + limit))
-    );
+    this.transactions.next(value.slice(start, start + limit));
   }
+
+  /*Create array*/
+  createArray = (num: number) => Array.from({ length: num }, (_, i) => i + 1);
 }

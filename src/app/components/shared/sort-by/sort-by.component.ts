@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { TransactionsService } from '../../../services/transactions/transactions.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sort-by',
@@ -10,14 +12,15 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SortByComponent implements OnInit {
   @Input() type!: string;
-  selected!: string;
+  selected!: Observable<String>;
   showContent: boolean = false;
   options!: Array<string>;
-  maxWidth!: string;
+  minWidth!: string;
+  transactionService = inject(TransactionsService);
 
   ngOnInit(): void {
     if (this.type === 'Sort By') {
-      this.selected = 'Latest';
+      this.selected = this.transactionService.sort$;
       this.options = [
         'Latest',
         'Oldest',
@@ -26,9 +29,9 @@ export class SortByComponent implements OnInit {
         'Highest',
         'Lowest',
       ];
-      this.maxWidth = '113px';
+      this.minWidth = '113px';
     } else if (this.type === 'Category') {
-      this.selected = 'All Transactions';
+      this.selected = this.transactionService.category$;
       this.options = [
         'All Transactions',
         'Entertainment',
@@ -38,7 +41,7 @@ export class SortByComponent implements OnInit {
         'Transportation',
         'Personal Care',
       ];
-      this.maxWidth = '179px';
+      this.minWidth = '179px';
     }
   }
 
@@ -47,6 +50,10 @@ export class SortByComponent implements OnInit {
   }
 
   select(str: string) {
-    this.selected = str;
+    if (this.type === 'Sort By') {
+      this.transactionService.updateSort(str);
+    } else if (this.type === 'Category') {
+      this.transactionService.updateCategory(str);
+    }
   }
 }

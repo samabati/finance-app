@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TableItemComponent } from '../table-item/table-item.component';
 import { TransactionsService } from '../../../services/transactions/transactions.service';
 import { CommonModule } from '@angular/common';
@@ -12,5 +12,5 @@ import { CommonModule } from '@angular/common';
 })
 export class TransactionsTableComponent {
   transactionService = inject(TransactionsService);
-  transactions = this.transactionService.getTransactions(1);
+  transactions = this.transactionService.transactions$;
 }
