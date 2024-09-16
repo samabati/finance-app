@@ -1,0 +1,4 @@
+button{
+    height: var(--spacing500);
+    padding: var(--spacing200);
+}

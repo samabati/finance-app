@@ -6,7 +6,7 @@
     <h3 class="color-g-5 font-s-5 font-w-4 font-lh-150">Amount</h3>
   </header>
   <section class="m-t-3">
-    @for(item of transactions | async; track item){
+    @for(item of transactions | async; track item; let i = $index){
     <app-table-item
       [src]="item.avatar"
       [name]="item.name"
@@ -14,7 +14,8 @@
       [date]="item.date"
       [amount]="item.amount"
     ></app-table-item>
+    @if(i !== 9){
     <img class="w-100 m-t-2 m-b-2" src="assets/overview/hr.svg" alt="" />
-    }
+    } }
   </section>
 </ul>

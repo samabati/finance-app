@@ -1,0 +1,4 @@
+button{
+    width: var(--spacing500);
+    height: var(--spacing500);
+}

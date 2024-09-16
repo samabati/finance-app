@@ -10,5 +10,15 @@
     </div>
   </header>
   <app-transactions-table class="outline"></app-transactions-table>
-  <nav></nav>
+  <nav class="m-t-3 p-t-3 outline flex just-s-b">
+    <app-page-nav type="prev"></app-page-nav>
+    <div class="flex gap-100 outline">
+      <app-page-number number="1" [selected]="false"></app-page-number>
+      <app-page-number number="2" [selected]="true"></app-page-number>
+      <app-page-number number="3" [selected]="false"></app-page-number>
+      <app-page-number number="4" [selected]="false"></app-page-number>
+      <app-page-number number="5" [selected]="false"></app-page-number>
+    </div>
+    <app-page-nav type="next"></app-page-nav>
+  </nav>
 </section>
