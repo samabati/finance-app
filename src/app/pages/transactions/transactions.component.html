@@ -12,11 +12,7 @@
   <app-transactions-table class="outline"></app-transactions-table>
   <nav class="m-t-3 p-t-3 outline flex just-s-b">
     <app-page-nav type="prev"></app-page-nav>
-    <div class="flex gap-100 outline">
-      @for(item of transactionService.totalPages$ | async; track item){
-      <app-page-number [number]="item"></app-page-number>
-      }
-    </div>
+    <app-page-number-list></app-page-number-list>
     <app-page-nav type="next"></app-page-nav>
   </nav>
 </section>

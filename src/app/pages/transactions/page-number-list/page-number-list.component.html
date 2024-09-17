@@ -1,0 +1,13 @@
+<div class="flex gap-100 outline">
+  @if(mobileList && ((transactionService.totalPages$ | async)!.length > 4)){
+
+  <app-page-number [number]="1"></app-page-number>
+  <!-- Need to create ellipses button functionality here-->
+  <app-page-number [number]="2"></app-page-number>
+  <app-page-number [number]="3"></app-page-number>
+  <app-page-number [number]="4"></app-page-number>
+
+  }@else { @for(item of transactionService.totalPages$ | async; track item){
+  <app-page-number [number]="item"></app-page-number>
+  } }
+</div>
