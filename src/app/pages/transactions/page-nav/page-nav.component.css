@@ -2,3 +2,9 @@ button{
     height: var(--spacing500);
     padding: var(--spacing200);
 }
+
+@media (max-width: 47.125rem){
+    button > p{
+        display: none;
+    }
+}

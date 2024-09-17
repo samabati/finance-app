@@ -22,9 +22,25 @@ li > p:nth-of-type(3){
     left: 0;
 }
 
+#mobile-category{
+    display: none;
+}
+
+/* Mobile */
+
 @media (max-width: 47.125rem){
+
+    #mobile-category{
+        display: block;
+    }
+
+    .image-container{
+        min-width: 40px;
+    }
+
     li{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 4fr 1fr;
+        padding: 0px;
     }
 
     li > div {
@@ -38,6 +54,7 @@ li > p:nth-of-type(3){
     li > p:nth-of-type(2){
         grid-column: 2;
         text-align: right;
+        white-space: nowrap;
     }
     li > p:nth-of-type(3){
         grid-row: 1;
