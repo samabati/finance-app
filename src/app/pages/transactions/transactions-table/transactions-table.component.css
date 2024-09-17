@@ -4,3 +4,9 @@ header{
 header > h3:nth-child(4){
     text-align: right;
 }
+
+@media (max-width: 47.125rem){
+    header{
+        display: none;
+    }
+}

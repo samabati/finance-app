@@ -16,8 +16,21 @@
       "
       alt="down-arrow"
     />
+    <img
+      id="mobile-logo"
+      [src]="
+        type === 'Category'
+          ? 'assets/transactions/category.svg'
+          : 'assets/transactions/sort-by.svg'
+      "
+      alt="mobile-logo"
+    />
     <ul
-      [ngStyle]="{ display: showContent ? 'block' : 'none' }"
+      [ngClass]="type === 'Category' ? 'category-content' : 'sort-by-content'"
+      [ngStyle]="{
+        display: showContent ? 'block' : 'none',
+        'min-width': minWidth
+      }"
       class="dropdown-content p-r-250 p-l-250 flex flex-d-c bg-w border-r-100"
     >
       @for(option of options; track option){
