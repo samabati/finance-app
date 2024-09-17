@@ -17,3 +17,7 @@ position: relative;
 li{
     cursor: pointer;
 }
+
+div:nth-of-type(1){
+    overflow: visible !important;
+}
