@@ -1,0 +1,4 @@
+li > div:nth-of-type(1){
+    width: var(--spacing50);
+    height: 21px;
+}

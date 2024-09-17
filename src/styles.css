@@ -313,7 +313,10 @@ button{
   font-size: var(--font1, 3.2rem);
 }
 .font-s-2{
-  font-size: var(2.0rem);
+  font-size: 2.0rem;
+}
+.font-s-3{
+  font-size: 1.6rem;
 }
 .font-s-4{
   font-size: var(--font4, 1.4rem);
