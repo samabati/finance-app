@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
   styleUrl: './page-number.component.css',
 })
 export class PageNumberComponent implements OnInit, OnDestroy {
-  @Input() number!: Number;
-  selected!: Number;
+  @Input() number!: number;
+  selected!: number;
   transactionService = inject(TransactionsService);
   subscription!: Subscription;
 

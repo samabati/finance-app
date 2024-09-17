@@ -13,21 +13,21 @@ export class TransactionsService {
   transactions$ = this.transactions.asObservable();
 
   /* Page Number Behavior Subject */
-  private pageNumber: BehaviorSubject<Number> = new BehaviorSubject<Number>(1);
+  private pageNumber: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   pageNumber$ = this.pageNumber.asObservable();
 
   /* Sorting Behavior Subject */
-  private sort: BehaviorSubject<String> = new BehaviorSubject<String>('Latest');
+  private sort: BehaviorSubject<string> = new BehaviorSubject<string>('Latest');
   sort$ = this.sort.asObservable();
 
   /* Category Behavior Subject */
-  private category: BehaviorSubject<String> = new BehaviorSubject<String>(
+  private category: BehaviorSubject<string> = new BehaviorSubject<string>(
     'All Transactions'
   );
   category$ = this.category.asObservable();
 
   /* Total pages (For button rendering) */
-  private totalPages: BehaviorSubject<Number[]> = new BehaviorSubject<Number[]>(
+  private totalPages: BehaviorSubject<number[]> = new BehaviorSubject<number[]>(
     []
   );
   totalPages$ = this.totalPages.asObservable();
@@ -53,13 +53,13 @@ export class TransactionsService {
   }
 
   /* Page methods */
-  changePage(page: Number) {
+  changePage(page: number) {
     this.pageNumber.next(page);
     this.loadTransactions();
   }
 
   incrementPage() {
-    let currentPage = Number(this.pageNumber.getValue());
+    let currentPage = this.pageNumber.getValue();
     currentPage = currentPage + 1;
     if (!(currentPage > this.totalPages.getValue().length)) {
       this.changePage(currentPage);
@@ -67,7 +67,7 @@ export class TransactionsService {
   }
 
   decrementPage() {
-    let currentPage = Number(this.pageNumber.getValue());
+    let currentPage = this.pageNumber.getValue();
     currentPage = currentPage - 1;
     if (!(currentPage < 1)) {
       this.changePage(currentPage);
@@ -76,7 +76,7 @@ export class TransactionsService {
 
   /* Update sort */
 
-  updateSort(sort: String) {
+  updateSort(sort: string) {
     this.sort.next(sort);
     console.log(
       'Sorting function called in service class: ',
@@ -87,7 +87,7 @@ export class TransactionsService {
 
   /* Update Category */
 
-  updateCategory(category: String) {
+  updateCategory(category: string) {
     this.category.next(category);
     this.loadTransactions();
   }
@@ -111,9 +111,7 @@ export class TransactionsService {
     this.totalPages.next(this.createArray(Math.ceil(data.length / 10)));
 
     /* If current page is greater than total page numbers revert to page 1*/
-    if (
-      Number(this.pageNumber.getValue()) > this.totalPages.getValue().length
-    ) {
+    if (this.pageNumber.getValue() > this.totalPages.getValue().length) {
       this.pageNumber.next(1);
     }
   }
@@ -145,7 +143,7 @@ export class TransactionsService {
   /*Paginate data*/
 
   paginateData(value: Transactions[]) {
-    let page = Number(this.pageNumber.getValue());
+    let page = this.pageNumber.getValue();
     let limit = 10;
     let start = (page - 1) * 10;
     this.transactions.next(value.slice(start, start + limit));
