@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { OverviewComponent } from './pages/overview/overview.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 import { BudgetsComponent } from './pages/budgets/budgets.component';
+import { AddNewBudgetsComponent } from './pages/add-new-budgets/add-new-budgets.component';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,12 @@ export const routes: Routes = [
   {
     path: 'budgets',
     component: BudgetsComponent,
+    children: [
+      {
+        path: 'add',
+        component: AddNewBudgetsComponent,
+      },
+    ],
   },
   {
     path: 'pots',

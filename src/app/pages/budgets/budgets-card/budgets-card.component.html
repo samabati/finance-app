@@ -1,1 +1,95 @@
-<p>budgets-card works!</p>
+<article
+  class="bg-w border-r-150 flex flex-d-c p-t-4 p-r-4 p-b-4 p-l-4 gap-250"
+>
+  <header class="flex just-s-b">
+    <div class="flex align-c">
+      <div [ngClass]="bgColor" class="circle outline"></div>
+      <h2 class="color-g-9 font-s-2 font-w-7 font-lh-120 m-l-2">
+        {{ category }}
+      </h2>
+    </div>
+    <img src="assets/budgets/ellipses.svg" alt="ellipses" />
+  </header>
+  <section class="flex flex-d-c gap-200">
+    <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
+      Maximum of {{ max | currency }}
+    </p>
+    <div
+      class="progress-container border-r-50 bg-b-1 p-t-50 p-r-50 p-b-50 p-l-50 flex"
+    >
+      <div
+        [ngClass]="bgColor"
+        [ngStyle]="{ width: max - spent > 0 ? max - spent + '%' : '100%' }"
+        class="progress-bar border-r-50"
+      ></div>
+    </div>
+    <div class="flex gap-200">
+      <div class="spent-remaining flex">
+        <div [ngClass]="bgColor" class="border border-r-1"></div>
+        <div class="flex flex-d-c gap-50 m-l-2">
+          <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Spent</h2>
+          <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
+            {{ spent | currency }}
+          </p>
+        </div>
+      </div>
+      <div class="spent-remaining flex">
+        <div class="border border-r-1 bg-b-1"></div>
+        <div class="flex flex-d-c gap-50 m-l-2">
+          <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Spent</h2>
+          <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
+            {{ spent | currency }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section
+    class="flex flex-d-c border-r-150 bg-b-1 p-t-250 p-r-250 p-b-250 p-l-250 gap-250"
+  >
+    <header class="flex just-s-b align-c">
+      <h2 class="color-g-9 font-s-3 font-w-7 font-lh-150">Latest Spending</h2>
+      <div class="flex">
+        <p class="color-g-5 font-s-4 font-w-4 font-lh-150">See All</p>
+        <img
+          class="m-l-150"
+          src="assets/overview/right-arrow.svg"
+          alt="right-arrow"
+        />
+      </div>
+    </header>
+    <ul class="outline">
+      <app-budgets-card-item
+        src="assets/overview/emma.svg"
+        name="Emma Richardson"
+        amount="+$75.50"
+        date="19 Aug 2024"
+        [positive]="true"
+      ></app-budgets-card-item>
+      <img
+        class="m-t-150 m-b-150 w-100"
+        src="assets/budgets/hr.svg"
+        alt="horizontal-line"
+      />
+      <app-budgets-card-item
+        src="assets/overview/emma.svg"
+        name="Emma Richardson"
+        amount="+$75.50"
+        date="19 Aug 2024"
+        [positive]="true"
+      ></app-budgets-card-item>
+      <img
+        class="m-t-150 m-b-150 w-100"
+        src="assets/budgets/hr.svg"
+        alt="horizontal-line"
+      />
+      <app-budgets-card-item
+        src="assets/overview/emma.svg"
+        name="Emma Richardson"
+        amount="+$75.50"
+        date="19 Aug 2024"
+        [positive]="true"
+      ></app-budgets-card-item>
+    </ul>
+  </section>
+</article>

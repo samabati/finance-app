@@ -1,0 +1,18 @@
+.circle{
+    width: var(--spacing200);
+    height: var(--spacing200);
+    border-radius: 50%;
+}
+
+.progress-bar{
+    height: var(--spacing300);
+}
+
+.border{
+    height: 43px;
+    width: var(--spacing50);
+}
+
+.spent-remaining{
+    width: 50%;
+}

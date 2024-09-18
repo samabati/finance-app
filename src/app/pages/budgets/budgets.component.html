@@ -4,7 +4,15 @@
 </header>
 <section class="outline m-t-4 flex gap-300">
   <app-budgets-summary></app-budgets-summary>
-  <div class="flex outline flex-d-c">
-    <app-budgets-card></app-budgets-card>
+  <div class="flex outline flex-d-c gap-300">
+    @for(item of data; track item){
+    <app-budgets-card
+      [category]="item.category"
+      [spent]="item.spent"
+      [max]="item.max"
+    ></app-budgets-card>
+    }
   </div>
 </section>
+
+<router-outlet></router-outlet>
