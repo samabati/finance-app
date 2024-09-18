@@ -1,0 +1,26 @@
+<li class="flex flex-d-c gap-50">
+  <h3 class="color-g-5 font-s-5 font-w-7 font-lh-150">Budget Category</h3>
+  <div
+    (click)="toggleDropdown()"
+    class="dropdown p-t-150 p-r-250 p-b-150 p-l-250 border-r-100 border-1-b-5 flex just-s-b color-g-9 font-s-4 font-w-4 font-lh-150"
+  >
+    {{ selected }}
+    <img src="assets/shared/down-arrow.svg" alt="down-arrow" />
+    <div
+      [ngStyle]="{ display: showDropdown ? 'block' : 'none' }"
+      class="dropdown-content border-r-100 outline w-100 p-t-150 p-r-250 p-b-150 p-l-250 b bg-w flex flex-d-c"
+    >
+      @for (item of data; track $index) {
+      <p
+        (click)="selectCategory(item)"
+        [ngClass]="selected === item ? 'font-w-7' : 'font-w-4'"
+        class="color-g-9 font-s-4 font-lh-150"
+      >
+        {{ item }}
+      </p>
+      @if($index !== data.length-1){
+      <img class="m-t-150 m-b-150" src="assets/overview/hr.svg" alt="hr" />
+      } }
+    </div>
+  </div>
+</li>
