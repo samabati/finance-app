@@ -19,7 +19,9 @@
     >
       <div
         [ngClass]="bgColor"
-        [ngStyle]="{ width: max - spent > 0 ? max - spent + '%' : '100%' }"
+        [ngStyle]="{
+          width: max - spent > 0 ? (spent / max) * 100 + '%' : '100%'
+        }"
         class="progress-bar border-r-50"
       ></div>
     </div>
@@ -36,9 +38,9 @@
       <div class="spent-remaining flex">
         <div class="border border-r-1 bg-b-1"></div>
         <div class="flex flex-d-c gap-50 m-l-2">
-          <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Spent</h2>
+          <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Remaining</h2>
           <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
-            {{ spent | currency }}
+            {{ max - spent | currency }}
           </p>
         </div>
       </div>

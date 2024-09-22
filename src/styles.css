@@ -202,6 +202,32 @@ button{
   margin-left: auto;
 }
 
+/* Margin right */
+.m-r-5{
+  margin-right: var(--spacing500);
+}
+.m-r-4{
+  margin-right: var(--spacing400);
+}
+.m-r-3{
+  margin-right: var(--spacing300);
+}
+.m-r-250{
+  margin-right: var(--spacing250);
+}
+.m-r-2{
+  margin-right: var(--spacing200);
+}
+.m-r-150{
+  margin-right: var(--spacing150);
+}
+.m-r-1{
+  margin-right: var(--spacing100);
+}
+.m-r-a{
+  margin-right: auto;
+}
+
 /* Margin top */
 .m-t-5{
   margin-top: var(--spacing500);
@@ -399,6 +425,15 @@ button{
 }
 .bg-w{
   background-color: #FFF;
+}
+.bg-red{
+  background-color: #C94736;
+}
+.bg-purple{
+  background-color: #826CB0
+}
+.bg-turq{
+  background-color: #597C7C;
 }
 
 /* Overflow */

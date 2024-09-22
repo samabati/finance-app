@@ -5,7 +5,14 @@
     class="dropdown p-t-150 p-r-250 p-b-150 p-l-250 border-r-100 border-1-b-5 flex just-s-b color-g-9 font-s-4 font-w-4 font-lh-150"
   >
     {{ selected }}
-    <img src="assets/shared/down-arrow.svg" alt="down-arrow" />
+    <img
+      [src]="
+        showDropdown
+          ? 'assets/shared/up-arrow.svg'
+          : 'assets/shared/down-arrow.svg'
+      "
+      alt="down-arrow"
+    />
     <div
       [ngStyle]="{ display: showDropdown ? 'block' : 'none' }"
       class="dropdown-content border-r-100 outline w-100 p-t-150 p-r-250 p-b-150 p-l-250 b bg-w flex flex-d-c"

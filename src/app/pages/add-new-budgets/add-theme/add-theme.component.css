@@ -9,3 +9,9 @@
     max-height: 300px;
     overflow: auto;
 }
+
+.circle{
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+}

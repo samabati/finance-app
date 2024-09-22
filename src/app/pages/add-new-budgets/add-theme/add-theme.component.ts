@@ -10,12 +10,20 @@ import { Component } from '@angular/core';
 })
 export class AddThemeComponent {
   showDropdown: boolean = false;
-  selected: string = 'Green';
+  selected: any = { name: 'Green', class: 'bg-g' };
 
-  data = ['Green', 'Yellow', 'Cyan', 'Navy', 'Red', 'Purple', 'Turquoise'];
+  data = [
+    { name: 'Green', class: 'bg-g' },
+    { name: 'Yellow', class: 'bg-yellow' },
+    { name: 'Cyan', class: 'bg-cyan' },
+    { name: 'Navy', class: 'bg-navy' },
+    { name: 'Red', class: 'bg-red' },
+    { name: 'Purple', class: 'bg-purple' },
+    { name: 'Turquoise', class: 'bg-turq' },
+  ];
 
-  selectCategory(color: string) {
-    this.selected = color;
+  selectCategory(category: any) {
+    this.selected = category;
   }
 
   toggleDropdown() {
