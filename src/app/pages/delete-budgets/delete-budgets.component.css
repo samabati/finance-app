@@ -11,6 +11,14 @@ header > img{
     cursor: pointer;
 }
 
+article{
+    max-width: 560px;
+}
+
+p:nth-of-type(2){
+    cursor: pointer;
+}
+
 
 /* Mobile */
 

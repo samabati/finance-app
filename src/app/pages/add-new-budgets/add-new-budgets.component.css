@@ -7,6 +7,10 @@
     overflow-y: auto;
 }
 
+article{
+    max-width: 560px;
+}
+
 header > img{
     cursor: pointer;
 }
