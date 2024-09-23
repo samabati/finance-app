@@ -3,6 +3,8 @@ import { OverviewComponent } from './pages/overview/overview.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
 import { BudgetsComponent } from './pages/budgets/budgets.component';
 import { AddNewBudgetsComponent } from './pages/add-new-budgets/add-new-budgets.component';
+import { EditBudgetsComponent } from './pages/edit-budgets/edit-budgets.component';
+import { DeleteBudgetsComponent } from './pages/delete-budgets/delete-budgets.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +22,14 @@ export const routes: Routes = [
       {
         path: 'add',
         component: AddNewBudgetsComponent,
+      },
+      {
+        path: 'edit',
+        component: EditBudgetsComponent,
+      },
+      {
+        path: 'delete',
+        component: DeleteBudgetsComponent,
       },
     ],
   },

@@ -5,3 +5,11 @@ div:nth-of-type(2){
 img{
     height: 32px;
 }
+
+/* Mobile */
+
+@media (max-width: 47.125rem){
+    img{
+        display: none;
+    }
+}

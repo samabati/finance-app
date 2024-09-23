@@ -1,0 +1,35 @@
+/* Tablet */
+
+@media (max-width: 65.94rem) {
+    article{
+        flex-direction: row;
+        gap: var(--spacing400);
+    }
+    article > div:nth-of-type(1){
+        margin-top: 0px;
+    }
+    app-budgets-pie{
+        width: 50%;
+    }
+    div{
+        width: 50%;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 47.125rem){
+    article{
+        padding-top: var(--spacing300);
+        padding-right: var(--spacing250);
+        padding-bottom: var(--spacing300);
+        padding-left:  var(--spacing250);
+        flex-direction: column;
+    }
+    app-budgets-pie{
+        width: 100%;
+    }
+    div{
+        width: 100%;
+    }
+}

@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BudgetsCardItemComponent } from './budgets-card-item/budgets-card-item.component';
 import { CommonModule } from '@angular/common';
+import { BudgetsEllipsesComponent } from './budgets-ellipses/budgets-ellipses.component';
 
 @Component({
   selector: 'app-budgets-card',
   standalone: true,
-  imports: [BudgetsCardItemComponent, CommonModule],
+  imports: [BudgetsCardItemComponent, CommonModule, BudgetsEllipsesComponent],
   templateUrl: './budgets-card.component.html',
   styleUrl: './budgets-card.component.css',
 })
