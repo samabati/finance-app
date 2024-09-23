@@ -4,7 +4,7 @@
   >
     <header class="flex just-s-b align-c">
       <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">
-        Delete ‘Entertainment’?
+        Delete ‘{{ title }}’?
       </h2>
       <img
         (click)="exitPage()"
@@ -16,7 +16,10 @@
       Are you sure you want to delete this budget? This action cannot be
       reversed, and all the data inside it will be removed forever.
     </p>
-    <app-confirm-delete></app-confirm-delete>
+    <app-confirm-delete
+      [index]="index"
+      (exitPage)="exitPage()"
+    ></app-confirm-delete>
     <p
       (click)="exitPage()"
       style="text-align: center"

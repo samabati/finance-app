@@ -1,5 +1,7 @@
 <section id="overlay" class="h-100 w-100 flex just-c align-c">
-  <article
+  <form
+    (ngSubmit)="submitForm()"
+    [formGroup]="addBudgetForm"
     class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 flex flex-d-c gap-250"
   >
     <header class="flex just-s-b align-c">
@@ -15,10 +17,10 @@
       monitor spending.
     </p>
     <ul class="flex flex-d-c gap-200">
-      <app-add-category></app-add-category>
-      <app-add-spend></app-add-spend>
-      <app-add-theme></app-add-theme>
+      <app-add-category formControlName="category"></app-add-category>
+      <app-add-spend formControlName="max"></app-add-spend>
+      <app-add-theme formControlName="theme"></app-add-theme>
     </ul>
-    <app-add-button></app-add-button>
-  </article>
+    <app-add-button type="submit"></app-add-button>
+  </form>
 </section>

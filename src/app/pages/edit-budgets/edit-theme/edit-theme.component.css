@@ -1,0 +1,17 @@
+.dropdown{
+    position: relative;
+}
+
+.dropdown-content{
+    position: absolute;
+    top: calc(47px + 16px);
+    left: 0px;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.circle{
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+}

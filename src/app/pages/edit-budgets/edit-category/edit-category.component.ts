@@ -1,32 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-category',
+  selector: 'app-edit-category',
   standalone: true,
   imports: [CommonModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AddCategoryComponent),
+      useExisting: forwardRef(() => EditCategoryComponent),
       multi: true,
     },
   ],
-  templateUrl: './add-category.component.html',
-  styleUrl: './add-category.component.css',
+  templateUrl: './edit-category.component.html',
+  styleUrl: './edit-category.component.css',
 })
-export class AddCategoryComponent implements ControlValueAccessor {
+export class EditCategoryComponent implements ControlValueAccessor {
   onChange = (value: any) => {};
 
   onTouched = () => {};
 
   writeValue(value: any): void {
-    this.selected = value || 'Entertainment';
+    this.selected = value || this.selected;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -36,7 +32,7 @@ export class AddCategoryComponent implements ControlValueAccessor {
   }
 
   showDropdown: boolean = false;
-  selected!: string;
+  @Input() selected!: string;
 
   data = [
     'Entertainment',

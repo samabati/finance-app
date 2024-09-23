@@ -1,38 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-theme',
+  selector: 'app-edit-theme',
   standalone: true,
   imports: [CommonModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AddThemeComponent),
+      useExisting: forwardRef(() => EditThemeComponent),
       multi: true,
     },
   ],
-  templateUrl: './add-theme.component.html',
-  styleUrl: './add-theme.component.css',
+  templateUrl: './edit-theme.component.html',
+  styleUrl: './edit-theme.component.css',
 })
-export class AddThemeComponent implements ControlValueAccessor {
+export class EditThemeComponent implements ControlValueAccessor {
   onChange = (value: any) => {};
 
   onTouched = () => {};
 
-  writeValue(obj: any): void {
-    this.selected = { name: 'Green', class: 'bg-g' };
+  writeValue(value: any): void {
+    this.selected = this.selected;
   }
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
+
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
   showDropdown: boolean = false;
-  selected: any = { name: 'Green', class: 'bg-g' };
+  @Input() selected: any;
 
   data = [
     { name: 'Green', class: 'bg-g' },

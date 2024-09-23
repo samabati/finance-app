@@ -1,28 +1,28 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-spend',
+  selector: 'app-edit-spend',
   standalone: true,
-  imports: [],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AddSpendComponent),
+      useExisting: forwardRef(() => EditSpendComponent),
       multi: true,
     },
   ],
-  templateUrl: './add-spend.component.html',
-  styleUrl: './add-spend.component.css',
+  imports: [],
+  templateUrl: './edit-spend.component.html',
+  styleUrl: './edit-spend.component.css',
 })
-export class AddSpendComponent implements ControlValueAccessor {
-  value!: number;
+export class EditSpendComponent implements ControlValueAccessor {
+  @Input() value!: number;
 
   onChanges = (value: number) => {};
   onTouched = () => {};
 
   writeValue(value: number): void {
-    this.value = value;
+    this.value = value || this.value;
   }
   registerOnChange(fn: any): void {
     this.onChanges = fn;

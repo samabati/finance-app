@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BudgetsCardItemComponent } from './budgets-card-item/budgets-card-item.component';
 import { CommonModule } from '@angular/common';
 import { BudgetsEllipsesComponent } from './budgets-ellipses/budgets-ellipses.component';
+import { Budget } from '../../../types/budget';
 
 @Component({
   selector: 'app-budgets-card',
@@ -10,21 +11,7 @@ import { BudgetsEllipsesComponent } from './budgets-ellipses/budgets-ellipses.co
   templateUrl: './budgets-card.component.html',
   styleUrl: './budgets-card.component.css',
 })
-export class BudgetsCardComponent implements OnInit {
-  @Input() category!: string;
-  @Input() spent!: number;
-  @Input() max!: number;
-  bgColor!: string;
-
-  ngOnInit(): void {
-    if (this.category === 'Entertainment') {
-      this.bgColor = 'bg-g';
-    } else if (this.category === 'Bills') {
-      this.bgColor = 'bg-cyan';
-    } else if (this.category === 'Dining Out') {
-      this.bgColor = 'bg-yellow';
-    } else if (this.category === 'Personal Care') {
-      this.bgColor = 'bg-navy';
-    }
-  }
+export class BudgetsCardComponent {
+  @Input() budget!: Budget;
+  @Input() index!: number;
 }

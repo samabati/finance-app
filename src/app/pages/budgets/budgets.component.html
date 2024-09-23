@@ -6,11 +6,7 @@
   <app-budgets-summary></app-budgets-summary>
   <div class="flex outline flex-d-c gap-300">
     @for(item of budgetService.budgets$ | async; track item){
-    <app-budgets-card
-      [category]="item.category"
-      [spent]="item.spent"
-      [max]="item.max"
-    ></app-budgets-card>
+    <app-budgets-card [budget]="item" [index]="$index"> </app-budgets-card>
     }
   </div>
 </section>

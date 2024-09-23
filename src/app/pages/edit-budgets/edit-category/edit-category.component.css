@@ -1,0 +1,12 @@
+.dropdown{
+    position: relative;
+}
+
+.dropdown-content{
+    position: absolute;
+    top: calc(47px + 16px);
+    left: 0px;
+    max-height: 300px;
+    overflow: auto;
+    z-index: 2;
+}

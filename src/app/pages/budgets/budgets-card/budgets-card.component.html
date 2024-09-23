@@ -3,35 +3,41 @@
 >
   <header class="flex just-s-b">
     <div class="flex align-c">
-      <div [ngClass]="bgColor" class="circle outline"></div>
+      <div [ngClass]="budget.theme.class" class="circle outline"></div>
       <h2 class="color-g-9 font-s-2 font-w-7 font-lh-120 m-l-2">
-        {{ category }}
+        {{ budget.category }}
       </h2>
     </div>
-    <app-budgets-ellipses class="flex align-c outline"></app-budgets-ellipses>
+    <app-budgets-ellipses
+      [index]="index"
+      class="flex align-c outline"
+    ></app-budgets-ellipses>
   </header>
   <section class="flex flex-d-c gap-200">
     <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
-      Maximum of {{ max | currency }}
+      Maximum of {{ budget.max | currency }}
     </p>
     <div
       class="progress-container border-r-50 bg-b-1 p-t-50 p-r-50 p-b-50 p-l-50 flex"
     >
       <div
-        [ngClass]="bgColor"
+        [ngClass]="budget.theme.class"
         [ngStyle]="{
-          width: max - spent > 0 ? (spent / max) * 100 + '%' : '100%'
+          width:
+            budget.max - budget.spent > 0
+              ? (budget.spent / budget.max) * 100 + '%'
+              : '100%'
         }"
         class="progress-bar border-r-50"
       ></div>
     </div>
     <div class="flex gap-200">
       <div class="spent-remaining flex">
-        <div [ngClass]="bgColor" class="border border-r-1"></div>
+        <div [ngClass]="budget.theme.class" class="border border-r-1"></div>
         <div class="flex flex-d-c gap-50 m-l-2">
           <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Spent</h2>
           <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
-            {{ spent | currency }}
+            {{ budget.spent | currency }}
           </p>
         </div>
       </div>
@@ -40,7 +46,7 @@
         <div class="flex flex-d-c gap-50 m-l-2">
           <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Remaining</h2>
           <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
-            {{ max - spent | currency }}
+            {{ budget.max - budget.spent | currency }}
           </p>
         </div>
       </div>

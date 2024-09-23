@@ -24,11 +24,11 @@ export const routes: Routes = [
         component: AddNewBudgetsComponent,
       },
       {
-        path: 'edit',
+        path: 'edit/:index',
         component: EditBudgetsComponent,
       },
       {
-        path: 'delete',
+        path: 'delete/:index',
         component: DeleteBudgetsComponent,
       },
     ],

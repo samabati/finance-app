@@ -7,7 +7,7 @@
     overflow-y: auto;
 }
 
-article{
+form{
     max-width: 560px;
 }
 
@@ -28,7 +28,7 @@ header > img{
         font-size: var(--font2);
     }
 
-    article{
+    form{
         padding-top: var(--spacing300);
         padding-right: var(--spacing250);
         padding-left: var(--spacing250);

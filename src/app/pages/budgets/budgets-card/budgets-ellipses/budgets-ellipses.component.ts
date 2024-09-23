@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
   styleUrl: './budgets-ellipses.component.css',
 })
 export class BudgetsEllipsesComponent {
+  @Input() index!: number;
   showDropdown = false;
-
   router = inject(Router);
 
   toggleDropdown() {
@@ -19,10 +19,10 @@ export class BudgetsEllipsesComponent {
   }
 
   editBudget() {
-    this.router.navigateByUrl('/budgets/edit');
+    this.router.navigateByUrl(`/budgets/edit/${this.index}`);
   }
 
   deleteBudget() {
-    this.router.navigateByUrl('/budgets/delete');
+    this.router.navigateByUrl(`/budgets/delete/${this.index}`);
   }
 }

@@ -11,21 +11,25 @@ export class BudgetsService {
       category: 'Entertainment',
       spent: 15,
       max: 50,
+      theme: { name: 'Green', class: 'bg-g' },
     },
     {
       category: 'Bills',
       spent: 150,
       max: 750,
+      theme: { name: 'Cyan', class: 'bg-cyan' },
     },
     {
       category: 'Dining Out',
       spent: 133.75,
       max: 75,
+      theme: { name: 'Yellow', class: 'bg-yellow' },
     },
     {
       category: 'Personal Care',
       spent: 40,
       max: 100,
+      theme: { name: 'Navy', class: 'bg-navy' },
     },
   ]);
 
@@ -37,11 +41,24 @@ export class BudgetsService {
     let tempBudget = this.budgets.getValue();
     tempBudget.push(newBudget);
     this.budgets.next(tempBudget);
+    console.log('New Budget list: ', this.budgets.getValue());
   }
 
-  removeBudget(oldBudget: Budget) {
+  removeBudget(index: number) {
     let tempBudget = this.budgets.getValue();
-    tempBudget.filter((budget) => budget !== oldBudget);
+    tempBudget = tempBudget.filter((value, i) => i !== index);
     this.budgets.next(tempBudget);
+  }
+
+  getBudget(index: number) {
+    let budget = this.budgets.getValue().filter((value, i) => i === index);
+    return budget[0];
+  }
+
+  updateBudget(updates: Partial<Budget>, index: number) {
+    const budgets = this.budgets.getValue();
+    const budget = { ...budgets[index], ...updates };
+    budgets[index] = budget;
+    this.budgets.next(budgets);
   }
 }
