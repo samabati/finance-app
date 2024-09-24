@@ -1,0 +1,4 @@
+section{
+    grid-gap: var(--spacing300);
+    grid-template-columns: repeat(2, 1fr);
+}

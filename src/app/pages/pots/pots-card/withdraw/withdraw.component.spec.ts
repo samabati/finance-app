@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BudgetsEllipsesComponent } from './budgets-ellipses.component';
+import { WithdrawComponent } from './withdraw.component';
 
-describe('BudgetsEllipsesComponent', () => {
-  let component: BudgetsEllipsesComponent;
-  let fixture: ComponentFixture<BudgetsEllipsesComponent>;
+describe('WithdrawComponent', () => {
+  let component: WithdrawComponent;
+  let fixture: ComponentFixture<WithdrawComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BudgetsEllipsesComponent]
+      imports: [WithdrawComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BudgetsEllipsesComponent);
+    fixture = TestBed.createComponent(WithdrawComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

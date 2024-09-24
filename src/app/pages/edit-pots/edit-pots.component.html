@@ -1,11 +1,11 @@
 <section id="overlay" class="h-100 w-100 flex just-c align-c">
   <form
     (ngSubmit)="submitForm()"
-    [formGroup]="addBudgetForm"
+    [formGroup]="editPotForm"
     class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 flex flex-d-c gap-250"
   >
     <header class="flex just-s-b align-c">
-      <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">Add New Budget</h2>
+      <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">Edit Pot</h2>
       <img
         (click)="exitPage()"
         src="assets/budgets/close-button.svg"
@@ -13,17 +13,17 @@
       />
     </header>
     <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
-      Choose a category to set a spending budget. These categories can help you
-      monitor spending.
+      If your saving targets change, feel free to update your pots.
     </p>
     <ul class="flex flex-d-c gap-200">
-      <app-add-category formControlName="category"></app-add-category>
+      <app-pot-name class="outline" formControlName="name"></app-pot-name>
       <app-add-spend
-        title="Maximum Spend"
-        formControlName="max"
+        title="Target"
+        formControlName="target"
+        class="outline"
       ></app-add-spend>
-      <app-add-theme formControlName="theme"></app-add-theme>
+      <app-add-theme class="outline" formControlName="theme"></app-add-theme>
     </ul>
-    <app-add-button text="Add Budget" type="submit"></app-add-button>
+    <app-add-button text="Save Changes"></app-add-button>
   </form>
 </section>

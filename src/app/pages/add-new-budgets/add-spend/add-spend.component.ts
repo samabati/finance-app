@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -16,6 +16,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   styleUrl: './add-spend.component.css',
 })
 export class AddSpendComponent implements ControlValueAccessor {
+  @Input() title!: string;
+
   value!: number;
 
   onChanges = (value: number) => {};

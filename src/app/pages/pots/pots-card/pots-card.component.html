@@ -1,0 +1,35 @@
+<article
+  class="p-t-3 p-r-3 p-b-3 p-l-3 bg-w border-r-150 flex flex-d-c gap-400"
+>
+  <header class="flex align-c">
+    <div [ngClass]="pot.theme.class" class="circle"></div>
+    <h2 class="color-g-9 font-s-2 font-w-7 font-lh-120 m-l-2">
+      {{ pot.name }}
+    </h2>
+    <app-ellipses type="Pot" [index]="index" class="m-l-a"></app-ellipses>
+  </header>
+  <section class="outline">
+    <div class="flex just-s-b align-c outline">
+      <p class="color-g-5 font-s-4 font-w-4 font-lh-150">Total Saved</p>
+      <h3 class="color-g-9 font-s-1 font-w-7 font-lh-120">
+        {{ pot.saved | currency }}
+      </h3>
+    </div>
+    <div class="progress-container w-100 border-r-50 bg-b-1 m-t-2">
+      <div
+        [ngClass]="pot.theme.class"
+        [ngStyle]="{ width: savedPercentage + '%' }"
+        style="width: 20%"
+        class="progress-bar border-r-50"
+      ></div>
+    </div>
+    <div class="data flex align-c just-s-b color-g-5 font-lh-150 font-s-5">
+      <p class="font-w-7">{{ savedPercentage }}%</p>
+      <p class="font-w-4">Target of {{ pot.target | currency }}</p>
+    </div>
+  </section>
+  <section class="flex gap-200 outline">
+    <app-add-money class="w-100"></app-add-money>
+    <app-withdraw class="w-100"></app-withdraw>
+  </section>
+</article>

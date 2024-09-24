@@ -51,8 +51,7 @@ export class BudgetsService {
   }
 
   getBudget(index: number) {
-    let budget = this.budgets.getValue().filter((value, i) => i === index);
-    return budget[0];
+    return this.budgets.getValue()[index];
   }
 
   updateBudget(updates: Partial<Budget>, index: number) {

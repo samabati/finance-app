@@ -13,10 +13,12 @@
       />
     </header>
     <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
-      Are you sure you want to delete this budget? This action cannot be
+      Are you sure you want to delete this
+      {{ type.split("").slice(0, -1).join("") }}? This action cannot be
       reversed, and all the data inside it will be removed forever.
     </p>
     <app-confirm-delete
+      [type]="type"
       [index]="index"
       (exitPage)="exitPage()"
     ></app-confirm-delete>

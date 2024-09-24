@@ -1,0 +1,18 @@
+.circle{
+    width: var(--spacing200);
+    height: var(--spacing200);
+    border-radius: 50%;
+}
+
+section:nth-of-type(1){
+    outline: 2px solid green;
+    padding: 10.5px 0px 10.5px 0px;
+}
+
+.progress-container, .progress-bar{
+    height: var(--spacing100);
+}
+
+.data{
+    margin-top: 13px;
+}

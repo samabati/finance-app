@@ -3,13 +3,14 @@ import { Component, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-budgets-ellipses',
+  selector: 'app-ellipses',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './budgets-ellipses.component.html',
-  styleUrl: './budgets-ellipses.component.css',
+  templateUrl: './ellipses.component.html',
+  styleUrl: './ellipses.component.css',
 })
-export class BudgetsEllipsesComponent {
+export class EllipsesComponent {
+  @Input() type!: string;
   @Input() index!: number;
   showDropdown = false;
   router = inject(Router);
@@ -19,10 +20,14 @@ export class BudgetsEllipsesComponent {
   }
 
   editBudget() {
-    this.router.navigateByUrl(`/budgets/edit/${this.index}`);
+    this.router.navigateByUrl(
+      `/${this.type.toLowerCase()}s/edit/${this.index}`
+    );
   }
 
   deleteBudget() {
-    this.router.navigateByUrl(`/budgets/delete/${this.index}`);
+    this.router.navigateByUrl(
+      `/${this.type.toLowerCase()}s/delete/${this.index}`
+    );
   }
 }

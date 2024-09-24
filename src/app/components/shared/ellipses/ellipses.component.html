@@ -1,15 +1,11 @@
-<div class="dropdown">
-  <img
-    (click)="toggleDropdown()"
-    src="assets/budgets/ellipses.svg"
-    alt="ellipses"
-  />
+<div class="dropdown flex">
+  <button class="outline" (click)="toggleDropdown()"></button>
   <ul
     [ngStyle]="{ display: showDropdown ? 'flex' : 'none' }"
     class="dropdown-content p-r-250 p-t-150 p-b-150 p-l-250 bg-w border-r-100 font-s-4 font-w-4 font-lh-150 gap-150 flex flex-d-c text-truncate"
   >
-    <li (click)="editBudget()" class="color-g-9">Edit Budget</li>
+    <li (click)="editBudget()" class="color-g-9">Edit {{ type }}</li>
     <img class="w-100" src="assets/budgets/hr2.svg" alt="hr" />
-    <li (click)="deleteBudget()" class="color-red">Delete Budget</li>
+    <li (click)="deleteBudget()" class="color-red">Delete {{ type }}</li>
   </ul>
 </div>

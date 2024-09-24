@@ -21,8 +21,8 @@ export class AddThemeComponent implements ControlValueAccessor {
 
   onTouched = () => {};
 
-  writeValue(obj: any): void {
-    this.selected = { name: 'Green', class: 'bg-g' };
+  writeValue(value: any): void {
+    this.selected = value || { name: 'Green', class: 'bg-g' };
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;

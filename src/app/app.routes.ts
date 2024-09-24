@@ -4,7 +4,10 @@ import { TransactionsComponent } from './pages/transactions/transactions.compone
 import { BudgetsComponent } from './pages/budgets/budgets.component';
 import { AddNewBudgetsComponent } from './pages/add-new-budgets/add-new-budgets.component';
 import { EditBudgetsComponent } from './pages/edit-budgets/edit-budgets.component';
-import { DeleteBudgetsComponent } from './pages/delete-budgets/delete-budgets.component';
+import { PotsComponent } from './pages/pots/pots.component';
+import { AddNewPotsComponent } from './pages/add-new-pots/add-new-pots.component';
+import { EditPotsComponent } from './pages/edit-pots/edit-pots.component';
+import { DeleteComponent } from './pages/delete/delete/delete.component';
 
 export const routes: Routes = [
   {
@@ -29,13 +32,27 @@ export const routes: Routes = [
       },
       {
         path: 'delete/:index',
-        component: DeleteBudgetsComponent,
+        component: DeleteComponent,
       },
     ],
   },
   {
     path: 'pots',
-    component: TransactionsComponent,
+    component: PotsComponent,
+    children: [
+      {
+        path: 'add',
+        component: AddNewPotsComponent,
+      },
+      {
+        path: 'edit/:index',
+        component: EditPotsComponent,
+      },
+      {
+        path: 'delete/:index',
+        component: DeleteComponent,
+      },
+    ],
   },
   {
     path: 'recurring-bills',
