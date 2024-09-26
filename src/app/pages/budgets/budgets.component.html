@@ -2,9 +2,9 @@
   <h1 class="color-g-9 font-s-1 font-w-7 font-lh-120">Budgets</h1>
   <app-add-budgets></app-add-budgets>
 </header>
-<section class="outline m-t-4 flex gap-300">
+<section class="m-t-4 flex gap-300">
   <app-budgets-summary></app-budgets-summary>
-  <div class="flex outline flex-d-c gap-300">
+  <div class="flex flex-d-c gap-300">
     @for(item of budgetService.budgets$ | async; track item){
     <app-budgets-card [budget]="item" [index]="$index"> </app-budgets-card>
     }

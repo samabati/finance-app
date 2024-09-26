@@ -29,7 +29,6 @@
     }
 
     section:nth-of-type(2){
-        outline: 2px solid purple;
         padding: var(--spacing200) var(--spacing200) var(--spacing200) var(--spacing200)
     }
 }

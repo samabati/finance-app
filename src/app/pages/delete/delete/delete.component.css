@@ -39,3 +39,11 @@ p:nth-of-type(2){
         padding-bottom: var(--spacing300);
     }
 }
+
+/* Hover styles */
+
+@media (min-width: 65.94rem){
+    #go-back:hover{
+        color: var(--grey900) !important;
+    }
+}

@@ -41,6 +41,18 @@
   input{
     outline: none;
   }
+  /* Hide spinner for Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  }  
+
+  button{
+    background: none;
+    border-style: none;
+    cursor: pointer;
+  }
 
 
   /* Global styles */
@@ -74,12 +86,6 @@
     --font4: 1.4rem;
     --font5: 1.2rem;
     --font2: 2.0rem;
-}
-
-button{
-  background: none;
-  border-style: none;
-  cursor: pointer;
 }
 
 /* Utility classes */

@@ -1,5 +1,6 @@
 .dropdown{
     position: relative;
+    cursor: pointer;
 }
 
 .dropdown-content{
@@ -9,4 +10,13 @@
     max-height: 300px;
     overflow: auto;
     z-index: 2;
+}
+
+
+/* Hover styles */
+
+@media (min-width: 65.94rem){
+    .dropdown:hover{
+        border-color: var(--grey500)
+    }
 }

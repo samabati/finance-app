@@ -3,7 +3,7 @@
 >
   <header class="flex just-s-b">
     <div class="flex align-c">
-      <div [ngClass]="budget.theme.class" class="circle outline"></div>
+      <div [ngClass]="budget.theme.class" class="circle"></div>
       <h2 class="color-g-9 font-s-2 font-w-7 font-lh-120 m-l-2">
         {{ budget.category }}
       </h2>
@@ -11,7 +11,7 @@
     <app-ellipses
       type="Budget"
       [index]="index"
-      class="flex align-c outline"
+      class="flex align-c"
     ></app-ellipses>
   </header>
   <section class="flex flex-d-c gap-200">
@@ -67,7 +67,7 @@
         />
       </div>
     </header>
-    <ul class="outline">
+    <ul>
       <app-budgets-card-item
         src="assets/overview/emma.svg"
         name="Emma Richardson"

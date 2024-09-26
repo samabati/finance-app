@@ -4,7 +4,6 @@ li{
 }
 
 li > div:nth-of-type(1) > img{
-    outline: 2px solid green;
     height: 32px;
     width: 32px;
     border-radius: 50%;
@@ -23,7 +22,6 @@ li > p:nth-of-type(1){
     }
 
     li > div:nth-of-type(1){
-        outline: 2px solid green;
         grid-column: 1/3;
     }
 }

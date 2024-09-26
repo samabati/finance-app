@@ -22,7 +22,7 @@
       to put money back in your main balance. This will reduce the amount you
       have in this pot. }
     </p>
-    <section class="outline">
+    <section>
       <div class="flex just-s-b align-c">
         <p class="color-g-5 font-s-4 font-w-4 font-lh-150">New Amount</p>
         <h3 class="color-g-9 font-s-1 font-w-7 font-lh-120">
@@ -47,7 +47,7 @@
         } @else if (type === 'withdraw') {
         <div
           [ngStyle]="{ width: (pot.saved / pot.target) * 100 + '%' }"
-          class="outline flex"
+          class="flex"
         >
           <div style="flex: 1" class="current bg-g-9"></div>
           <div style="width: 2px" class="divider bg-g-1"></div>
@@ -73,7 +73,6 @@
     <app-add-spend
       [title]="type === 'add' ? 'Amount to Add' : 'Amount to Withdraw'"
       formControlName="saved"
-      class="outline"
     ></app-add-spend>
     <app-add-button
       [text]="type === 'add' ? 'Confirm Addition' : 'Confirm Withdrawal'"

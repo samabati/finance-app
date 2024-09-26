@@ -8,8 +8,8 @@
     </h2>
     <app-ellipses type="Pot" [index]="index" class="m-l-a"></app-ellipses>
   </header>
-  <section class="outline">
-    <div class="flex just-s-b align-c outline">
+  <section>
+    <div class="flex just-s-b align-c">
       <p class="color-g-5 font-s-4 font-w-4 font-lh-150">Total Saved</p>
       <h3 class="color-g-9 font-s-1 font-w-7 font-lh-120">
         {{ pot.saved | currency }}
@@ -28,7 +28,7 @@
       <p class="font-w-4">Target of {{ pot.target | currency }}</p>
     </div>
   </section>
-  <section class="flex gap-200 outline">
+  <section class="flex gap-200">
     <app-add-money [index]="index" class="w-100"></app-add-money>
     <app-withdraw [index]="index" class="w-100"></app-withdraw>
   </section>

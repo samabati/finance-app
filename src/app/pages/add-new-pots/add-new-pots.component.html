@@ -17,13 +17,9 @@
       you save for special purchases.
     </p>
     <ul class="flex flex-d-c gap-200">
-      <app-pot-name class="outline" formControlName="name"></app-pot-name>
-      <app-add-spend
-        title="Target"
-        formControlName="target"
-        class="outline"
-      ></app-add-spend>
-      <app-add-theme class="outline" formControlName="theme"></app-add-theme>
+      <app-pot-name formControlName="name"></app-pot-name>
+      <app-add-spend title="Target" formControlName="target"></app-add-spend>
+      <app-add-theme formControlName="theme"></app-add-theme>
     </ul>
     <app-add-button text="Add Pot"></app-add-button>
   </form>
