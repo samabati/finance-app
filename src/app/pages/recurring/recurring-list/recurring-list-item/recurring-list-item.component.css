@@ -1,0 +1,27 @@
+li{
+    grid-template-columns: 0.592fr 0.223fr 0.185fr;
+    gap: var(--spacing400)
+}
+
+li > div:nth-of-type(1) > img{
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+}
+
+li > p:nth-of-type(1){
+    text-align: right;
+}
+
+/* Mobile */
+
+@media (max-width: 47.125rem){
+    li{
+        gap: var(--spacing100);
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    li > div:nth-of-type(1){
+        grid-column: 1/3;
+    }
+}

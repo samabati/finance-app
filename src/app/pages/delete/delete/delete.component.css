@@ -1,0 +1,49 @@
+#overlay{
+    background: rgba(0, 0, 0, 0.50);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    overflow-y: auto;
+}
+
+header > img{
+    cursor: pointer;
+}
+
+article{
+    max-width: 560px;
+}
+
+p:nth-of-type(2){
+    cursor: pointer;
+}
+
+
+/* Mobile */
+
+@media (max-width: 47.125rem){
+    #overlay{
+        padding-right: var(--spacing250);
+        padding-left: var(--spacing250);
+    }
+
+    header > h2{
+        font-size: var(--font2);
+    }
+
+    article{
+        padding-top: var(--spacing300);
+        padding-right: var(--spacing250);
+        padding-left: var(--spacing250);
+        padding-bottom: var(--spacing300);
+    }
+}
+
+/* Hover styles */
+
+@media (min-width: 65.94rem){
+    #go-back:hover{
+        color: var(--grey900) !important;
+    }
+}

@@ -1,0 +1,49 @@
+<div class="flex gap-100 align-c text-truncate">
+  <h2 class="color-g-5 font-s-4 font-w-4 font-lh-150">{{ type }}</h2>
+  <div
+    [ngStyle]="{ 'min-width': minWidth }"
+    (click)="toggleContent()"
+    class="dropdown flex p-t-150 p-r-250 p-b-150 p-l-250 just-s-b border-r-100 border-1-b-5"
+  >
+    <p class="color-g-9 font-s-4 font-w-4 font-lh-150">
+      {{ selected | async }}
+    </p>
+    <img
+      [src]="
+        showContent
+          ? 'assets/shared/down-arrow.svg'
+          : 'assets/shared/up-arrow.svg'
+      "
+      alt="down-arrow"
+    />
+    <img
+      id="mobile-logo"
+      [src]="
+        type === 'Category'
+          ? 'assets/transactions/category.svg'
+          : 'assets/transactions/sort-by.svg'
+      "
+      alt="mobile-logo"
+    />
+    <ul
+      [ngClass]="type === 'Category' ? 'category-content' : 'sort-by-content'"
+      [ngStyle]="{
+        display: showContent ? 'block' : 'none',
+        'min-width': minWidth
+      }"
+      class="dropdown-content p-r-250 p-l-250 flex flex-d-c bg-w border-r-100"
+    >
+      @for(option of options; track option){
+      <li
+        [ngStyle]="{
+          'font-weight': (selected | async) === option ? '700' : '400'
+        }"
+        (click)="select(option)"
+        class="color-g-9 font-s-4 font-lh-150 p-t-150 p-b-150"
+      >
+        {{ option }}
+      </li>
+      }
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+/* Hover Styles */
+
+@media (min-width: 65.94rem){
+    button:hover{
+        background: var(--color-grey-500, #696868);
+    }
+}

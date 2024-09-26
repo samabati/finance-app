@@ -1,0 +1,11 @@
+<header class="p-t-1 p-b-1 flex just-s-b align-c">
+  <h1 class="color-g-9 font-w-7 font-lh-120 font-s-1">Pots</h1>
+  <app-add-pot></app-add-pot>
+</header>
+
+<section class="m-t-4 grid">
+  @for(pot of potsService.pots$| async; track pot){
+  <app-pots-card [index]="$index" [pot]="pot"></app-pots-card>
+  }
+</section>
+<router-outlet></router-outlet>

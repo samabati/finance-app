@@ -1,0 +1,29 @@
+<article
+  class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 flex flex-d-c gap-300"
+>
+  <section class="flex just-s-b align-c">
+    <app-search-bar type="bills"></app-search-bar>
+    <app-sort-by type="Sort By"></app-sort-by>
+  </section>
+  <header class="grid p-t-150 p-r-200 p-b-150 p-l-200">
+    <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Bill Title</h2>
+    <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Due Date</h2>
+    <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Amount</h2>
+  </header>
+  <ul>
+    @for (item of data; track $index) {
+    <app-recurring-list-item
+      [avatar]="item.avatar"
+      [name]="item.name"
+      [date]="item.date"
+      [amount]="item.amount"
+    ></app-recurring-list-item>
+    @if($index !== data.length-1){
+    <img
+      class="m-t-250 m-b-250 w-100"
+      src="assets/overview/hr.svg"
+      alt="horizontal line"
+    />
+    } }
+  </ul>
+</article>

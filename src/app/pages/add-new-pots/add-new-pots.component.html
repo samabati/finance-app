@@ -1,0 +1,26 @@
+<section id="overlay" class="h-100 w-100 flex just-c align-c">
+  <form
+    (ngSubmit)="submitForm()"
+    [formGroup]="addPotForm"
+    class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 flex flex-d-c gap-250"
+  >
+    <header class="flex just-s-b align-c">
+      <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">Add New Pot</h2>
+      <img
+        (click)="exitPage()"
+        src="assets/budgets/close-button.svg"
+        alt="close-button"
+      />
+    </header>
+    <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
+      Create a pot to set savings targets. These can help keep you on track as
+      you save for special purchases.
+    </p>
+    <ul class="flex flex-d-c gap-200">
+      <app-pot-name formControlName="name"></app-pot-name>
+      <app-add-spend title="Target" formControlName="target"></app-add-spend>
+      <app-add-theme formControlName="theme"></app-add-theme>
+    </ul>
+    <app-add-button text="Add Pot"></app-add-button>
+  </form>
+</section>

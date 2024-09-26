@@ -1,0 +1,9 @@
+app-search-bar{
+    max-width: 320px;
+}
+
+@media (max-width: 47.125rem){
+    section{
+        padding: var(--spacing300) var(--spacing250) var(--spacing300) var(--spacing250)
+    }
+}

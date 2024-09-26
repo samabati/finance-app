@@ -1,0 +1,25 @@
+.circle{
+    width: var(--spacing200);
+    height: var(--spacing200);
+    border-radius: 50%;
+}
+
+section:nth-of-type(1){
+    padding: 10.5px 0px 10.5px 0px;
+}
+
+.progress-container, .progress-bar{
+    height: var(--spacing100);
+}
+
+.data{
+    margin-top: 13px;
+}
+
+/* Mobile */
+@media (max-width: 47.125rem){
+    article{
+        padding-right: var(--spacing250);
+        padding-left: var(--spacing250);
+    }
+}

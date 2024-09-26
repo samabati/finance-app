@@ -1,0 +1,11 @@
+/* Mobile */
+
+@media (max-width: 47.125rem){
+article{
+    padding-left: var(--spacing250);
+    padding-right: var(--spacing250);
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing250);
+}
+}

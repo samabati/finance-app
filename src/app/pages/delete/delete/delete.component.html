@@ -1,0 +1,34 @@
+<section id="overlay" class="h-100 w-100 flex just-c align-c">
+  <article
+    class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 flex flex-d-c gap-250"
+  >
+    <header class="flex just-s-b align-c">
+      <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">
+        Delete ‘{{ title }}’?
+      </h2>
+      <img
+        (click)="exitPage()"
+        src="assets/budgets/close-button.svg"
+        alt="close-button"
+      />
+    </header>
+    <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
+      Are you sure you want to delete this
+      {{ type.split("").slice(0, -1).join("") }}? This action cannot be
+      reversed, and all the data inside it will be removed forever.
+    </p>
+    <app-confirm-delete
+      [type]="type"
+      [index]="index"
+      (exitPage)="exitPage()"
+    ></app-confirm-delete>
+    <p
+      id="go-back"
+      (click)="exitPage()"
+      style="text-align: center"
+      class="color-g-5 font-s-4 font-w-4 font-lh-150"
+    >
+      No, Go Back
+    </p>
+  </article>
+</section>

@@ -1,0 +1,34 @@
+<section id="overlay" class="h-100 w-100 flex just-c align-c">
+  <form
+    class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 flex flex-d-c gap-250"
+    [formGroup]="editBudgetForm"
+    (ngSubmit)="saveChanges()"
+  >
+    <header class="flex just-s-b align-c">
+      <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">Edit Budget</h2>
+      <img
+        (click)="exitPage()"
+        src="assets/budgets/close-button.svg"
+        alt="close-button"
+      />
+    </header>
+    <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
+      As your budgets change, feel free to update your spending limits.
+    </p>
+    <ul class="flex flex-d-c gap-200">
+      <app-edit-category
+        formControlName="category"
+        [selected]="budget.category"
+      ></app-edit-category>
+      <app-edit-spend
+        formControlName="max"
+        [value]="budget.max"
+      ></app-edit-spend>
+      <app-edit-theme
+        formControlName="theme"
+        [selected]="budget.theme"
+      ></app-edit-theme>
+    </ul>
+    <app-save-changes></app-save-changes>
+  </form>
+</section>

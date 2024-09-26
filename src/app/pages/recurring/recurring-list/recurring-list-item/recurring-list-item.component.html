@@ -1,0 +1,16 @@
+<li class="grid align-c">
+  <div class="flex gap-200 align-c">
+    <img [src]="avatar" alt="item-image" />
+    <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
+      {{ name }}
+    </p>
+  </div>
+  <div class="flex gap-100">
+    <p [ngClass]="" class="color-green font-s-5 font-w-4 font-lh-150">
+      {{ date }}
+    </p>
+    <img src="assets/images/icon-bill-paid.svg" alt="paid-icon" />
+  </div>
+
+  <p class="color-g-9 font-s-4 font-w-7 font-lh-150">{{ amount | currency }}</p>
+</li>

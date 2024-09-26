@@ -1,0 +1,12 @@
+/* Hover styles */
+
+button{
+    border: 1px solid var(--beige100, #98908B); 
+}
+
+@media (min-width: 65.94rem){
+    button:hover{
+        background: var(--white, #FFF);
+        border: 1px solid var(--beige500, #98908B);
+    }
+}

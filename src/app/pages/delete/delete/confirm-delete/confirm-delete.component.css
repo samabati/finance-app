@@ -1,0 +1,7 @@
+/* Hover styles */
+
+@media (min-width: 65.94rem){
+    button:hover{
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.20) 100%), var(--color-red, #C94736);
+    }
+}

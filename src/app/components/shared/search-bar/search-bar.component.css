@@ -1,0 +1,31 @@
+.search-container{
+    max-width: 320px;
+}
+
+.search-container > img {
+
+}
+input{
+    border: none;
+}
+
+button{
+    flex-shrink: 0;
+    padding: 0;
+}
+
+img{
+    cursor: pointer;
+    height: var(--spacing200);
+    width: var(--spacing200);
+}
+
+/* Hover styles */
+@media (min-width: 65.94rem){
+
+    .search-container:hover{
+        border-color: var(--grey900);
+    }
+
+    
+}

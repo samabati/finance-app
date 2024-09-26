@@ -1,0 +1,21 @@
+<li class="grid align-c p-l-2 p-r-2">
+  <div class="flex align-c gap-200">
+    <div class="image-container">
+      <img [src]="src" alt="image" />
+    </div>
+    <div class="flex just-s-b flex-d-c">
+      <p class="color-g-9 font-s-4 font-w-7 font-lh-150">{{ name }}</p>
+      <p id="mobile-category" class="color-g-5 font-s-5 font-w-4 font-lh-150">
+        {{ category }}
+      </p>
+    </div>
+  </div>
+  <p class="color-g-5 font-s-5 font-w-4 font-lh-150">{{ category }}</p>
+  <p class="color-g-5 font-s-5 font-w-4 font-lh-150">{{ date | date }}</p>
+  <p
+    [ngStyle]="{ color: positive ? 'var(--green)' : 'var(--grey900)' }"
+    class="color-green font-s-4 font-w-7 font-lh-150"
+  >
+    {{ formatCurrency() }}
+  </p>
+</li>

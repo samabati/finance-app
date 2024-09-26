@@ -1,0 +1,12 @@
+input{
+    outline: none;
+    border: none;
+}
+
+/* Hover styles */
+
+@media (min-width: 65.94rem){
+    .dropdown:hover{
+        border-color: var(--grey500)
+    }
+}

@@ -1,0 +1,15 @@
+<div class="flex gap-100">
+  @if(mobileList && ((transactionService.totalPages$ | async)!.length > 4)){
+  @for(item of mobileArray; track item){ @if(item !== 'e'){
+  <app-page-number [number]="item"></app-page-number>
+  } @else{
+  <button
+    class="flex align-c just-c p-t-2 p-r-2 p-b-2 p-l-2 border-r-100 border-1-b-5"
+    (click)="shiftArray()"
+  >
+    ...
+  </button>
+  } } }@else { @for(item of transactionService.totalPages$ | async; track item){
+  <app-page-number [number]="item"></app-page-number>
+  } }
+</div>

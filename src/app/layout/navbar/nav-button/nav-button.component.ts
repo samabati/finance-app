@@ -1,7 +1,8 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { NavbarService } from '../../../services/navbar.service';
 import { CommonModule } from '@angular/common';
 import NavItems from '../../../types/navItems';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-button',
@@ -10,14 +11,20 @@ import NavItems from '../../../types/navItems';
   templateUrl: './nav-button.component.html',
   styleUrl: './nav-button.component.css',
 })
-export class NavButtonComponent {
+export class NavButtonComponent implements OnInit {
   @Input() name!: NavItems;
   @Input() icon!: string;
-
+  router = inject(Router);
   navService = inject(NavbarService);
 
   buttonClicked() {
     console.log('Button clicked ran');
     this.navService.setNavStatus(this.name);
+    let route = this.name.toLowerCase().split(' ').join('-');
+    console.log(route);
+    if (route === 'overview') route = '';
+    this.router.navigateByUrl(route);
   }
+
+  ngOnInit(): void {}
 }
