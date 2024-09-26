@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { TransactionsService } from '../../../services/transactions/transactions.service';
 import { Observable } from 'rxjs';
+import { SortItems } from '../../../types/sortItems';
+import { Categories } from '../../../types/categories';
 
 @Component({
   selector: 'app-sort-by',
@@ -21,26 +23,11 @@ export class SortByComponent implements OnInit {
   ngOnInit(): void {
     if (this.type === 'Sort By') {
       this.selected = this.transactionService.sort$;
-      this.options = [
-        'Latest',
-        'Oldest',
-        'A to Z',
-        'Z to A',
-        'Highest',
-        'Lowest',
-      ];
+      this.options = Object.values(SortItems);
       this.minWidth = '113px';
     } else if (this.type === 'Category') {
       this.selected = this.transactionService.category$;
-      this.options = [
-        'All Transactions',
-        'Entertainment',
-        'Bills',
-        'Groceries',
-        'Dining Out',
-        'Transportation',
-        'Personal Care',
-      ];
+      this.options = Object.values(Categories);
       this.minWidth = '179px';
     }
   }

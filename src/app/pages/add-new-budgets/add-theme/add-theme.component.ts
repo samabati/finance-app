@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { THEMES } from '../../../types/theme';
 
 @Component({
   selector: 'app-add-theme',
@@ -34,15 +35,7 @@ export class AddThemeComponent implements ControlValueAccessor {
   showDropdown: boolean = false;
   selected: any = { name: 'Green', class: 'bg-g' };
 
-  data = [
-    { name: 'Green', class: 'bg-g' },
-    { name: 'Yellow', class: 'bg-yellow' },
-    { name: 'Cyan', class: 'bg-cyan' },
-    { name: 'Navy', class: 'bg-navy' },
-    { name: 'Red', class: 'bg-red' },
-    { name: 'Purple', class: 'bg-purple' },
-    { name: 'Turquoise', class: 'bg-turq' },
-  ];
+  data = THEMES;
 
   selectCategory(category: any) {
     this.selected = category;
