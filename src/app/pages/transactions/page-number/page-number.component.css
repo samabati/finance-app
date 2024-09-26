@@ -2,3 +2,16 @@ button{
     width: var(--spacing500);
     height: var(--spacing500);
 }
+
+/* Hover Styles */
+
+@media (min-width: 65.94rem){
+    button:hover{
+        background-color: var(--beige500) !important
+    }
+
+    button:hover > p{
+        color: var(--white) !important;
+    }
+    
+}

@@ -8,6 +8,8 @@ import { PotsComponent } from './pages/pots/pots.component';
 import { AddNewPotsComponent } from './pages/add-new-pots/add-new-pots.component';
 import { EditPotsComponent } from './pages/edit-pots/edit-pots.component';
 import { DeleteComponent } from './pages/delete/delete/delete.component';
+import { AddWithdrawComponent } from './pages/add-withdraw/add-withdraw.component';
+import { RecurringComponent } from './pages/recurring/recurring.component';
 
 export const routes: Routes = [
   {
@@ -52,10 +54,18 @@ export const routes: Routes = [
         path: 'delete/:index',
         component: DeleteComponent,
       },
+      {
+        path: ':index/add',
+        component: AddWithdrawComponent,
+      },
+      {
+        path: ':index/withdraw',
+        component: AddWithdrawComponent,
+      },
     ],
   },
   {
     path: 'recurring-bills',
-    component: TransactionsComponent,
+    component: RecurringComponent,
   },
 ];

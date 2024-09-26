@@ -3,8 +3,28 @@ button{
     padding: var(--spacing200);
 }
 
+/* Mobile */
+
 @media (max-width: 47.125rem){
     button > p{
         display: none;
     }
+}
+
+/* Hover Styles */
+
+@media (min-width: 65.94rem){
+
+    button:hover{
+        background-color: var(--beige500)
+    }
+
+    button:hover > p{
+        color: var(--white);
+    }
+
+    button:hover > img{
+        filter: brightness(0) saturate(100%) invert(100%) contrast(100%);
+    }
+    
 }

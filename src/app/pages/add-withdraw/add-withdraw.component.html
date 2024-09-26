@@ -1,0 +1,82 @@
+<section id="overlay" class="h-100 w-100 flex just-c align-c">
+  <form
+    (ngSubmit)="submitForm()"
+    [formGroup]="addWithdrawForm"
+    class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 flex flex-d-c gap-250"
+  >
+    <header class="flex just-s-b align-c">
+      <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">
+        @if(type === 'add'){ Add to '{{ pot.name }}' } @else if(type ===
+        'withdraw'){ Withdraw from '{{ pot.name }}' }
+      </h2>
+      <img
+        (click)="exitPage()"
+        src="assets/budgets/close-button.svg"
+        alt="close-button"
+      />
+    </header>
+    <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
+      @if(type === 'add'){ Add money to your pot to keep it separate from your
+      main balance. As soon as you add this money, it will be deducted from your
+      current balance. } @else if (type === 'withdraw'){ Withdraw from your pot
+      to put money back in your main balance. This will reduce the amount you
+      have in this pot. }
+    </p>
+    <section class="outline">
+      <div class="flex just-s-b align-c">
+        <p class="color-g-5 font-s-4 font-w-4 font-lh-150">New Amount</p>
+        <h3 class="color-g-9 font-s-1 font-w-7 font-lh-120">
+          {{ newAmount | currency }}
+        </h3>
+      </div>
+      <div
+        class="progress-container bg-b-1 border-r-50 w-100 m-t-2 flex border-r-50"
+      >
+        @if(type === 'add'){
+        <div
+          [ngStyle]="{ width: (pot.saved / pot.target) * 100 + '%' }"
+          class="current bg-g-9"
+        ></div>
+        <div style="width: 2px" class="divider bg-g-1"></div>
+        <div
+          [ngStyle]="{
+            width: (addWithdrawForm.value.saved / pot.target) * 100 + '%'
+          }"
+          class="new bg-g"
+        ></div>
+        } @else if (type === 'withdraw') {
+        <div
+          [ngStyle]="{ width: (pot.saved / pot.target) * 100 + '%' }"
+          class="outline flex"
+        >
+          <div style="flex: 1" class="current bg-g-9"></div>
+          <div style="width: 2px" class="divider bg-g-1"></div>
+          <div
+            [ngStyle]="{
+              width: getNewPercentage() + '%'
+            }"
+            class="new bg-red"
+          ></div>
+        </div>
+        }
+      </div>
+      <div style="margin-top: 13px" class="flex just-s-b font-s-5 font-lh-150">
+        <p
+          [ngClass]="type === 'add' ? 'color-green' : 'color-red'"
+          class="font-w-7"
+        >
+          {{ ((newAmount / pot.target) * 100).toFixed(1) }}%
+        </p>
+        <p class="font-w-4 color-g-5">Target of {{ pot.target | currency }}</p>
+      </div>
+    </section>
+    <app-add-spend
+      [title]="type === 'add' ? 'Amount to Add' : 'Amount to Withdraw'"
+      formControlName="saved"
+      class="outline"
+    ></app-add-spend>
+    <app-add-button
+      [text]="type === 'add' ? 'Confirm Addition' : 'Confirm Withdrawal'"
+    ></app-add-button>
+  </form>
+</section>

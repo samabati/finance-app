@@ -1,0 +1,13 @@
+
+/* Hover styles */
+@media (min-width: 65.94rem){
+
+button:hover > p{
+    color: var(--grey900);
+}
+
+button:hover > img{
+    filter: brightness(0.5); /* Adjust the value as needed */
+}
+
+}

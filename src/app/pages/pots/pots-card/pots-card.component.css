@@ -16,3 +16,11 @@ section:nth-of-type(1){
 .data{
     margin-top: 13px;
 }
+
+/* Mobile */
+@media (max-width: 47.125rem){
+    article{
+        padding-right: var(--spacing250);
+        padding-left: var(--spacing250);
+    }
+}

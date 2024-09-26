@@ -2,3 +2,11 @@ section{
     grid-gap: var(--spacing300);
     grid-template-columns: repeat(2, 1fr);
 }
+
+
+/* Tablet */
+
+@media (max-width: 65.94rem ) {
+    section {grid-template-columns: 1fr;}
+}
+

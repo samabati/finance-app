@@ -5,6 +5,7 @@
 
 .dropdown{
 position: relative;
+cursor: pointer;
 }
 
 .dropdown-content{
@@ -25,6 +26,8 @@ div:nth-of-type(1){
 #mobile-logo{
     display: none;
 }
+
+/* Mobile */
 
 @media (max-width: 47.125rem){
     div:nth-of-type(1) > h2{
@@ -55,5 +58,13 @@ div:nth-of-type(1){
     .category-content{
         left: -157px;
     }
+}
 
+/* Hover styles */
+@media (min-width: 65.94rem){
+
+    .dropdown:hover{
+        border-color: var(--grey900);
+    }
+    
 }
