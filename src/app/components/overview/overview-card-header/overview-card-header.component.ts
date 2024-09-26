@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview-card-header',
@@ -10,4 +11,11 @@ import { Component, Input } from '@angular/core';
 export class OverviewCardHeaderComponent {
   @Input() title!: string;
   @Input() navTitle!: string;
+  router = inject(Router);
+
+  navigateToPage() {
+    this.router.navigateByUrl(
+      `/${this.title.toLowerCase().split(' ').join('-')}`
+    );
+  }
 }
