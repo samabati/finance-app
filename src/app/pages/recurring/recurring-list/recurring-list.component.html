@@ -11,14 +11,12 @@
     <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Amount</h2>
   </header>
   <ul>
-    @for (item of data; track $index) {
+    @for (transaction of this.recurringService.getBills() | async; track $index;
+    let count = $count) {
     <app-recurring-list-item
-      [avatar]="item.avatar"
-      [name]="item.name"
-      [date]="item.date"
-      [amount]="item.amount"
+      [transaction]="transaction"
     ></app-recurring-list-item>
-    @if($index !== data.length-1){
+    @if($index !== count-1){
     <img
       class="m-t-250 m-b-250 w-100"
       src="assets/overview/hr.svg"

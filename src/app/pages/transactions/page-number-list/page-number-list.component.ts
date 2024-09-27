@@ -12,6 +12,7 @@ import { debounceTime, fromEvent, Subscription } from 'rxjs';
   styleUrl: './page-number-list.component.css',
 })
 export class PageNumberListComponent implements OnInit, OnDestroy {
+  /* This is the list of page numbers */
   transactionService = inject(TransactionsService);
   screenWidth!: number;
   mobileList: boolean = false;

@@ -1,16 +1,25 @@
 <li class="grid align-c">
   <div class="flex gap-200 align-c">
-    <img [src]="avatar" alt="item-image" />
+    <img [src]="transaction.avatar" alt="item-image" />
     <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
-      {{ name }}
+      {{ transaction.name }}
     </p>
   </div>
   <div class="flex gap-100">
-    <p [ngClass]="" class="color-green font-s-5 font-w-4 font-lh-150">
-      {{ date }}
+    <p
+      [ngClass]="due === 'PAID' ? 'color-green' : 'color-g-9'"
+      class="font-s-5 font-w-4 font-lh-150"
+    >
+      {{ formatDate() }}
     </p>
+    @if(due === 'PAID'){
     <img src="assets/images/icon-bill-paid.svg" alt="paid-icon" />
+    } @else if (due === 'UPCOMING') {
+    <img src="assets/images/icon-bill-due.svg" alt="paid-icon" />
+    }
   </div>
 
-  <p class="color-g-9 font-s-4 font-w-7 font-lh-150">{{ amount | currency }}</p>
+  <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
+    {{ transaction.amount | currency }}
+  </p>
 </li>

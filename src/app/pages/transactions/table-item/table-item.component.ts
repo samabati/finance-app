@@ -10,6 +10,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
   providers: [CurrencyPipe],
 })
 export class TableItemComponent implements OnInit {
+  /* This is the actual transaction item */
   @Input() src!: string;
   @Input() name!: string;
   @Input() category!: string;

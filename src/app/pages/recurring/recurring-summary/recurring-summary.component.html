@@ -5,17 +5,23 @@
   <ul class="m-t-250">
     <li class="flex just-s-b">
       <p class="color-g-5 font-s-5 font-w-4 font-lh-150">Paid Bills</p>
-      <p class="color-g-9 font-s-5 font-w-7 font-lh-150">4 ($190.00)</p>
+      <p class="color-g-9 font-s-5 font-w-7 font-lh-150">
+        {{ paidBills.length }} ({{ getPaidTotal() | currency }})
+      </p>
     </li>
     <hr class="m-t-2 m-b-2 w-100" />
     <li class="flex just-s-b">
       <p class="color-g-5 font-s-5 font-w-4 font-lh-150">Total Upcoming</p>
-      <p class="color-g-9 font-s-5 font-w-7 font-lh-150">4 ($190.00)</p>
+      <p class="color-g-9 font-s-5 font-w-7 font-lh-150">
+        {{ upcomingBills.length }} ({{ getUpcomingTotal() | currency }})
+      </p>
     </li>
     <hr class="m-t-2 m-b-2 w-100" />
     <li class="flex just-s-b">
-      <p class="color-red font-s-5 font-w-4 font-lh-150">Total Upcoming</p>
-      <p class="color-red font-s-5 font-w-7 font-lh-150">4 ($190.00)</p>
+      <p class="color-red font-s-5 font-w-4 font-lh-150">Due Soon</p>
+      <p class="color-red font-s-5 font-w-7 font-lh-150">
+        {{ dueSoonBills.length }} ({{ getDueSoon() | currency }})
+      </p>
     </li>
   </ul>
 </article>

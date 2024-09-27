@@ -7,6 +7,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class TransactionsService {
+  /* Stable Transactions (does not change) */
+  private stableTransactions: BehaviorSubject<Transactions[]> =
+    new BehaviorSubject<Transactions[]>([]);
+  stableTransactions$ = this.stableTransactions.asObservable();
+
+  /* Transactions displayed on transaction page */
   private transactions: BehaviorSubject<Transactions[]> = new BehaviorSubject<
     Transactions[]
   >([]);
@@ -35,12 +41,10 @@ export class TransactionsService {
   http = inject(HttpClient);
 
   constructor() {
-    this.loadTransactions();
+    this.initialLoad();
   }
 
-  /* Load Transactions */
-
-  loadTransactions() {
+  initialLoad() {
     this.http
       .get<any>('/assets/data/data.json')
       .pipe(
@@ -48,8 +52,17 @@ export class TransactionsService {
         map((value) => value.transactions)
       )
       .subscribe((value) => {
-        this.sortCategory(value);
+        this.stableTransactions.next(value);
+        this.loadTransactions();
       });
+  }
+
+  /* Load Transactions */
+
+  loadTransactions() {
+    this.stableTransactions$.pipe(take(1)).subscribe((value) => {
+      this.sortCategory(value);
+    });
   }
 
   /* Page methods */

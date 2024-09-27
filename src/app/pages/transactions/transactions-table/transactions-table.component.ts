@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './transactions-table.component.css',
 })
 export class TransactionsTableComponent {
+  /* This component renders all the transactions */
   transactionService = inject(TransactionsService);
   transactions = this.transactionService.transactions$;
 }
