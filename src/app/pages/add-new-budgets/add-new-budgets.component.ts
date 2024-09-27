@@ -36,7 +36,10 @@ export class AddNewBudgetsComponent {
       category: ['Entertainment', Validators.required],
       spent: [0],
       max: ['', [Validators.required, Validators.min(1)]],
-      theme: [{ name: 'Green', class: 'bg-g' }, Validators.required],
+      theme: [
+        { name: 'Green', class: 'bg-g', color: '#277C78' },
+        Validators.required,
+      ],
     });
 
     this.addBudgetForm.valueChanges.subscribe((value) => {

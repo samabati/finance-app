@@ -23,7 +23,7 @@ export class AddThemeComponent implements ControlValueAccessor {
   onTouched = () => {};
 
   writeValue(value: any): void {
-    this.selected = value || { name: 'Green', class: 'bg-g' };
+    this.selected = value || { name: 'Green', class: 'bg-g', color: '#277C78' };
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -33,7 +33,7 @@ export class AddThemeComponent implements ControlValueAccessor {
   }
 
   showDropdown: boolean = false;
-  selected: any = { name: 'Green', class: 'bg-g' };
+  selected: any = { name: 'Green', class: 'bg-g', color: '#277C78' };
 
   data = THEMES;
 

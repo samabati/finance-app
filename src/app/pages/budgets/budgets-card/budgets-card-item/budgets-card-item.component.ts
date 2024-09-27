@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Transactions } from '../../../../types/transactions';
 
 @Component({
   selector: 'app-budgets-card-item',
@@ -8,10 +9,11 @@ import { Component, Input } from '@angular/core';
   templateUrl: './budgets-card-item.component.html',
   styleUrl: './budgets-card-item.component.css',
 })
-export class BudgetsCardItemComponent {
+export class BudgetsCardItemComponent implements OnInit {
   @Input() positive!: boolean;
-  @Input() amount!: string;
-  @Input() name!: string;
-  @Input() date!: string;
-  @Input() src!: string;
+  @Input() transaction!: Transactions;
+
+  ngOnInit(): void {
+    this.positive = this.transaction.amount >= 0;
+  }
 }

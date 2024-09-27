@@ -1,7 +1,9 @@
 <article class="flex w-100">
   <div class="flex align-c gap-200">
-    <img [src]="src" alt="user-image" />
-    <p class="font-w-7 font-lh-150 font-s-5 color-g-9">{{ name }}</p>
+    <img [src]="transaction.avatar" alt="user-image" />
+    <p class="font-w-7 font-lh-150 font-s-5 color-g-9">
+      {{ transaction.name }}
+    </p>
   </div>
   <div class="flex flex-d-c gap-50">
     <p
@@ -11,8 +13,8 @@
           : 'color-g-9 font-s-5 font-w-7 font-lh-150'
       "
     >
-      {{ amount }}
+      {{ transaction.amount | currency }}
     </p>
-    <p class="font-s-5 font-w-4 font-lh-150">{{ date }}</p>
+    <p class="font-s-5 font-w-4 font-lh-150">{{ transaction.date | date }}</p>
   </div>
 </article>

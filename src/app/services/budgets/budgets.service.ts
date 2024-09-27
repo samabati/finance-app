@@ -11,25 +11,25 @@ export class BudgetsService {
       category: 'Entertainment',
       spent: 15,
       max: 50,
-      theme: { name: 'Green', class: 'bg-g' },
+      theme: { name: 'Green', class: 'bg-g', color: '#277C78' },
     },
     {
       category: 'Bills',
       spent: 150,
       max: 750,
-      theme: { name: 'Cyan', class: 'bg-cyan' },
+      theme: { name: 'Cyan', class: 'bg-cyan', color: '#82C9D7' },
     },
     {
       category: 'Dining Out',
       spent: 133.75,
       max: 75,
-      theme: { name: 'Yellow', class: 'bg-yellow' },
+      theme: { name: 'Yellow', class: 'bg-yellow', color: '#F2CDAC' },
     },
     {
       category: 'Personal Care',
       spent: 40,
       max: 100,
-      theme: { name: 'Navy', class: 'bg-navy' },
+      theme: { name: 'Navy', class: 'bg-navy', color: '#626070' },
     },
   ]);
 

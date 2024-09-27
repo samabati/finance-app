@@ -68,37 +68,18 @@
       </div>
     </header>
     <ul>
+      @for (transaction of this.cardTransactions.slice(0,3); track $index; let
+      count = $count) {
       <app-budgets-card-item
-        src="assets/overview/emma.svg"
-        name="Emma Richardson"
-        amount="+$75.50"
-        date="19 Aug 2024"
-        [positive]="true"
+        [transaction]="transaction"
       ></app-budgets-card-item>
+      @if($index !== $count-1){
       <img
         class="m-t-150 m-b-150 w-100"
         src="assets/budgets/hr.svg"
         alt="horizontal-line"
       />
-      <app-budgets-card-item
-        src="assets/overview/emma.svg"
-        name="Emma Richardson"
-        amount="+$75.50"
-        date="19 Aug 2024"
-        [positive]="true"
-      ></app-budgets-card-item>
-      <img
-        class="m-t-150 m-b-150 w-100"
-        src="assets/budgets/hr.svg"
-        alt="horizontal-line"
-      />
-      <app-budgets-card-item
-        src="assets/overview/emma.svg"
-        name="Emma Richardson"
-        amount="+$75.50"
-        date="19 Aug 2024"
-        [positive]="true"
-      ></app-budgets-card-item>
+      } }
     </ul>
   </section>
 </article>
