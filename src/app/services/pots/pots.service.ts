@@ -63,4 +63,8 @@ export class PotsService {
     let newPots = this.pots.getValue().filter((value, i) => i !== index);
     this.pots.next(newPots);
   }
+
+  getTotalSaved(): number {
+    return this.pots.getValue().reduce((prev, curr) => prev + curr.saved, 0);
+  }
 }

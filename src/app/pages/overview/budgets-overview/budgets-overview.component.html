@@ -6,30 +6,15 @@
   <section class="m-t-250 p-t-1 p-b-1 flex gap-200 h-100 align-c">
     <app-budgets-pie class="w-100 h-100"></app-budgets-pie>
     <div class="w-100 flex flex-d-c gap-200">
+      @for (budget of (budgetService.budgets$ | async)?.slice(0,4); track
+      $index) {
       <app-pots-savings-micro
-        title="Entertainment"
-        amount="$50.00"
-        bgColor="bg-g"
+        [title]="budget.category"
+        [amount]="budget.max"
+        [theme]="budget.theme"
         class="h-100"
       ></app-pots-savings-micro>
-      <app-pots-savings-micro
-        title="Bills"
-        amount="$750.00"
-        bgColor="bg-cyan"
-        class="h-100"
-      ></app-pots-savings-micro>
-      <app-pots-savings-micro
-        title="Dining Out"
-        amount="$75.00"
-        bgColor="bg-yellow"
-        class="h-100"
-      ></app-pots-savings-micro>
-      <app-pots-savings-micro
-        title="Personal Care"
-        amount="$100.00"
-        bgColor="bg-navy"
-        class="h-100"
-      ></app-pots-savings-micro>
+      }
     </div>
   </section>
 </article>

@@ -12,30 +12,22 @@
       <img src="assets/overview/money-bag.svg" alt="money-bag" />
       <div class="flex flex-d-c m-l-2 gap-11">
         <h2 class="font-s-4 font-w-4 color-g-5 font-lh-150">Total Saved</h2>
-        <p class="font-s-1 color-g-9 font-w-7 font-lh-120">$850</p>
+        <p class="font-s-1 color-g-9 font-w-7 font-lh-120">
+          {{
+            potService.getTotalSaved() | currency : "USD" : "symbol" : "1.0-0"
+          }}
+        </p>
       </div>
     </div>
     <div class="w-100">
       <div class="grid">
+        @for (pot of (potService.pots$ | async)?.slice(0,4); track $index) {
         <app-pots-savings-micro
-          title="Savings"
-          amount="$159"
-          bgColor="bg-g"
+          [title]="pot.name"
+          [amount]="pot.saved"
+          [theme]="pot.theme"
         ></app-pots-savings-micro>
-        <app-pots-savings-micro title="Gift" amount="$40" bgColor="bg-cyan">
-        </app-pots-savings-micro>
-        <app-pots-savings-micro
-          title="Concert Ticket"
-          amount="$110"
-          bgColor="bg-navy"
-        >
-        </app-pots-savings-micro>
-        <app-pots-savings-micro
-          title="New Laptop"
-          amount="$10"
-          bgColor="bg-yellow"
-        >
-        </app-pots-savings-micro>
+        }
       </div>
     </div>
   </section>
