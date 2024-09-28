@@ -16,9 +16,11 @@ export class TotalBillsComponent implements OnInit, OnDestroy {
   subscriptions!: Subscription;
 
   ngOnInit(): void {
-    this.subscriptions = this.recurringService.getBills().subscribe((value) => {
-      this.total = Math.abs(value.reduce((a, b) => a + b.amount, 0));
-    });
+    this.subscriptions = this.recurringService
+      .getBillsSummary()
+      .subscribe((value) => {
+        this.total = Math.abs(value.reduce((a, b) => a + b.amount, 0));
+      });
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

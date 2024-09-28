@@ -20,8 +20,7 @@ export class RecurringSummaryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions = this.recurringService
-      .getBills()
-      .pipe(take(2))
+      .getBillsSummary()
       .subscribe((transactions) => {
         console.log('TRANSACTIONS: ', transactions);
         let today = new Date().getDate();

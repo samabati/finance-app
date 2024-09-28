@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, map, take } from 'rxjs';
+import { BehaviorSubject, map, shareReplay, take } from 'rxjs';
 import { Transactions } from '../../types/transactions';
 import { HttpClient } from '@angular/common/http';
 
@@ -53,16 +53,14 @@ export class RecurringService {
 
   updateSort(sort: string) {
     this.bills.next({
-      bills: this.bills.getValue().bills,
+      ...this.bills.getValue(),
       sort,
-      search: this.bills.getValue().search,
     });
   }
 
   updateSearch(search: string) {
     this.bills.next({
-      bills: this.bills.getValue().bills,
-      sort: this.bills.getValue().sort,
+      ...this.bills.getValue(),
       search,
     });
   }
@@ -92,6 +90,13 @@ export class RecurringService {
   searchBills(bills: Transactions[]): Transactions[] {
     return bills.filter((bill) =>
       bill.name.toLowerCase().includes(this.bills.getValue().search)
+    );
+  }
+
+  getBillsSummary() {
+    return this.bills.pipe(
+      take(2),
+      map((value) => value.bills)
     );
   }
 }
