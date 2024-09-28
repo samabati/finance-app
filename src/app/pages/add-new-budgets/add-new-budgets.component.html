@@ -22,7 +22,10 @@
         title="Maximum Spend"
         formControlName="max"
       ></app-add-spend>
-      <app-add-theme formControlName="theme"></app-add-theme>
+      <app-add-theme
+        [usedThemes]="usedThemes"
+        formControlName="theme"
+      ></app-add-theme>
     </ul>
     <app-add-button text="Add Budget" type="submit"></app-add-button>
   </form>

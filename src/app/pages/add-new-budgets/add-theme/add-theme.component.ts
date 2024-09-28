@@ -1,7 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { THEMES } from '../../../types/theme';
+import { Theme, THEMES } from '../../../types/theme';
+import { Router } from '@angular/router';
+import { BudgetsService } from '../../../services/budgets/budgets.service';
+import { PotsService } from '../../../services/pots/pots.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-theme',
@@ -17,13 +28,22 @@ import { THEMES } from '../../../types/theme';
   templateUrl: './add-theme.component.html',
   styleUrl: './add-theme.component.css',
 })
-export class AddThemeComponent implements ControlValueAccessor {
+export class AddThemeComponent implements ControlValueAccessor, OnInit {
+  @Input() usedThemes!: Theme[];
+  router = inject(Router);
+  budgetService = inject(BudgetsService);
+  potsService = inject(PotsService);
+
+  ngOnInit(): void {
+    console.log('SELECTED VALUE:', this.selected);
+  }
+
   onChange = (value: any) => {};
 
   onTouched = () => {};
 
   writeValue(value: any): void {
-    this.selected = value || { name: 'Green', class: 'bg-g', color: '#277C78' };
+    this.selected = value;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -33,18 +53,24 @@ export class AddThemeComponent implements ControlValueAccessor {
   }
 
   showDropdown: boolean = false;
-  selected: any = { name: 'Green', class: 'bg-g', color: '#277C78' };
+  selected!: Theme;
 
-  data = THEMES;
+  themes = THEMES;
 
-  selectCategory(category: any) {
-    this.selected = category;
-    this.onChange(category);
-    this.onTouched();
+  selectTheme(theme: any) {
+    if (!this.isUsedTheme(theme)) {
+      this.selected = theme;
+      this.onChange(theme);
+      this.onTouched();
+    }
   }
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
+  }
+
+  isUsedTheme(theme: Theme): boolean {
+    return this.usedThemes.some((used) => used.name == theme.name);
   }
 
   bgColor() {}

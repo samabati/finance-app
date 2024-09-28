@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Pot } from '../../types/pot';
 
 @Injectable({
@@ -11,31 +11,31 @@ export class PotsService {
       name: 'Savings',
       saved: 150,
       target: 2000,
-      theme: { name: 'Green', class: 'bg-g' },
+      theme: { name: 'Green', class: 'bg-g', color: '#277C78' },
     },
     {
       name: 'Concert Ticket',
       saved: 110,
       target: 150,
-      theme: { name: 'Navy', class: 'bg-navy' },
+      theme: { name: 'Navy', class: 'bg-navy', color: '#626070' },
     },
     {
       name: 'Gift',
       saved: 40,
       target: 60,
-      theme: { name: 'Cyan', class: 'bg-cyan' },
+      theme: { name: 'Cyan', class: 'bg-cyan', color: '#82C9D7' },
     },
     {
       name: 'New Laptop',
       saved: 10,
       target: 1000,
-      theme: { name: 'Yellow', class: 'bg-yellow' },
+      theme: { name: 'Yellow', class: 'bg-yellow', color: '#F2CDAC' },
     },
     {
       name: 'Holiday',
       saved: 531,
       target: 1440,
-      theme: { name: 'Purple', class: 'bg-purple' },
+      theme: { name: 'Purple', class: 'bg-purple', color: '#826CB0' },
     },
   ]);
 
@@ -66,5 +66,9 @@ export class PotsService {
 
   getTotalSaved(): number {
     return this.pots.getValue().reduce((prev, curr) => prev + curr.saved, 0);
+  }
+
+  getThemes() {
+    return this.pots$.pipe(map((pots) => pots.map((pot) => pot.theme)));
   }
 }

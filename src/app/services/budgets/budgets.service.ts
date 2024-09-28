@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Budget } from '../../types/budget';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +52,12 @@ export class BudgetsService {
 
   getBudget(index: number) {
     return this.budgets.getValue()[index];
+  }
+
+  getThemes() {
+    return this.budgets$.pipe(
+      map((budgets) => budgets.map((budget) => budget.theme))
+    );
   }
 
   updateBudget(updates: Partial<Budget>, index: number) {
