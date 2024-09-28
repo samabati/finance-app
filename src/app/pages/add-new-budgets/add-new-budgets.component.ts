@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { AddSpendComponent } from './add-spend/add-spend.component';
 import { AddThemeComponent } from './add-theme/add-theme.component';
@@ -11,6 +11,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { BudgetsService } from '../../services/budgets/budgets.service';
+import { Subscription } from 'rxjs';
+import { Theme, THEMES } from '../../types/theme';
 
 @Component({
   selector: 'app-add-new-budgets',
@@ -25,23 +27,40 @@ import { BudgetsService } from '../../services/budgets/budgets.service';
   templateUrl: './add-new-budgets.component.html',
   styleUrl: './add-new-budgets.component.css',
 })
-export class AddNewBudgetsComponent {
+export class AddNewBudgetsComponent implements OnDestroy {
   router = inject(Router);
   addBudgetForm: FormGroup;
   budgetService = inject(BudgetsService);
   fb = inject(FormBuilder);
+  subscription!: Subscription;
+  usedThemes!: Theme[];
+  themes = THEMES;
 
   constructor() {
+    this.subscription = this.budgetService.getThemes().subscribe((value) => {
+      console.log('USED THEMES:', value);
+      this.usedThemes = value;
+    });
+
     this.addBudgetForm = this.fb.group({
       category: ['Entertainment', Validators.required],
       spent: [0],
-      max: ['', [Validators.required, Validators.min(1)]],
-      theme: [{ name: 'Green', class: 'bg-g' }, Validators.required],
+      max: [
+        '',
+        [Validators.required, Validators.min(1), Validators.max(9999999)],
+      ],
+      theme: [
+        this.themes.find((theme) => !this.isUsedTheme(theme)),
+        Validators.required,
+      ],
     });
 
     this.addBudgetForm.valueChanges.subscribe((value) => {
       console.log('Form value changed: ', value);
     });
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   submitForm() {
@@ -56,5 +75,9 @@ export class AddNewBudgetsComponent {
 
   exitPage() {
     this.router.navigateByUrl('/budgets');
+  }
+
+  isUsedTheme(theme: Theme): boolean {
+    return this.usedThemes.some((used) => used.name == theme.name);
   }
 }

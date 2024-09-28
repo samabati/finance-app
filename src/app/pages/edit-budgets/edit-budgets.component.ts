@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { SaveChangesComponent } from './save-changes/save-changes.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
@@ -11,8 +11,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { BudgetsService } from '../../services/budgets/budgets.service';
-import { take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { Budget } from '../../types/budget';
+import { Theme } from '../../types/theme';
+import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.component';
 
 @Component({
   selector: 'app-edit-budgets',
@@ -23,11 +25,12 @@ import { Budget } from '../../types/budget';
     EditThemeComponent,
     SaveChangesComponent,
     ReactiveFormsModule,
+    AddThemeComponent,
   ],
   templateUrl: './edit-budgets.component.html',
   styleUrl: './edit-budgets.component.css',
 })
-export class EditBudgetsComponent {
+export class EditBudgetsComponent implements OnDestroy {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   editBudgetForm!: FormGroup;
@@ -35,11 +38,16 @@ export class EditBudgetsComponent {
   index!: number;
   budgetService = inject(BudgetsService);
   budget!: Budget;
+  usedThemes!: Theme[];
+  subscription!: Subscription;
 
   constructor() {
     this.getIndex();
-
     this.loadBudget();
+
+    this.subscription = this.budgetService.getThemes().subscribe((value) => {
+      this.usedThemes = value;
+    });
 
     this.editBudgetForm = this.formBuilder.group({
       category: [this.budget.category, Validators.required],
@@ -51,6 +59,10 @@ export class EditBudgetsComponent {
     this.editBudgetForm.valueChanges.subscribe((value) => {
       console.log('Changes made: ', value);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   getIndex() {

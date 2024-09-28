@@ -1,12 +1,14 @@
-<div
+<form
+  [formGroup]="searchForm"
   class="search-container p-t-150 p-b-150 p-l-250 p-r-250 bg-w color-b-5 border-r-100 border-1-b-5 flex align-c gap-200"
 >
   <input
     type="text"
     [placeholder]="'Search ' + type"
     class="font-s-4 font-w-4 font-lh-120 w-100"
+    formControlName="inputField"
   />
   <button class="">
     <img class="" src="assets/shared/search.svg" alt="search-icon" />
   </button>
-</div>
+</form>

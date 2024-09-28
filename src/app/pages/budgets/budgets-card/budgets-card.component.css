@@ -17,6 +17,10 @@
     width: 50%;
 }
 
+.navigate{
+    cursor: pointer;
+}
+
 /* Mobile */
 
 @media (max-width: 47.125rem){
@@ -32,3 +36,16 @@
         padding: var(--spacing200) var(--spacing200) var(--spacing200) var(--spacing200)
     }
 }
+
+/* Hover styles */
+@media (min-width: 65.94rem){
+
+    .navigate:hover > p{
+        color: var(--grey900);
+    }
+    
+    .navigate:hover > img{
+        filter: brightness(0.5); /* Adjust the value as needed */
+    }
+    
+    }

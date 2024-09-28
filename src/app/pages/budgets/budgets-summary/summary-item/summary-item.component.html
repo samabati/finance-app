@@ -1,10 +1,12 @@
 <li class="flex align-c">
-  <div [ngClass]="bgColor" class="border-r-100 h-100"></div>
-  <p class="m-l-2 color-g-5 font-s-4 font-w-4 font-lh-150">{{ category }}</p>
+  <div [ngClass]="budget.theme.class" class="border-r-100 h-100"></div>
+  <p class="m-l-2 color-g-5 font-s-4 font-w-4 font-lh-150">
+    {{ budget.category }}
+  </p>
   <p class="color-g-9 font-s-3 font-w-7 font-lh-150 m-l-a">
-    {{ amount | currency }}
+    {{ budget.spent | currency }}
   </p>
   <p class="color-g-5 font-s-5 font-w-4 font-lh-150 m-l-1">
-    of {{ maxAmount | currency }}
+    of {{ budget.max | currency }}
   </p>
 </li>

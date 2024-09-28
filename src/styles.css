@@ -442,11 +442,36 @@
   background-color: #C94736;
 }
 .bg-purple{
-  background-color: #826CB0
+  background-color: #826CB0;
 }
 .bg-turq{
   background-color: #597C7C;
 }
+.bg-brown{
+  background-color: #93674F;
+}
+.bg-magenta{
+  background-color: #934F6F;
+}
+.bg-blue{
+  background-color: #3F82B2
+}
+.bg-navy-grey{
+  background-color: #97A0AC;
+}
+.bg-army-green{
+  background-color: #7F9161;
+}
+.bg-pink{
+  background-color: #826CB0;
+}
+.bg-gold{
+  background-color: #CAB361;
+}
+.bg-orange{
+  background-color: #BE6C49;
+}
+
 
 /* Overflow */
 .overflow-h{

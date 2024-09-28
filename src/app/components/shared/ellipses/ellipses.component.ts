@@ -20,12 +20,14 @@ export class EllipsesComponent {
   }
 
   editBudget() {
+    this.toggleDropdown();
     this.router.navigateByUrl(
       `/${this.type.toLowerCase()}s/edit/${this.index}`
     );
   }
 
   deleteBudget() {
+    this.toggleDropdown();
     this.router.navigateByUrl(
       `/${this.type.toLowerCase()}s/delete/${this.index}`
     );

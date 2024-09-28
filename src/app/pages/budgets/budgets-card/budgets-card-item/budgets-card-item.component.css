@@ -4,6 +4,7 @@ div:nth-of-type(2){
 }
 img{
     height: 32px;
+    border-radius: 50%;
 }
 
 /* Mobile */

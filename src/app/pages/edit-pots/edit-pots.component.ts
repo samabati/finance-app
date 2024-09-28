@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,7 +13,8 @@ import { PotNameComponent } from '../add-new-pots/pot-name/pot-name.component';
 import { AddSpendComponent } from '../add-new-budgets/add-spend/add-spend.component';
 import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.component';
 import { Pot } from '../../types/pot';
-import { take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
+import { Theme, THEMES } from '../../types/theme';
 
 @Component({
   selector: 'app-edit-pots',
@@ -29,7 +30,7 @@ import { take } from 'rxjs';
   templateUrl: './edit-pots.component.html',
   styleUrl: './edit-pots.component.css',
 })
-export class EditPotsComponent {
+export class EditPotsComponent implements OnDestroy {
   router = inject(Router);
   editPotForm!: FormGroup;
   potService = inject(PotsService);
@@ -37,14 +38,19 @@ export class EditPotsComponent {
   pot!: Pot;
   index!: number;
   activatedRoute = inject(ActivatedRoute);
+  usedThemes!: Theme[];
+  subscription!: Subscription;
 
   constructor() {
     this.loadIndex();
-
     this.loadPot();
 
+    this.subscription = this.potService.getThemes().subscribe((value) => {
+      this.usedThemes = value;
+    });
+
     this.editPotForm = this.fb.group({
-      name: [this.pot.name, Validators.required],
+      name: [this.pot.name, [Validators.required, Validators.maxLength(30)]],
       saved: [this.pot.saved],
       target: [this.pot.target, [Validators.required, Validators.min(1)]],
       theme: [this.pot.theme, Validators.required],
@@ -53,6 +59,10 @@ export class EditPotsComponent {
     this.editPotForm.valueChanges.subscribe((value) => {
       console.log('Form value changed: ', value);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   loadIndex() {

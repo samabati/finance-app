@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,6 +12,8 @@ import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.compon
 import { AddSpendComponent } from '../add-new-budgets/add-spend/add-spend.component';
 import { AddButtonComponent } from '../add-new-budgets/add-button/add-button.component';
 import { PotsService } from '../../services/pots/pots.service';
+import { Theme, THEMES } from '../../types/theme';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-new-pots',
@@ -27,18 +29,28 @@ import { PotsService } from '../../services/pots/pots.service';
   templateUrl: './add-new-pots.component.html',
   styleUrl: './add-new-pots.component.css',
 })
-export class AddNewPotsComponent {
+export class AddNewPotsComponent implements OnDestroy {
   router = inject(Router);
   addPotForm!: FormGroup;
-  budgetService = inject(PotsService);
+  potsService = inject(PotsService);
   fb = inject(FormBuilder);
+  usedThemes!: Theme[];
+  themes = THEMES;
+  subscription!: Subscription;
 
   constructor() {
+    this.subscription = this.potsService.getThemes().subscribe((value) => {
+      this.usedThemes = value;
+    });
+
     this.addPotForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(30)]],
       saved: [0],
       target: ['', [Validators.required, Validators.min(1)]],
-      theme: [{ name: 'Green', class: 'bg-g' }, Validators.required],
+      theme: [
+        this.themes.find((theme) => !this.isUsedTheme(theme)),
+        Validators.required,
+      ],
     });
 
     this.addPotForm.valueChanges.subscribe((value) => {
@@ -46,10 +58,14 @@ export class AddNewPotsComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   submitForm() {
     if (this.addPotForm.valid) {
       console.log('Pot being added:', this.addPotForm.value);
-      this.budgetService.addPot(this.addPotForm.value);
+      this.potsService.addPot(this.addPotForm.value);
       this.exitPage();
     } else {
       console.log('Form is invalid');
@@ -58,5 +74,11 @@ export class AddNewPotsComponent {
 
   exitPage() {
     this.router.navigateByUrl('/pots');
+  }
+
+  isUsedTheme(theme: Theme): boolean {
+    return this.usedThemes.some(
+      (used) => used.name === theme.name && used.class === theme.class
+    );
   }
 }

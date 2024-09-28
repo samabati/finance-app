@@ -5,13 +5,10 @@
       Spending Summary
     </h2>
     <ul>
-      @for(item of data ; track $index){
-      <app-summary-item
-        [category]="item.category"
-        [amount]="item.amount"
-        [maxAmount]="item.maxAmount"
-      ></app-summary-item>
-      @if($index !== data.length-1){
+      @for(budget of budgetService.budgets$ | async ; track $index; let count =
+      $count){
+      <app-summary-item [budget]="budget"></app-summary-item>
+      @if($index !== count-1){
       <img
         class="w-100 m-t-2 m-b-2"
         src="assets/overview/hr.svg"

@@ -24,10 +24,8 @@
         formControlName="max"
         [value]="budget.max"
       ></app-edit-spend>
-      <app-edit-theme
-        formControlName="theme"
-        [selected]="budget.theme"
-      ></app-edit-theme>
+      <app-add-theme formControlName="theme" [usedThemes]="usedThemes">
+      </app-add-theme>
     </ul>
     <app-save-changes></app-save-changes>
   </form>

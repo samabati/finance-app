@@ -1,9 +1,11 @@
 <div class="grid-item w-100 flex">
-  <div [ngClass]="bgColor" class="color-tag"></div>
+  <div [ngClass]="theme.class" class="color-tag"></div>
   <div class="flex flex-d-c">
     <h2 class="font-s-5 font-w-4 font-lh-150 color-g-5 text-truncate">
       {{ title }}
     </h2>
-    <p class="color-g-9 font-s-4 font-w-7 font-lh-150">{{ amount }}</p>
+    <p class="color-g-9 font-s-4 font-w-7 font-lh-150">
+      {{ amount | currency }}
+    </p>
   </div>
 </div>

@@ -10,7 +10,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './transactions-table.component.html',
   styleUrl: './transactions-table.component.css',
 })
-export class TransactionsTableComponent {
+export class TransactionsTableComponent implements OnInit {
+  /* This component renders all the transactions */
   transactionService = inject(TransactionsService);
-  transactions = this.transactionService.transactions$;
+  transactions = this.transactionService.getDisplayTransactions();
+
+  ngOnInit(): void {}
 }

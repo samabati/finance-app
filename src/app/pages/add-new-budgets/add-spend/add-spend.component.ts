@@ -34,9 +34,17 @@ export class AddSpendComponent implements ControlValueAccessor {
   }
 
   onInput(event: any) {
+    this.checkLength(event);
     let num = Number(event.target.value);
     this.value = num;
     this.onChanges(num);
     this.onTouched();
+  }
+
+  checkLength(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.value.length > 7) {
+      input.value = input.value.slice(0, 7); // Limit to 10 digits
+    }
   }
 }

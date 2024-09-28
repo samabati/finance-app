@@ -10,6 +10,6 @@ import { Component, Input } from '@angular/core';
 })
 export class PotsSavingsMicroComponent {
   @Input() title!: string;
-  @Input() amount!: string;
-  @Input() bgColor!: string;
+  @Input() amount!: number;
+  @Input() theme!: any;
 }

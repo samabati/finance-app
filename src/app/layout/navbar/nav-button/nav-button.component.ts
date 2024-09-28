@@ -19,9 +19,7 @@ export class NavButtonComponent implements OnInit {
 
   buttonClicked() {
     console.log('Button clicked ran');
-    this.navService.setNavStatus(this.name);
     let route = this.name.toLowerCase().split(' ').join('-');
-    console.log(route);
     if (route === 'overview') route = '';
     this.router.navigateByUrl(route);
   }

@@ -12,6 +12,7 @@ import { debounceTime, fromEvent, Subscription } from 'rxjs';
   styleUrl: './page-number-list.component.css',
 })
 export class PageNumberListComponent implements OnInit, OnDestroy {
+  /* This is the list of page numbers */
   transactionService = inject(TransactionsService);
   screenWidth!: number;
   mobileList: boolean = false;
@@ -32,6 +33,23 @@ export class PageNumberListComponent implements OnInit, OnDestroy {
       });
 
     this.subscription.add(
+      this.transactionService.pageState$.subscribe((value) => {
+        this.totalPages = value.totalPages.length;
+        this.generateMobileArray();
+      })
+    );
+
+    this.subscription.add(
+      this.transactionService.pageState$.subscribe((value) => {
+        this.pageNumber = value.currentPage;
+        this.generateMobileArray();
+      })
+    );
+
+    this.generateMobileArray();
+
+    /*
+    this.subscription.add(
       this.transactionService.totalPages$.subscribe((value) => {
         this.totalPages = value.length;
         this.generateMobileArray();
@@ -44,6 +62,7 @@ export class PageNumberListComponent implements OnInit, OnDestroy {
         this.generateMobileArray();
       })
     );
+    */
   }
 
   ngOnDestroy(): void {
