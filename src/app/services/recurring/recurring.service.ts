@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 interface State {
   bills: Transactions[];
   sort: string;
+  search: string;
 }
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class RecurringService {
   private bills: BehaviorSubject<State> = new BehaviorSubject<State>({
     bills: [],
     sort: 'Latest',
+    search: '',
   });
 
   http = inject(HttpClient);
@@ -33,6 +35,7 @@ export class RecurringService {
         this.bills.next({
           bills: value.filter((item: Transactions) => item.recurring == true),
           sort: 'Latest',
+          search: '',
         });
       });
   }
@@ -42,11 +45,26 @@ export class RecurringService {
   }
 
   getBills() {
-    return this.bills.pipe(map((value) => this.sortBills(value.bills)));
+    return this.bills.pipe(
+      map((value) => this.searchBills(value.bills)),
+      map((value) => this.sortBills(value))
+    );
   }
 
   updateSort(sort: string) {
-    this.bills.next({ bills: this.bills.getValue().bills, sort });
+    this.bills.next({
+      bills: this.bills.getValue().bills,
+      sort,
+      search: this.bills.getValue().search,
+    });
+  }
+
+  updateSearch(search: string) {
+    this.bills.next({
+      bills: this.bills.getValue().bills,
+      sort: this.bills.getValue().sort,
+      search,
+    });
   }
 
   sortBills(bills: Transactions[]): Transactions[] {
@@ -69,5 +87,11 @@ export class RecurringService {
     else if (sortValue === 'Lowest')
       return (data = data.sort((a, b) => b.amount - a.amount));
     return data;
+  }
+
+  searchBills(bills: Transactions[]): Transactions[] {
+    return bills.filter((bill) =>
+      bill.name.toLowerCase().includes(this.bills.getValue().search)
+    );
   }
 }
