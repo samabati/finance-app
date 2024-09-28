@@ -5,10 +5,14 @@ import { HttpClient } from '@angular/common/http';
 
 interface State {
   transactions: Transactions[];
-  currentPage: number;
   sort: string;
   category: string;
   search: string;
+}
+
+interface PageState {
+  totalPages: number[];
+  currentPage: number;
 }
 
 @Injectable({
@@ -18,19 +22,21 @@ export class TransactionsService {
   /* State */
   private state: BehaviorSubject<State> = new BehaviorSubject<State>({
     transactions: [],
-    currentPage: 1,
     sort: 'Latest',
     category: 'All Transactions',
     search: '',
   });
 
-  /* Needed for generating page buttons*/
-  private totalPages: BehaviorSubject<number[]> = new BehaviorSubject<number[]>(
-    []
-  );
-  totalPages$ = this.totalPages.asObservable();
-
   state$ = this.state.asObservable();
+
+  /* Page states (must be separate from transaction state)*/
+  private pageState: BehaviorSubject<PageState> =
+    new BehaviorSubject<PageState>({
+      totalPages: [],
+      currentPage: 1,
+    });
+
+  pageState$ = this.pageState.asObservable();
 
   http = inject(HttpClient);
 
@@ -62,7 +68,7 @@ export class TransactionsService {
       filter((state) => state.transactions.length > 0), // Emit only when data is loaded
       map((value) => value.transactions),
       map((transactions) => this.filterSearch(transactions)),
-      map((transactions) => this.sortCategory(transactions)),
+      map((transactions) => this.filterCategory(transactions)),
       map((transactions) => this.sortData(transactions)),
       map((transactions) => this.paginateData(transactions)),
       map((transactions) => {
@@ -83,31 +89,38 @@ export class TransactionsService {
 
   /* Get total pages */
   getTotalPages() {
-    return this.totalPages$;
+    return this.pageState$.pipe(map((state) => state.totalPages));
   }
 
   /* Navigate to a specific page  */
   changePage(currentPage: number) {
-    this.state.next({ ...this.state.getValue(), currentPage });
+    this.pageState.next({ ...this.pageState.getValue(), currentPage });
+    this.refreshState();
   }
 
   /* Go to next page as long as its not over total page length */
   incrementPage() {
-    let currentPage = this.state.getValue().currentPage;
-    let totalPages = this.totalPages.getValue().length;
+    let currentPage = this.pageState.getValue().currentPage;
+    let totalPages = this.pageState.getValue().totalPages.length;
     currentPage = currentPage + 1;
     if (!(currentPage > totalPages)) {
-      this.state.next({ ...this.state.getValue(), currentPage });
+      this.pageState.next({ ...this.pageState.getValue(), currentPage });
     }
+    this.refreshState();
   }
 
   /* Go to previous page as long as its not 0 lol */
   decrementPage() {
-    let currentPage = this.state.getValue().currentPage;
+    let currentPage = this.pageState.getValue().currentPage;
     currentPage = currentPage - 1;
     if (!(currentPage < 1)) {
-      this.state.next({ ...this.state.getValue(), currentPage });
+      this.pageState.next({ ...this.pageState.getValue(), currentPage });
     }
+    this.refreshState();
+  }
+
+  refreshState() {
+    this.state.next({ ...this.state.getValue() });
   }
 
   /* Update sorting method currently implemented on list */
@@ -134,21 +147,32 @@ export class TransactionsService {
   }
 
   /* Filter Category */
-  sortCategory(data: Transactions[]) {
+  filterCategory(transactions: Transactions[]) {
     let category = this.state.getValue().category;
+    let data = transactions;
     if (category !== 'All Transactions')
-      return data.filter((value) => value.category === category);
+      data = data.filter((value) => value.category === category);
     this.generatePageButtons(data);
     return data;
   }
 
   /* Generate Page Buttons */
   generatePageButtons(data: Transactions[]) {
+    console.log(
+      'ARRAY LENGTH',
+      this.createArray(Math.ceil(data.length / 10)).length
+    );
     // Generate total page count
-    this.totalPages.next(this.createArray(Math.ceil(data.length / 10)));
+    this.pageState.next({
+      ...this.pageState.getValue(),
+      totalPages: this.createArray(Math.ceil(data.length / 10)),
+    });
     //If current page is greater than total page numbers revert to page 1
-    if (this.state.getValue().currentPage > this.totalPages.getValue().length)
-      this.state.next({ ...this.state.getValue(), currentPage: 1 });
+    if (
+      this.pageState.getValue().currentPage >
+      this.pageState.getValue().totalPages.length
+    )
+      this.pageState.next({ ...this.pageState.getValue(), currentPage: 1 });
   }
 
   /* Sort transactions */
@@ -175,7 +199,7 @@ export class TransactionsService {
 
   /*Paginate data*/
   paginateData(transactions: Transactions[]) {
-    let page = this.state.getValue().currentPage;
+    let page = this.pageState.getValue().currentPage;
     let limit = 10;
     let start = (page - 1) * 10;
     return transactions.slice(start, start + limit);

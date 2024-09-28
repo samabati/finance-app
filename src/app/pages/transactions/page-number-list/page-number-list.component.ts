@@ -33,14 +33,14 @@ export class PageNumberListComponent implements OnInit, OnDestroy {
       });
 
     this.subscription.add(
-      this.transactionService.totalPages$.subscribe((value) => {
-        this.totalPages = value.length;
+      this.transactionService.pageState$.subscribe((value) => {
+        this.totalPages = value.totalPages.length;
         this.generateMobileArray();
       })
     );
 
     this.subscription.add(
-      this.transactionService.state$.subscribe((value) => {
+      this.transactionService.pageState$.subscribe((value) => {
         this.pageNumber = value.currentPage;
         this.generateMobileArray();
       })
