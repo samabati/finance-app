@@ -45,7 +45,10 @@ export class AddNewBudgetsComponent implements OnDestroy {
     this.addBudgetForm = this.fb.group({
       category: ['Entertainment', Validators.required],
       spent: [0],
-      max: ['', [Validators.required, Validators.min(1)]],
+      max: [
+        '',
+        [Validators.required, Validators.min(1), Validators.max(9999999)],
+      ],
       theme: [
         this.themes.find((theme) => !this.isUsedTheme(theme)),
         Validators.required,

@@ -44,7 +44,7 @@ export class AddNewPotsComponent implements OnDestroy {
     });
 
     this.addPotForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(30)]],
       saved: [0],
       target: ['', [Validators.required, Validators.min(1)]],
       theme: [

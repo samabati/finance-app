@@ -66,12 +66,12 @@ export class TransactionsService {
   getDisplayTransactions() {
     return this.state$.pipe(
       filter((state) => state.transactions.length > 0), // Emit only when data is loaded
-      map((value) => value.transactions),
-      map((transactions) => this.filterSearch(transactions)),
-      map((transactions) => this.filterCategory(transactions)),
-      map((transactions) => this.sortData(transactions)),
-      map((transactions) => this.paginateData(transactions)),
-      map((transactions) => {
+      map((value) => {
+        let transactions = value.transactions;
+        transactions = this.filterSearch(transactions);
+        transactions = this.filterCategory(transactions);
+        transactions = this.sortData(transactions);
+        transactions = this.paginateData(transactions);
         return transactions;
       })
     );

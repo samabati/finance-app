@@ -50,7 +50,7 @@ export class EditPotsComponent implements OnDestroy {
     });
 
     this.editPotForm = this.fb.group({
-      name: [this.pot.name, Validators.required],
+      name: [this.pot.name, [Validators.required, Validators.maxLength(30)]],
       saved: [this.pot.saved],
       target: [this.pot.target, [Validators.required, Validators.min(1)]],
       theme: [this.pot.theme, Validators.required],
