@@ -17,8 +17,8 @@ export class PageNumberComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
 
   ngOnInit() {
-    this.subscription = this.transactionService.pageNumber$.subscribe(
-      (value) => (this.selected = value)
+    this.subscription = this.transactionService.state$.subscribe(
+      (value) => (this.selected = value.currentPage)
     );
   }
 

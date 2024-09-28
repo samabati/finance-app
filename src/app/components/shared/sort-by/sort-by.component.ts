@@ -29,7 +29,7 @@ export class SortByComponent implements OnInit {
     if (this.router.url.includes('recurring')) this.recurring = true;
 
     if (this.type === 'Sort By' && !this.recurring) {
-      this.selected = this.transactionService.sort$;
+      this.selected = this.transactionService.getSort();
       this.options = Object.values(SortItems);
       this.minWidth = '113px';
     } else if (this.type === 'Sort By' && this.recurring) {
@@ -37,7 +37,7 @@ export class SortByComponent implements OnInit {
       this.options = Object.values(SortItems);
       this.minWidth = '113px';
     } else if (this.type === 'Category') {
-      this.selected = this.transactionService.category$;
+      this.selected = this.transactionService.getCategory();
       this.options = Object.values(Categories);
       this.minWidth = '179px';
     }

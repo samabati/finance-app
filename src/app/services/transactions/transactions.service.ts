@@ -1,165 +1,184 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, filter, map, Observable, take } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, pipe, take } from 'rxjs';
 import { Transactions } from '../../types/transactions';
 import { HttpClient } from '@angular/common/http';
+
+interface State {
+  transactions: Transactions[];
+  currentPage: number;
+  sort: string;
+  category: string;
+  search: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransactionsService {
-  /* Stable Transactions (does not change) */
-  private stableTransactions: BehaviorSubject<Transactions[]> =
-    new BehaviorSubject<Transactions[]>([]);
-  stableTransactions$ = this.stableTransactions.asObservable();
+  /* State */
+  private state: BehaviorSubject<State> = new BehaviorSubject<State>({
+    transactions: [],
+    currentPage: 1,
+    sort: 'Latest',
+    category: 'All Transactions',
+    search: '',
+  });
 
-  /* Transactions displayed on transaction page */
-  private transactions: BehaviorSubject<Transactions[]> = new BehaviorSubject<
-    Transactions[]
-  >([]);
-  transactions$ = this.transactions.asObservable();
-
-  /* Page Number Behavior Subject */
-  private pageNumber: BehaviorSubject<number> = new BehaviorSubject<number>(1);
-  pageNumber$ = this.pageNumber.asObservable();
-
-  /* Sorting Behavior Subject */
-  private sort: BehaviorSubject<string> = new BehaviorSubject<string>('Latest');
-  sort$ = this.sort.asObservable();
-
-  /* Category Behavior Subject */
-  private category: BehaviorSubject<string> = new BehaviorSubject<string>(
-    'All Transactions'
-  );
-  category$ = this.category.asObservable();
-
-  /* Total pages (For button rendering) */
+  /* Needed for generating page buttons*/
   private totalPages: BehaviorSubject<number[]> = new BehaviorSubject<number[]>(
     []
   );
   totalPages$ = this.totalPages.asObservable();
 
+  state$ = this.state.asObservable();
+
   http = inject(HttpClient);
 
   constructor() {
-    this.initialLoad();
+    this.loadTransactions();
   }
 
-  initialLoad() {
+  /* Load transactions */
+
+  loadTransactions() {
     this.http
       .get<any>('/assets/data/data.json')
       .pipe(
         take(1),
         map((value) => value.transactions)
       )
-      .subscribe((value) => {
-        this.stableTransactions.next(value);
-        this.loadTransactions();
-      });
+      .subscribe((transactions) =>
+        this.state.next({ ...this.state.getValue(), transactions })
+      );
   }
 
-  /* Load Transactions */
-
-  loadTransactions() {
-    this.stableTransactions$.pipe(take(1)).subscribe((value) => {
-      this.sortCategory(value);
-    });
+  getRawTransactions() {
+    return this.state$.pipe(map((value) => value.transactions));
   }
 
-  /* Page methods */
-  changePage(page: number) {
-    this.pageNumber.next(page);
-    this.loadTransactions();
+  /* Displayed transaction data */
+  getDisplayTransactions() {
+    return this.state$.pipe(
+      filter((state) => state.transactions.length > 0), // Emit only when data is loaded
+      map((value) => value.transactions),
+      map((transactions) => this.filterSearch(transactions)),
+      map((transactions) => this.sortCategory(transactions)),
+      map((transactions) => this.sortData(transactions)),
+      map((transactions) => this.paginateData(transactions)),
+      map((transactions) => {
+        return transactions;
+      })
+    );
   }
 
+  /* Get current sorting */
+  getSort() {
+    return this.state$.pipe(map((map) => map.sort));
+  }
+
+  /* Get current category */
+  getCategory() {
+    return this.state$.pipe(map((map) => map.category));
+  }
+
+  /* Get total pages */
+  getTotalPages() {
+    return this.totalPages$;
+  }
+
+  /* Navigate to a specific page  */
+  changePage(currentPage: number) {
+    this.state.next({ ...this.state.getValue(), currentPage });
+  }
+
+  /* Go to next page as long as its not over total page length */
   incrementPage() {
-    let currentPage = this.pageNumber.getValue();
+    let currentPage = this.state.getValue().currentPage;
+    let totalPages = this.totalPages.getValue().length;
     currentPage = currentPage + 1;
-    if (!(currentPage > this.totalPages.getValue().length)) {
-      this.changePage(currentPage);
+    if (!(currentPage > totalPages)) {
+      this.state.next({ ...this.state.getValue(), currentPage });
     }
   }
 
+  /* Go to previous page as long as its not 0 lol */
   decrementPage() {
-    let currentPage = this.pageNumber.getValue();
+    let currentPage = this.state.getValue().currentPage;
     currentPage = currentPage - 1;
     if (!(currentPage < 1)) {
-      this.changePage(currentPage);
+      this.state.next({ ...this.state.getValue(), currentPage });
     }
   }
 
-  /* Update sort */
-
+  /* Update sorting method currently implemented on list */
   updateSort(sort: string) {
-    this.sort.next(sort);
-    console.log(
-      'Sorting function called in service class: ',
-      this.sort.getValue()
-    );
-    this.loadTransactions();
+    this.state.next({ ...this.state.getValue(), sort });
   }
 
   /* Update Category */
 
   updateCategory(category: string) {
-    this.category.next(category);
-    this.loadTransactions();
+    this.state.next({ ...this.state.getValue(), category });
+  }
+
+  /* Update Search */
+  updateSearch(search: string) {
+    this.state.next({ ...this.state.getValue(), search });
+  }
+
+  /* Filter search */
+  filterSearch(data: Transactions[]) {
+    return data.filter((transaction) =>
+      transaction.name.toLowerCase().includes(this.state.getValue().search)
+    );
   }
 
   /* Filter Category */
-  sortCategory(value: Transactions[]) {
-    let data = value;
-
-    if (this.category.getValue() !== 'All Transactions') {
-      data = data.filter(
-        (value) => value.category === this.category.getValue()
-      );
-    }
+  sortCategory(data: Transactions[]) {
+    let category = this.state.getValue().category;
+    if (category !== 'All Transactions')
+      return data.filter((value) => value.category === category);
     this.generatePageButtons(data);
-    this.sortData(data);
+    return data;
   }
 
   /* Generate Page Buttons */
-
   generatePageButtons(data: Transactions[]) {
+    // Generate total page count
     this.totalPages.next(this.createArray(Math.ceil(data.length / 10)));
-
-    /* If current page is greater than total page numbers revert to page 1*/
-    if (this.pageNumber.getValue() > this.totalPages.getValue().length) {
-      this.pageNumber.next(1);
-    }
+    //If current page is greater than total page numbers revert to page 1
+    if (this.state.getValue().currentPage > this.totalPages.getValue().length)
+      this.state.next({ ...this.state.getValue(), currentPage: 1 });
   }
 
   /* Sort transactions */
-
-  sortData(value: Transactions[]) {
-    let data = value;
-    if (this.sort.getValue() === 'Latest') {
-      data = data.sort(
+  sortData(data: Transactions[]) {
+    let sortValue = this.state.getValue().sort;
+    if (sortValue === 'Latest')
+      return data.sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       );
-    } else if (this.sort.getValue() === 'Oldest') {
-      data = data.sort(
+    else if (sortValue === 'Oldest')
+      return data.sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
       );
-    } else if (this.sort.getValue() === 'A to Z') {
-      data = data.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (this.sort.getValue() === 'Z to A') {
-      data = data.sort((a, b) => b.name.localeCompare(a.name));
-    } else if (this.sort.getValue() === 'Highest') {
-      data = data.sort((a, b) => b.amount - a.amount);
-    } else if (this.sort.getValue() === 'Lowest') {
-      data = data.sort((a, b) => a.amount - b.amount);
-    }
-    this.paginateData(data);
+    else if (sortValue === 'A to Z')
+      return data.sort((a, b) => a.name.localeCompare(b.name));
+    else if (sortValue === 'Z to A')
+      return data.sort((a, b) => b.name.localeCompare(a.name));
+    else if (sortValue === 'Highest')
+      return data.sort((a, b) => b.amount - a.amount);
+    else if (sortValue === 'Lowest')
+      return (data = data.sort((a, b) => a.amount - b.amount));
+    else return data;
   }
 
   /*Paginate data*/
-
-  paginateData(value: Transactions[]) {
-    let page = this.pageNumber.getValue();
+  paginateData(transactions: Transactions[]) {
+    let page = this.state.getValue().currentPage;
     let limit = 10;
     let start = (page - 1) * 10;
-    this.transactions.next(value.slice(start, start + limit));
+    return transactions.slice(start, start + limit);
   }
 
   /*Create array*/

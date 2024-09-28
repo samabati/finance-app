@@ -6,6 +6,7 @@ import { EllipsesComponent } from '../../../components/shared/ellipses/ellipses.
 import { TransactionsService } from '../../../services/transactions/transactions.service';
 import { filter, map, Observable, Subscription } from 'rxjs';
 import { Transactions } from '../../../types/transactions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-budgets-card',
@@ -19,10 +20,12 @@ export class BudgetsCardComponent implements OnInit, OnDestroy {
   @Input() index!: number;
   cardTransactions: Transactions[] = [];
   transactionService = inject(TransactionsService);
+  router = inject(Router);
   subscription!: Subscription;
 
   ngOnInit(): void {
-    this.subscription = this.transactionService.stableTransactions$
+    this.subscription = this.transactionService
+      .getRawTransactions()
       .pipe(
         map((trans) =>
           trans.filter((trans) => trans.category == this.budget.category)
@@ -38,5 +41,9 @@ export class BudgetsCardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  navigateToTransactions() {
+    this.router.navigateByUrl('/transactions');
   }
 }

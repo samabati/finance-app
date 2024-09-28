@@ -1,5 +1,5 @@
 <div class="flex gap-100">
-  @if(mobileList && ((transactionService.totalPages$ | async)!.length > 4)){
+  @if(mobileList && ((transactionService.getTotalPages() | async)!.length > 4)){
   @for(item of mobileArray; track item){ @if(item !== 'e'){
   <app-page-number [number]="item"></app-page-number>
   } @else{
@@ -9,7 +9,8 @@
   >
     ...
   </button>
-  } } }@else { @for(item of transactionService.totalPages$ | async; track item){
+  } } }@else { @for(item of transactionService.getTotalPages() | async; track
+  item){
   <app-page-number [number]="item"></app-page-number>
   } }
 </div>

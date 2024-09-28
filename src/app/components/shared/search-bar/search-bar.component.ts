@@ -3,6 +3,7 @@ import { RecurringService } from '../../../services/recurring/recurring.service'
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { TransactionsService } from '../../../services/transactions/transactions.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -14,6 +15,7 @@ import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 export class SearchBarComponent implements OnInit, OnDestroy {
   @Input() type!: string;
   recurringService = inject(RecurringService);
+  transactionService = inject(TransactionsService);
   inputSearch = '';
   subscription!: Subscription;
   searchForm!: FormGroup;
@@ -41,6 +43,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   updateSearch(searchTerm: string) {
     if (this.type === 'bills') {
       this.recurringService.updateSearch(searchTerm.toLowerCase());
+    } else if (this.type === 'transactions') {
+      this.transactionService.updateSearch(searchTerm.toLowerCase());
     }
   }
 }
