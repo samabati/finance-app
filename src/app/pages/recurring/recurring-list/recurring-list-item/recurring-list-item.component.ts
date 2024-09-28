@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, input, OnInit } from '@angular/core';
-import { format } from 'date-fns';
+import {
+  Component,
+  Input,
+  input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { addDays, isBefore, isSameDay, parseISO, format } from 'date-fns';
 import { Transactions } from '../../../../types/transactions';
 
 export enum DueDate {
@@ -18,24 +25,27 @@ export enum DueDate {
 })
 export class RecurringListItemComponent implements OnInit {
   @Input() transaction!: Transactions;
-  currentTime = new Date();
   due!: DueDate;
 
   constructor() {}
 
   ngOnInit(): void {
-    let currDay = this.currentTime.getDate();
-    let transDay = new Date(this.transaction.date).getDate();
-    if (currDay >= transDay) {
-      this.due = DueDate.PAID;
-    } else if (currDay - transDay >= -3) {
-      this.due = DueDate.UPCOMING;
-    } else {
-      this.due = DueDate.LATER;
-    }
+    this.loadDueDate();
   }
 
   formatDate() {
     return format(this.transaction.date, "'Monthly - 'do");
+  }
+
+  loadDueDate() {
+    const today = new Date().getDate();
+    const transactionDate = new Date(this.transaction.date).getDate();
+    if (isBefore(transactionDate, today) || today === transactionDate) {
+      this.due = DueDate.PAID;
+    } else if (isBefore(transactionDate, addDays(today, 3))) {
+      this.due = DueDate.UPCOMING;
+    } else {
+      this.due = DueDate.LATER;
+    }
   }
 }

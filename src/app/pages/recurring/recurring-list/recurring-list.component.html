@@ -11,8 +11,8 @@
     <h2 class="color-g-5 font-s-5 font-w-4 font-lh-150">Amount</h2>
   </header>
   <ul>
-    @for (transaction of this.recurringService.getBills() | async; track $index;
-    let count = $count) {
+    @for (transaction of this.recurringService.getBills() | async; track
+    transaction; let count = $count) {
     <app-recurring-list-item
       [transaction]="transaction"
     ></app-recurring-list-item>

@@ -21,25 +21,35 @@ export class RecurringSummaryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions = this.recurringService
       .getBillsSummary()
+      .pipe(take(2))
       .subscribe((transactions) => {
         console.log('TRANSACTIONS: ', transactions);
         let today = new Date().getDate();
+        let tempPaid = [];
+        let tempDue = [];
+        let tempUpcoming = [];
         transactions.map((item: Transactions) => {
           let transDay = new Date(item.date).getDate();
           if (today >= transDay) {
-            this.paidBills.push(item.amount);
+            tempPaid.push(item.amount);
           } else if (today - transDay >= -3) {
-            this.dueSoonBills.push(item.amount);
+            tempDue.push(item.amount);
             this.upcomingBills.push(item.amount);
           } else {
-            this.upcomingBills.push(item.amount);
+            tempUpcoming.push(item.amount);
           }
+          this.paidBills = tempPaid;
+          this.dueSoonBills = tempDue;
+          this.upcomingBills = tempUpcoming;
         });
       });
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this.dueSoonBills = [];
+    this.paidBills = [];
+    this.upcomingBills = [];
   }
 
   getPaidTotal() {

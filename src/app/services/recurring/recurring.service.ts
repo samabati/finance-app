@@ -29,7 +29,14 @@ export class RecurringService {
       .get<any>('assets/data/data.json')
       .pipe(
         take(1),
-        map((data) => data.transactions)
+        map((data) => data.transactions),
+        map((transactions: Transactions[]) =>
+          // Remove duplicates
+          transactions.filter(
+            (item, index, self) =>
+              index === self.findIndex((o) => o.name === item.name)
+          )
+        )
       )
       .subscribe((value) => {
         this.bills.next({
