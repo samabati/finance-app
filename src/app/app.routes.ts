@@ -18,7 +18,10 @@ export const routes: Routes = [
   },
   {
     path: 'transactions',
-    component: TransactionsComponent,
+    loadComponent: () =>
+      import('./pages/transactions/transactions.component').then(
+        (m) => m.TransactionsComponent
+      ),
   },
   {
     path: 'budgets',
