@@ -40,9 +40,7 @@ export class TransactionsService {
 
   http = inject(HttpClient);
 
-  constructor() {
-    this.loadTransactions();
-  }
+  constructor() {}
 
   /* Load transactions */
 
