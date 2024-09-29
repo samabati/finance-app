@@ -14,7 +14,10 @@ import { RecurringComponent } from './pages/recurring/recurring.component';
 export const routes: Routes = [
   {
     path: '',
-    component: OverviewComponent,
+    loadComponent: () =>
+      import('./pages/overview/overview.component').then(
+        (m) => m.OverviewComponent
+      ),
   },
   {
     path: 'transactions',
@@ -25,7 +28,10 @@ export const routes: Routes = [
   },
   {
     path: 'budgets',
-    component: BudgetsComponent,
+    loadComponent: () =>
+      import('./pages/budgets/budgets.component').then(
+        (m) => m.BudgetsComponent
+      ),
     children: [
       {
         path: 'add',
@@ -43,7 +49,8 @@ export const routes: Routes = [
   },
   {
     path: 'pots',
-    component: PotsComponent,
+    loadComponent: () =>
+      import('./pages/pots/pots.component').then((m) => m.PotsComponent),
     children: [
       {
         path: 'add',
@@ -69,6 +76,9 @@ export const routes: Routes = [
   },
   {
     path: 'recurring-bills',
-    component: RecurringComponent,
+    loadComponent: () =>
+      import('./pages/recurring/recurring.component').then(
+        (m) => m.RecurringComponent
+      ),
   },
 ];
