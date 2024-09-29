@@ -14,10 +14,7 @@ import { RecurringComponent } from './pages/recurring/recurring.component';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./pages/overview/overview.component').then(
-        (m) => m.OverviewComponent
-      ),
+    component: OverviewComponent,
   },
   {
     path: 'transactions',
@@ -25,6 +22,7 @@ export const routes: Routes = [
       import('./pages/transactions/transactions.component').then(
         (m) => m.TransactionsComponent
       ),
+    data: { preload: true },
   },
   {
     path: 'budgets',
@@ -32,6 +30,7 @@ export const routes: Routes = [
       import('./pages/budgets/budgets.component').then(
         (m) => m.BudgetsComponent
       ),
+    data: { preload: true },
     children: [
       {
         path: 'add',
@@ -51,6 +50,7 @@ export const routes: Routes = [
     path: 'pots',
     loadComponent: () =>
       import('./pages/pots/pots.component').then((m) => m.PotsComponent),
+    data: { preload: true },
     children: [
       {
         path: 'add',
@@ -80,5 +80,6 @@ export const routes: Routes = [
       import('./pages/recurring/recurring.component').then(
         (m) => m.RecurringComponent
       ),
+    data: { preload: true },
   },
 ];
