@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 export class TransactionsTableComponent implements OnInit {
   /* This component renders all the transactions */
   transactionService = inject(TransactionsService);
-  transactions = this.transactionService.getDisplayTransactions();
+  transactions = this.transactionService.getTransactions();
 
   ngOnInit(): void {}
 }

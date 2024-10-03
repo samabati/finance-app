@@ -25,17 +25,7 @@ export class BudgetsCardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.transactionService
-      .getRawTransactions()
-      .pipe(
-        map((trans) =>
-          trans.filter((trans) => trans.category == this.budget.category)
-        ),
-        map((trans) =>
-          trans.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-          )
-        )
-      )
+      .fetchTransactions(this.budget.category)
       .subscribe((value) => (this.cardTransactions = value));
   }
 

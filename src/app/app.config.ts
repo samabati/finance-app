@@ -10,9 +10,10 @@ import {
 } from '@angular/router';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TransactionsService } from './services/transactions/transactions.service';
 import { Observable, of } from 'rxjs';
+import { loggerInterceptor } from './interceptors/logger.interceptor';
 
 /* APP Initializer */
 
@@ -32,6 +33,6 @@ export const appConfig: ApplicationConfig = {
       deps: [TransactionsService],
     },
     provideCharts(withDefaultRegisterables()),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([loggerInterceptor])),
   ],
 };
