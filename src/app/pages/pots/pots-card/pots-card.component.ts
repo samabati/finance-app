@@ -19,7 +19,7 @@ import { EllipsesComponent } from '../../../components/shared/ellipses/ellipses.
 })
 export class PotsCardComponent implements OnInit {
   @Input() pot!: Pot;
-  @Input() index!: number;
+  @Input() id!: number;
   savedPercentage!: string;
 
   ngOnInit(): void {

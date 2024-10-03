@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class BudgetsCardComponent implements OnInit, OnDestroy {
   @Input() budget!: Budget;
-  @Input() index!: number;
+  @Input() id!: number;
   cardTransactions: Transactions[] = [];
   transactionService = inject(TransactionsService);
   router = inject(Router);

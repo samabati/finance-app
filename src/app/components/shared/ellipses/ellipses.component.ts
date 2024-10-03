@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class EllipsesComponent {
   @Input() type!: string;
-  @Input() index!: number;
+  @Input() id!: number | undefined;
   showDropdown = false;
   router = inject(Router);
 
@@ -21,15 +21,11 @@ export class EllipsesComponent {
 
   editBudget() {
     this.toggleDropdown();
-    this.router.navigateByUrl(
-      `/${this.type.toLowerCase()}s/edit/${this.index}`
-    );
+    this.router.navigateByUrl(`/${this.type.toLowerCase()}s/edit/${this.id}`);
   }
 
   deleteBudget() {
     this.toggleDropdown();
-    this.router.navigateByUrl(
-      `/${this.type.toLowerCase()}s/delete/${this.index}`
-    );
+    this.router.navigateByUrl(`/${this.type.toLowerCase()}s/delete/${this.id}`);
   }
 }

@@ -6,7 +6,7 @@
     <h2 class="color-g-9 font-s-2 font-w-7 font-lh-120 m-l-2">
       {{ pot.name }}
     </h2>
-    <app-ellipses type="Pot" [index]="index" class="m-l-a"></app-ellipses>
+    <app-ellipses type="Pot" [id]="id" class="m-l-a"></app-ellipses>
   </header>
   <section>
     <div class="flex just-s-b align-c">
@@ -29,7 +29,7 @@
     </div>
   </section>
   <section class="flex gap-200">
-    <app-add-money [index]="index" class="w-100"></app-add-money>
-    <app-withdraw [index]="index" class="w-100"></app-withdraw>
+    <app-add-money [id]="id" class="w-100"></app-add-money>
+    <app-withdraw [id]="id" class="w-100"></app-withdraw>
   </section>
 </article>

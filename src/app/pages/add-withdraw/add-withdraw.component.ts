@@ -78,7 +78,10 @@ export class AddWithdrawComponent {
   }
 
   loadPot() {
-    this.pot = this.potService.getPot(this.index);
+    let loadedPot = this.potService.getPot(this.index);
+    if (loadedPot) {
+      this.pot = loadedPot;
+    }
     this.newAmount = this.pot.saved;
   }
 

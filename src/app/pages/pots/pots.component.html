@@ -5,7 +5,7 @@
 
 <section class="m-t-4 grid">
   @for(pot of potsService.pots$| async; track pot){
-  <app-pots-card [index]="$index" [pot]="pot"></app-pots-card>
+  <app-pots-card [id]="pot.id" [pot]="pot"></app-pots-card>
   }
 </section>
 <router-outlet></router-outlet>

@@ -33,9 +33,9 @@ export class DeleteComponent {
 
   loadTitle() {
     if (this.type === 'budgets') {
-      this.title = this.budgetService.getBudget(this.index).category;
+      this.title = this.budgetService.getBudget(this.index)!.category;
     } else if (this.type === 'pots') {
-      this.title = this.potService.getPot(this.index).name;
+      this.title = this.potService.getPot(this.index)!.name;
     }
   }
 

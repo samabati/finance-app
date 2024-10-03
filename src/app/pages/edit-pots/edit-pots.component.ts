@@ -35,8 +35,18 @@ export class EditPotsComponent implements OnDestroy {
   editPotForm!: FormGroup;
   potService = inject(PotsService);
   fb = inject(FormBuilder);
-  pot!: Pot;
-  index!: number;
+  pot: Pot = {
+    id: 0,
+    name: '',
+    saved: 0,
+    target: 0,
+    theme: {
+      color: '',
+      class: '',
+      name: '',
+    },
+  };
+  id!: number;
   activatedRoute = inject(ActivatedRoute);
   usedThemes!: Theme[];
   subscription!: Subscription;
@@ -67,18 +77,21 @@ export class EditPotsComponent implements OnDestroy {
 
   loadIndex() {
     this.activatedRoute.paramMap.pipe(take(1)).subscribe((value) => {
-      this.index = Number(value.get('index'));
+      this.id = Number(value.get('index'));
     });
   }
 
   loadPot() {
-    this.pot = this.potService.getPot(this.index);
+    let loadedPot = this.potService.getPot(this.id);
+    if (loadedPot) {
+      this.pot = loadedPot;
+    }
   }
 
   submitForm() {
     if (this.editPotForm.valid) {
       console.log('Pot being added:', this.editPotForm.value);
-      this.potService.editPot(this.editPotForm.value, this.index);
+      this.potService.editPot(this.editPotForm.value, this.id);
       this.exitPage();
     } else {
       console.log('Form is invalid');

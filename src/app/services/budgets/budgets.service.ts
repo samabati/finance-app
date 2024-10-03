@@ -1,57 +1,64 @@
 import { Injectable } from '@angular/core';
 import { Budget } from '../../types/budget';
 import { BehaviorSubject, map, Observable, take } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Theme } from '../../types/theme';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetsService {
-  private budgets: BehaviorSubject<Budget[]> = new BehaviorSubject<Budget[]>([
-    {
-      category: 'Entertainment',
-      spent: 15,
-      max: 50,
-      theme: { name: 'Green', class: 'bg-g', color: '#277C78' },
-    },
-    {
-      category: 'Bills',
-      spent: 150,
-      max: 750,
-      theme: { name: 'Cyan', class: 'bg-cyan', color: '#82C9D7' },
-    },
-    {
-      category: 'Dining Out',
-      spent: 133.75,
-      max: 75,
-      theme: { name: 'Yellow', class: 'bg-yellow', color: '#F2CDAC' },
-    },
-    {
-      category: 'Personal Care',
-      spent: 40,
-      max: 100,
-      theme: { name: 'Navy', class: 'bg-navy', color: '#626070' },
-    },
-  ]);
+  private budgets: BehaviorSubject<Budget[]> = new BehaviorSubject<Budget[]>(
+    []
+  );
 
   budgets$: Observable<Budget[]> = this.budgets.asObservable();
 
-  constructor() {}
+  token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
+  baseURL = 'http://localhost:3000/api/v1/budgets';
+  headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+
+  constructor(private http: HttpClient) {
+    this.loadBudgets();
+  }
+
+  loadBudgets() {
+    this.http
+      .get<Budget[]>(this.baseURL, { headers: this.headers })
+      .subscribe((budgets) => {
+        this.budgets.next(budgets);
+        console.log(this.budgets.getValue());
+      });
+  }
 
   addBudget(newBudget: Budget) {
-    let tempBudget = this.budgets.getValue();
-    tempBudget.push(newBudget);
-    this.budgets.next(tempBudget);
-    console.log('New Budget list: ', this.budgets.getValue());
+    this.http
+      .post<Budget>(this.baseURL, newBudget, {
+        headers: this.headers,
+      })
+      .subscribe({
+        error: (e) => console.log('An error has occured', e),
+        complete: () => {
+          this.loadBudgets();
+          console.log('Budget added successfully');
+        },
+      });
   }
 
-  removeBudget(index: number) {
+  removeBudget(id: number) {
     let tempBudget = this.budgets.getValue();
-    tempBudget = tempBudget.filter((value, i) => i !== index);
+    tempBudget = tempBudget.filter((value) => value.id !== id);
     this.budgets.next(tempBudget);
+    this.http
+      .delete<any>(this.baseURL + `/${id}`, { headers: this.headers })
+      .subscribe({
+        error: (e) => console.log('An error has occured', e),
+        complete: () => console.log('Budget deleted successfully'),
+      });
   }
 
-  getBudget(index: number) {
-    return this.budgets.getValue()[index];
+  getBudget(id: number) {
+    return this.budgets.getValue().find((budget) => budget.id === id);
   }
 
   getThemes() {
@@ -60,10 +67,19 @@ export class BudgetsService {
     );
   }
 
-  updateBudget(updates: Partial<Budget>, index: number) {
+  updateBudget(updates: Partial<Budget>, id: number) {
     const budgets = this.budgets.getValue();
-    const budget = { ...budgets[index], ...updates };
-    budgets[index] = budget;
-    this.budgets.next(budgets);
+    const budgetIndex = budgets.findIndex((budget) => budget.id === id);
+
+    if (budgetIndex) {
+      budgets[budgetIndex] = { ...budgets[budgetIndex], ...updates };
+      this.budgets.next(budgets);
+      this.http
+        .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
+        .subscribe({
+          error: (e) => console.log('An error has occured', e),
+          complete: () => console.log('Budget deleted successfully'),
+        });
+    }
   }
 }

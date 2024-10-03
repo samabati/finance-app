@@ -13,7 +13,7 @@ import {
 import { BudgetsService } from '../../services/budgets/budgets.service';
 import { Subscription, take } from 'rxjs';
 import { Budget } from '../../types/budget';
-import { Theme } from '../../types/theme';
+import { Theme, THEMES } from '../../types/theme';
 import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.component';
 
 @Component({
@@ -37,7 +37,13 @@ export class EditBudgetsComponent implements OnDestroy {
   formBuilder = inject(FormBuilder);
   index!: number;
   budgetService = inject(BudgetsService);
-  budget!: Budget;
+  budget: Budget = {
+    id: 999,
+    category: '',
+    spent: 0,
+    max: 0,
+    theme: { name: '', class: '', color: '' },
+  };
   usedThemes!: Theme[];
   subscription!: Subscription;
 
@@ -72,7 +78,8 @@ export class EditBudgetsComponent implements OnDestroy {
   }
 
   loadBudget() {
-    this.budget = this.budgetService.getBudget(this.index);
+    let loadBudget = this.budgetService.getBudget(this.index);
+    if (loadBudget) this.budget = loadBudget;
   }
 
   exitPage() {
