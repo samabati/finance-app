@@ -39,6 +39,7 @@ export class AddNewBudgetsComponent implements OnDestroy {
   fb = inject(FormBuilder);
   subscription = new Subscription();
   usedThemes!: Theme[];
+  usedCategories!: [];
   themes = THEMES;
   errors: any = '';
 
@@ -53,7 +54,6 @@ export class AddNewBudgetsComponent implements OnDestroy {
 
   submitForm() {
     if (this.addBudgetForm.valid) {
-      this.getSpent();
       console.log('Budget being added:', this.addBudgetForm.value);
       this.budgetService.addBudget(this.addBudgetForm.value);
       this.exitPage();
@@ -77,39 +77,6 @@ export class AddNewBudgetsComponent implements OnDestroy {
             this.usedThemes = value;
             this.updateForm();
           }
-        })
-    );
-  }
-
-  getSpent() {
-    this.subscription.add(
-      this.transactionService.state$
-        .pipe(
-          take(1),
-          map((state) => state.transactions),
-          map((transactions) =>
-            transactions.filter((item) => {
-              return (
-                item.category === this.addBudgetForm.get('category')?.value &&
-                item.amount < 0
-              );
-            })
-          )
-        )
-        .subscribe((value) => {
-          console.log(
-            'CATEGORY VALUE:',
-            this.addBudgetForm.get('category')?.value
-          );
-          let totalSpent = +value.reduce(
-            (a, b) => a.abs().plus(new Decimal(b.amount).abs()),
-            new Decimal(0)
-          );
-
-          console.log('totalspent', totalSpent);
-          this.addBudgetForm.patchValue({
-            spent: totalSpent,
-          });
         })
     );
   }
