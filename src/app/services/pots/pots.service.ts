@@ -93,4 +93,52 @@ export class PotsService {
   getThemes() {
     return this.pots$.pipe(map((pots) => pots.map((pot) => pot.theme)));
   }
+
+  addFunds(id: number, saved: number) {
+    let pots = this.pots.getValue();
+    let index = pots.findIndex((pot) => pot.id === id);
+
+    if (index) {
+      this.http
+        .patch<any>(
+          this.baseURL + `/${id}/add`,
+          { saved },
+          {
+            headers: this.headers,
+          }
+        )
+        .subscribe({
+          next: (res) => {
+            console.log('Funds added successfully:', res);
+            pots[index] = { ...pots[index], saved };
+            this.pots.next(pots);
+          },
+          error: (e) => console.log('Error adding funds', e),
+        });
+    }
+  }
+
+  withdrawFunds(id: number, saved: number) {
+    let pots = this.pots.getValue();
+    let index = pots.findIndex((pot) => pot.id === id);
+
+    if (index) {
+      this.http
+        .patch<any>(
+          this.baseURL + `/${id}/withdraw`,
+          { saved },
+          {
+            headers: this.headers,
+          }
+        )
+        .subscribe({
+          next: (res) => {
+            console.log('Funds withdrawn successfully:', res);
+            pots[index] = { ...pots[index], saved };
+            this.pots.next(pots);
+          },
+          error: (e) => console.log('Error withdrawing funds', e),
+        });
+    }
+  }
 }

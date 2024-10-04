@@ -37,7 +37,7 @@ export class BudgetsService {
         headers: this.headers,
       })
       .subscribe({
-        error: (e) => console.log('An error has occured', e),
+        error: (e) => console.log('An error has occurred', e),
         complete: () => {
           this.loadBudgets();
           console.log('Budget added successfully');
@@ -52,7 +52,7 @@ export class BudgetsService {
     this.http
       .delete<any>(this.baseURL + `/${id}`, { headers: this.headers })
       .subscribe({
-        error: (e) => console.log('An error has occured', e),
+        error: (e) => console.log('An error has occurred', e),
         complete: () => console.log('Budget deleted successfully'),
       });
   }
@@ -77,7 +77,7 @@ export class BudgetsService {
       this.http
         .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
         .subscribe({
-          error: (e) => console.log('An error has occured', e),
+          error: (e) => console.log('An error has occurred', e),
           complete: () => console.log('Budget deleted successfully'),
         });
     }

@@ -59,7 +59,12 @@ export class AddWithdrawComponent {
   submitForm() {
     if (this.addWithdrawForm.valid) {
       console.log(`Amount being ${this.type}ed:`, this.addWithdrawForm.value);
-      this.potService.editPot({ saved: this.newAmount }, this.index);
+
+      if (this.type === 'add') {
+        this.potService.addFunds(this.pot.id, this.newAmount);
+      } else if (this.type === 'withdraw') {
+        this.potService.withdrawFunds(this.pot.id, this.newAmount);
+      }
       this.exitPage();
     } else {
       console.log('Form is invalid');
