@@ -54,23 +54,19 @@ export class PotsService {
 
   editPot(updates: Partial<Pot>, id: number) {
     let pots = this.pots.getValue();
-
     let index = pots.findIndex((pot) => pot.id === id);
-
-    if (index) {
-      this.http
-        .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
-        .subscribe({
-          next: (res) => {
-            console.log('Pot edited successfully:', res);
-            pots[index] = { ...pots[index], ...updates };
-            this.pots.next(pots);
-          },
-          error: (e) => {
-            console.log('Error editing pot', e);
-          },
-        });
-    }
+    this.http
+      .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          console.log('Pot edited successfully:', res);
+          pots[index] = { ...pots[index], ...updates };
+          this.pots.next(pots);
+        },
+        error: (e) => {
+          console.log('Error editing pot', e);
+        },
+      });
   }
 
   removePot(id: number) {
@@ -97,48 +93,42 @@ export class PotsService {
   addFunds(id: number, saved: number) {
     let pots = this.pots.getValue();
     let index = pots.findIndex((pot) => pot.id === id);
-
-    if (index) {
-      this.http
-        .patch<any>(
-          this.baseURL + `/${id}/add`,
-          { saved },
-          {
-            headers: this.headers,
-          }
-        )
-        .subscribe({
-          next: (res) => {
-            console.log('Funds added successfully:', res);
-            pots[index] = { ...pots[index], saved };
-            this.pots.next(pots);
-          },
-          error: (e) => console.log('Error adding funds', e),
-        });
-    }
+    this.http
+      .patch<any>(
+        this.baseURL + `/${id}/add`,
+        { saved },
+        {
+          headers: this.headers,
+        }
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('Funds added successfully:', res);
+          pots[index] = { ...pots[index], saved };
+          this.pots.next(pots);
+        },
+        error: (e) => console.log('Error adding funds', e),
+      });
   }
 
   withdrawFunds(id: number, saved: number) {
     let pots = this.pots.getValue();
     let index = pots.findIndex((pot) => pot.id === id);
-
-    if (index) {
-      this.http
-        .patch<any>(
-          this.baseURL + `/${id}/withdraw`,
-          { saved },
-          {
-            headers: this.headers,
-          }
-        )
-        .subscribe({
-          next: (res) => {
-            console.log('Funds withdrawn successfully:', res);
-            pots[index] = { ...pots[index], saved };
-            this.pots.next(pots);
-          },
-          error: (e) => console.log('Error withdrawing funds', e),
-        });
-    }
+    this.http
+      .patch<any>(
+        this.baseURL + `/${id}/withdraw`,
+        { saved },
+        {
+          headers: this.headers,
+        }
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('Funds withdrawn successfully:', res);
+          pots[index] = { ...pots[index], saved };
+          this.pots.next(pots);
+        },
+        error: (e) => console.log('Error withdrawing funds', e),
+      });
   }
 }

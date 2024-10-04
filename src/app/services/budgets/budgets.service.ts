@@ -18,9 +18,7 @@ export class BudgetsService {
   baseURL = 'http://localhost:3000/api/v1/budgets';
   headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
 
-  constructor(private http: HttpClient) {
-    this.loadBudgets();
-  }
+  constructor(private http: HttpClient) {}
 
   loadBudgets() {
     this.http
@@ -70,16 +68,13 @@ export class BudgetsService {
   updateBudget(updates: Partial<Budget>, id: number) {
     const budgets = this.budgets.getValue();
     const budgetIndex = budgets.findIndex((budget) => budget.id === id);
-
-    if (budgetIndex) {
-      budgets[budgetIndex] = { ...budgets[budgetIndex], ...updates };
-      this.budgets.next(budgets);
-      this.http
-        .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
-        .subscribe({
-          error: (e) => console.log('An error has occurred', e),
-          complete: () => console.log('Budget deleted successfully'),
-        });
-    }
+    budgets[budgetIndex] = { ...budgets[budgetIndex], ...updates };
+    this.budgets.next(budgets);
+    this.http
+      .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
+      .subscribe({
+        error: (e) => console.log('An error has occurred', e),
+        complete: () => console.log('Budget deleted successfully'),
+      });
   }
 }

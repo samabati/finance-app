@@ -11,8 +11,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { BudgetsService } from '../../services/budgets/budgets.service';
-import { Subscription } from 'rxjs';
+import { filter, map, Subscription, take } from 'rxjs';
 import { Theme, THEMES } from '../../types/theme';
+import { TransactionsService } from '../../services/transactions/transactions.service';
+import { Transactions } from '../../types/transactions';
+import { Budget } from '../../types/budget';
+import Decimal from 'decimal.js';
 
 @Component({
   selector: 'app-add-new-budgets',
@@ -29,19 +33,88 @@ import { Theme, THEMES } from '../../types/theme';
 })
 export class AddNewBudgetsComponent implements OnDestroy {
   router = inject(Router);
-  addBudgetForm: FormGroup;
+  addBudgetForm!: FormGroup;
   budgetService = inject(BudgetsService);
+  transactionService = inject(TransactionsService);
   fb = inject(FormBuilder);
-  subscription!: Subscription;
+  subscription = new Subscription();
   usedThemes!: Theme[];
   themes = THEMES;
+  errors: any = '';
 
   constructor() {
-    this.subscription = this.budgetService.getThemes().subscribe((value) => {
-      console.log('USED THEMES:', value);
-      this.usedThemes = value;
-    });
+    this.loadForm();
+    this.loadThemes();
+  }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  submitForm() {
+    if (this.addBudgetForm.valid) {
+      this.getSpent();
+      console.log('Budget being added:', this.addBudgetForm.value);
+      this.budgetService.addBudget(this.addBudgetForm.value);
+      this.exitPage();
+    } else {
+      if (this.addBudgetForm.get('max')?.errors) {
+        this.errors = 'Maximum spend is required';
+      }
+    }
+  }
+
+  loadThemes() {
+    this.subscription.add(
+      this.budgetService.budgets$
+        .pipe(
+          take(2),
+          map((budgets: Budget[]) => budgets.map((budget) => budget.theme))
+        )
+        .subscribe((value) => {
+          console.log('USED THEMES:', value);
+          if (value) {
+            this.usedThemes = value;
+            this.updateForm();
+          }
+        })
+    );
+  }
+
+  getSpent() {
+    this.subscription.add(
+      this.transactionService.state$
+        .pipe(
+          take(1),
+          map((state) => state.transactions),
+          map((transactions) =>
+            transactions.filter((item) => {
+              return (
+                item.category === this.addBudgetForm.get('category')?.value &&
+                item.amount < 0
+              );
+            })
+          )
+        )
+        .subscribe((value) => {
+          console.log(
+            'CATEGORY VALUE:',
+            this.addBudgetForm.get('category')?.value
+          );
+          let totalSpent = +value.reduce(
+            (a, b) => a.abs().plus(new Decimal(b.amount).abs()),
+            new Decimal(0)
+          );
+
+          console.log('totalspent', totalSpent);
+          this.addBudgetForm.patchValue({
+            spent: totalSpent,
+          });
+        })
+    );
+  }
+
+  loadForm() {
     this.addBudgetForm = this.fb.group({
       category: ['Entertainment', Validators.required],
       spent: [0],
@@ -49,28 +122,20 @@ export class AddNewBudgetsComponent implements OnDestroy {
         '',
         [Validators.required, Validators.min(1), Validators.max(9999999)],
       ],
-      theme: [
-        this.themes.find((theme) => !this.isUsedTheme(theme)),
-        Validators.required,
-      ],
-    });
-
-    this.addBudgetForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed: ', value);
+      theme: [' ', Validators.required],
     });
   }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
 
-  submitForm() {
-    if (this.addBudgetForm.valid) {
-      console.log('Budget being added:', this.addBudgetForm.value);
-      this.budgetService.addBudget(this.addBudgetForm.value);
-      this.exitPage();
-    } else {
-      console.log('Form is invalid');
-    }
+  updateForm() {
+    this.addBudgetForm.patchValue({
+      theme: this.themes.find((theme) => !this.isUsedTheme(theme)),
+    });
+
+    this.subscription.add(
+      this.addBudgetForm.valueChanges.subscribe((value) => {
+        console.log('Form value changed: ', value);
+      })
+    );
   }
 
   exitPage() {

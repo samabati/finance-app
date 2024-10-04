@@ -27,6 +27,11 @@
         formControlName="theme"
       ></app-add-theme>
     </ul>
+    @if(errors){
+    <p class="color-red font-s-4 font-w-4 font-lh-150">
+      {{ errors }}
+    </p>
+    }
     <app-add-button text="Add Budget" type="submit"></app-add-button>
   </form>
 </section>

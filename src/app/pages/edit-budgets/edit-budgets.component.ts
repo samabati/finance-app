@@ -11,7 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { BudgetsService } from '../../services/budgets/budgets.service';
-import { Subscription, take } from 'rxjs';
+import { map, Subscription, take } from 'rxjs';
 import { Budget } from '../../types/budget';
 import { Theme, THEMES } from '../../types/theme';
 import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.component';
@@ -33,38 +33,25 @@ import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.compon
 export class EditBudgetsComponent implements OnDestroy {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
-  editBudgetForm!: FormGroup;
+  editBudgetForm: FormGroup = new FormGroup({});
   formBuilder = inject(FormBuilder);
   index!: number;
   budgetService = inject(BudgetsService);
   budget: Budget = {
-    id: 999,
+    id: 0,
     category: '',
     spent: 0,
     max: 0,
-    theme: { name: '', class: '', color: '' },
+    theme: { class: '', name: '', color: '' },
   };
   usedThemes!: Theme[];
-  subscription!: Subscription;
+  subscription = new Subscription();
+  error = '';
 
   constructor() {
     this.getIndex();
+    this.buildForm();
     this.loadBudget();
-
-    this.subscription = this.budgetService.getThemes().subscribe((value) => {
-      this.usedThemes = value;
-    });
-
-    this.editBudgetForm = this.formBuilder.group({
-      category: [this.budget.category, Validators.required],
-      max: [this.budget.max, [Validators.required, Validators.min(1)]],
-      spent: [this.budget.spent, Validators.required],
-      theme: [this.budget.theme, Validators.required],
-    });
-
-    this.editBudgetForm.valueChanges.subscribe((value) => {
-      console.log('Changes made: ', value);
-    });
   }
 
   ngOnDestroy(): void {
@@ -72,25 +59,62 @@ export class EditBudgetsComponent implements OnDestroy {
   }
 
   getIndex() {
-    this.activatedRoute.params.pipe(take(1)).subscribe((value) => {
-      this.index = Number(value['index']);
-    });
+    this.subscription.add(
+      this.activatedRoute.params.pipe(take(1)).subscribe((value) => {
+        this.index = Number(value['index']);
+      })
+    );
   }
 
   loadBudget() {
-    let loadBudget = this.budgetService.getBudget(this.index);
-    if (loadBudget) this.budget = loadBudget;
+    this.subscription.add(
+      this.budgetService.budgets$.pipe(take(2)).subscribe((budgets) => {
+        let budget = budgets.find((budget) => budget.id === this.index);
+        if (budget) {
+          this.budget = budget;
+          this.updateForm();
+        }
+        this.usedThemes = budgets.map((budget) => budget.theme);
+      })
+    );
   }
 
-  exitPage() {
-    this.router.navigateByUrl('/budgets');
+  buildForm() {
+    this.editBudgetForm = this.formBuilder.group({
+      category: ['', Validators.required],
+      max: ['', [Validators.required, Validators.min(1)]],
+      spent: ['', Validators.required],
+      theme: ['', Validators.required],
+    });
+  }
+
+  updateForm() {
+    this.editBudgetForm.patchValue({
+      category: this.budget.category,
+      max: this.budget.max,
+      spent: this.budget.spent,
+      theme: this.budget.theme,
+    });
+
+    this.subscription.add(
+      this.editBudgetForm.valueChanges.subscribe((value) => {
+        console.log('Changes made: ', value);
+      })
+    );
   }
 
   saveChanges() {
     if (this.editBudgetForm.valid) {
-      console.log('Editing budget:', this.editBudgetForm.value);
       this.budgetService.updateBudget(this.editBudgetForm.value, this.index);
       this.exitPage();
+    } else {
+      if (this.editBudgetForm.get('max')?.errors) {
+        this.error = 'Maximum spend is required';
+      }
     }
+  }
+
+  exitPage() {
+    this.router.navigateByUrl('/budgets');
   }
 }

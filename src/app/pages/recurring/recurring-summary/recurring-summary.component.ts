@@ -3,6 +3,7 @@ import { RecurringService } from '../../../services/recurring/recurring.service'
 import { Subscription, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Transactions } from '../../../types/transactions';
+import Decimal from 'decimal.js';
 
 @Component({
   selector: 'app-recurring-summary',
@@ -53,14 +54,23 @@ export class RecurringSummaryComponent implements OnInit, OnDestroy {
   }
 
   getPaidTotal() {
-    return Math.abs(this.paidBills.reduce((a, b) => a + b, 0));
+    return this.paidBills
+      .reduce((a, b) => a.plus(new Decimal(b)), new Decimal(0))
+      .abs()
+      .toString();
   }
 
   getUpcomingTotal() {
-    return Math.abs(this.upcomingBills.reduce((a, b) => a + b, 0));
+    return this.upcomingBills
+      .reduce((a, b) => a.plus(new Decimal(b)), new Decimal(0))
+      .abs()
+      .toString();
   }
 
   getDueSoon() {
-    return Math.abs(this.dueSoonBills.reduce((a, b) => a + b, 0));
+    return this.dueSoonBills
+      .reduce((a, b) => a.plus(new Decimal(b)), new Decimal(0))
+      .abs()
+      .toString();
   }
 }

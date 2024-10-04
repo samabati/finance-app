@@ -49,26 +49,13 @@ export class EditPotsComponent implements OnDestroy {
   id!: number;
   activatedRoute = inject(ActivatedRoute);
   usedThemes!: Theme[];
-  subscription!: Subscription;
+  subscription = new Subscription();
+  error = '';
 
   constructor() {
     this.loadIndex();
+    this.buildForm();
     this.loadPot();
-
-    this.subscription = this.potService.getThemes().subscribe((value) => {
-      this.usedThemes = value;
-    });
-
-    this.editPotForm = this.fb.group({
-      name: [this.pot.name, [Validators.required, Validators.maxLength(30)]],
-      saved: [this.pot.saved],
-      target: [this.pot.target, [Validators.required, Validators.min(1)]],
-      theme: [this.pot.theme, Validators.required],
-    });
-
-    this.editPotForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed: ', value);
-    });
   }
 
   ngOnDestroy(): void {
@@ -76,16 +63,48 @@ export class EditPotsComponent implements OnDestroy {
   }
 
   loadIndex() {
-    this.activatedRoute.paramMap.pipe(take(1)).subscribe((value) => {
-      this.id = Number(value.get('index'));
-    });
+    this.subscription.add(
+      this.activatedRoute.paramMap.pipe(take(1)).subscribe((value) => {
+        this.id = Number(value.get('index'));
+      })
+    );
   }
 
   loadPot() {
-    let loadedPot = this.potService.getPot(this.id);
-    if (loadedPot) {
-      this.pot = loadedPot;
-    }
+    this.subscription.add(
+      this.potService.pots$.pipe(take(2)).subscribe((pots) => {
+        let pot = pots.find((pot) => pot.id === this.id);
+        if (pot) {
+          this.pot = pot;
+          this.updateForm();
+        }
+        this.usedThemes = pots.map((pot) => pot.theme);
+      })
+    );
+  }
+
+  buildForm() {
+    this.editPotForm = this.fb.group({
+      name: ['', [Validators.required, Validators.maxLength(30)]],
+      saved: [''],
+      target: ['', [Validators.required, Validators.min(1)]],
+      theme: ['', Validators.required],
+    });
+  }
+
+  updateForm() {
+    this.editPotForm.patchValue({
+      name: this.pot.name,
+      saved: this.pot.saved,
+      target: this.pot.target,
+      theme: this.pot.theme,
+    });
+
+    this.subscription.add(
+      this.editPotForm.valueChanges.subscribe((value) => {
+        console.log('Form value changed: ', value);
+      })
+    );
   }
 
   submitForm() {
@@ -94,7 +113,14 @@ export class EditPotsComponent implements OnDestroy {
       this.potService.editPot(this.editPotForm.value, this.id);
       this.exitPage();
     } else {
-      console.log('Form is invalid');
+      let errors = [];
+      if (this.editPotForm.get('target')?.errors) errors.push('Target');
+      if (this.editPotForm.get('name')?.errors) errors.push('Name');
+      if (errors.length > 1) {
+        this.error = 'Target and Name are required';
+      } else {
+        this.error = `${errors[0]} is required`;
+      }
     }
   }
 

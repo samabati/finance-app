@@ -39,10 +39,10 @@ export class RecurringListItemComponent implements OnInit {
 
   loadDueDate() {
     const today = new Date().getDate();
-    const transactionDate = new Date(this.transaction.date).getDate();
-    if (isBefore(transactionDate, today) || today === transactionDate) {
+    const transDay = new Date(this.transaction.date).getDate();
+    if (today >= transDay) {
       this.due = DueDate.PAID;
-    } else if (isBefore(transactionDate, addDays(today, 3))) {
+    } else if (today - transDay >= -3) {
       this.due = DueDate.UPCOMING;
     } else {
       this.due = DueDate.LATER;
