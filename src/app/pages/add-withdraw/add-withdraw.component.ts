@@ -42,13 +42,13 @@ export class AddWithdrawComponent implements OnDestroy {
   index!: number;
   newAmount!: number;
   subscription = new Subscription();
-  error = '';
+  error: string | null = '';
 
   constructor() {
     this.loadType();
     this.loadIndex();
-    this.loadPot();
     this.buildForm();
+    this.loadPot();
   }
 
   ngOnDestroy(): void {
@@ -56,19 +56,44 @@ export class AddWithdrawComponent implements OnDestroy {
   }
 
   submitForm() {
+    this.error = this.validateNewAmount();
+
+    if (this.error) {
+      return;
+    }
+
     if (this.addWithdrawForm.valid) {
-      console.log(`Amount being ${this.type}ed:`, this.addWithdrawForm.value);
-      if (this.type === 'add') {
-        this.potService.addFunds(this.pot.id, this.newAmount);
-      } else if (this.type === 'withdraw') {
-        this.potService.withdrawFunds(this.pot.id, this.newAmount);
-      }
+      this.handleTransaction();
       this.exitPage();
     } else {
-      let savedError = this.addWithdrawForm.get('saved')?.errors;
-      if (savedError) {
-        this.error = `Amount to ${this.type} is required`;
-      }
+      this.handleFormErrors();
+    }
+  }
+
+  validateNewAmount(): string | null {
+    if (this.newAmount > this.pot.target) {
+      return 'New amount cannot be greater than target';
+    }
+    if (this.newAmount < 0) {
+      return 'New amount cannot be negative';
+    }
+    return null;
+  }
+
+  handleTransaction() {
+    const action = this.type === 'add' ? 'addFunds' : 'withdrawFunds';
+    this.potService[action](this.pot.id, this.newAmount);
+    console.log(`Amount being ${this.type}ed:`, this.addWithdrawForm.value);
+  }
+
+  handleFormErrors() {
+    const savedError = this.addWithdrawForm.get('saved')?.errors;
+    console.log(savedError);
+
+    if (savedError?.['min']) {
+      this.error = `Amount to ${this.type} must be greater than 0`;
+    } else if (savedError?.['required']) {
+      this.error = `Amount to ${this.type} is required`;
     }
   }
 
@@ -90,9 +115,22 @@ export class AddWithdrawComponent implements OnDestroy {
         if (pot) {
           this.pot = pot;
           this.newAmount = pot.saved;
+          this.setValidators();
         }
       })
     );
+  }
+
+  setValidators() {
+    if (this.type === 'add') {
+      this.addWithdrawForm
+        .get('saved')
+        ?.setValidators([
+          Validators.required,
+          Validators.min(1),
+          Validators.max(this.pot.target - this.pot.saved),
+        ]);
+    }
   }
 
   buildForm() {

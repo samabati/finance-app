@@ -44,12 +44,19 @@ export class DeleteComponent {
 
   loadTitle() {
     if (this.type === 'budgets') {
-      this.budgetService.budgets$.pipe(take(2)).subscribe((budgets) => {
-        let title = budgets.find((item) => item.id === this.index)?.category;
-        if (title) this.title = title;
-      });
+      this.subscription.add(
+        this.budgetService.budgets$.pipe(take(2)).subscribe((budgets) => {
+          let title = budgets.find((item) => item.id === this.index)?.category;
+          if (title) this.title = title;
+        })
+      );
     } else if (this.type === 'pots') {
-      this.title = this.potService.getPot(this.index)!.name;
+      this.subscription.add(
+        this.potService.pots$.pipe(take(2)).subscribe((budgets) => {
+          let title = budgets.find((item) => item.id === this.index)?.name;
+          if (title) this.title = title;
+        })
+      );
     }
   }
 
