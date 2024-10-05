@@ -17,7 +17,10 @@
       monitor spending.
     </p>
     <ul class="flex flex-d-c gap-200">
-      <app-add-category formControlName="category"></app-add-category>
+      <app-add-category
+        [usedCategories]="usedCategories"
+        formControlName="category"
+      ></app-add-category>
       <app-add-spend
         title="Maximum Spend"
         formControlName="max"

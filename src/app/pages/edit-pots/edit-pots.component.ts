@@ -108,7 +108,9 @@ export class EditPotsComponent implements OnDestroy {
   }
 
   submitForm() {
-    if (this.editPotForm.valid) {
+    if (this.editPotForm.pristine) {
+      this.error = 'No changes have been made';
+    } else if (this.editPotForm.valid) {
       console.log('Pot being added:', this.editPotForm.value);
       this.potService.editPot(this.editPotForm.value, this.id);
       this.exitPage();

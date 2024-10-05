@@ -17,6 +17,7 @@ import { TransactionsService } from '../../services/transactions/transactions.se
 import { Transactions } from '../../types/transactions';
 import { Budget } from '../../types/budget';
 import Decimal from 'decimal.js';
+import { CATEGORIES } from '../../types/categories';
 
 @Component({
   selector: 'app-add-new-budgets',
@@ -39,13 +40,14 @@ export class AddNewBudgetsComponent implements OnDestroy {
   fb = inject(FormBuilder);
   subscription = new Subscription();
   usedThemes!: Theme[];
-  usedCategories!: [];
+  usedCategories!: string[];
   themes = THEMES;
+  categories = CATEGORIES;
   errors: any = '';
 
   constructor() {
     this.loadForm();
-    this.loadThemes();
+    this.loadThemesAndCategories();
   }
 
   ngOnDestroy(): void {
@@ -64,26 +66,32 @@ export class AddNewBudgetsComponent implements OnDestroy {
     }
   }
 
-  loadThemes() {
+  loadThemesAndCategories() {
     this.subscription.add(
-      this.budgetService.budgets$
-        .pipe(
-          take(2),
-          map((budgets: Budget[]) => budgets.map((budget) => budget.theme))
-        )
-        .subscribe((value) => {
-          console.log('USED THEMES:', value);
-          if (value) {
-            this.usedThemes = value;
-            this.updateForm();
-          }
-        })
+      this.budgetService.budgets$.pipe(take(2)).subscribe((value: Budget[]) => {
+        let usedThemes = value.map((budget) => budget.theme);
+        let usedCategories = value.map((budget) => budget.category);
+        console.log(
+          'USED THEMES:',
+          usedThemes,
+          'USED CATEGORIES',
+          usedCategories
+        );
+        if (usedThemes) {
+          this.usedThemes = usedThemes;
+          this.updateForm();
+        }
+        if (usedCategories) {
+          this.usedCategories = usedCategories;
+          this.updateForm();
+        }
+      })
     );
   }
 
   loadForm() {
     this.addBudgetForm = this.fb.group({
-      category: ['Entertainment', Validators.required],
+      category: ['', Validators.required],
       spent: [0],
       max: [
         '',
@@ -94,9 +102,20 @@ export class AddNewBudgetsComponent implements OnDestroy {
   }
 
   updateForm() {
-    this.addBudgetForm.patchValue({
-      theme: this.themes.find((theme) => !this.isUsedTheme(theme)),
-    });
+    if (this.usedThemes) {
+      this.addBudgetForm.patchValue({
+        theme: this.themes.find((theme) => !this.isUsedTheme(theme)),
+      });
+    }
+
+    if (this.usedCategories) {
+      console.log('FUNCTION RAN HERE');
+      this.addBudgetForm.patchValue({
+        category: this.categories.find(
+          (category) => !this.isUsedCategory(category)
+        ),
+      });
+    }
 
     this.subscription.add(
       this.addBudgetForm.valueChanges.subscribe((value) => {
@@ -111,5 +130,9 @@ export class AddNewBudgetsComponent implements OnDestroy {
 
   isUsedTheme(theme: Theme): boolean {
     return this.usedThemes.some((used) => used.name == theme.name);
+  }
+
+  isUsedCategory(category: string): boolean {
+    return this.usedCategories.some((used) => used == category);
   }
 }

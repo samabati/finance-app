@@ -45,6 +45,7 @@ export class EditBudgetsComponent implements OnDestroy {
     theme: { class: '', name: '', color: '' },
   };
   usedThemes!: Theme[];
+  usedCategories!: string[];
   subscription = new Subscription();
   error = '';
 
@@ -74,6 +75,7 @@ export class EditBudgetsComponent implements OnDestroy {
           this.budget = budget;
           this.updateForm();
         }
+        this.usedCategories = budgets.map((budget) => budget.category);
         this.usedThemes = budgets.map((budget) => budget.theme);
       })
     );
@@ -104,7 +106,9 @@ export class EditBudgetsComponent implements OnDestroy {
   }
 
   saveChanges() {
-    if (this.editBudgetForm.valid) {
+    if (this.editBudgetForm.pristine) {
+      this.error = 'No changes have been made';
+    } else if (this.editBudgetForm.valid) {
       this.budgetService.updateBudget(this.editBudgetForm.value, this.index);
       this.exitPage();
     } else {

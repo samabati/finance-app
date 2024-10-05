@@ -5,6 +5,7 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import { CATEGORIES } from '../../../types/categories';
 
 @Component({
   selector: 'app-add-category',
@@ -37,24 +38,22 @@ export class AddCategoryComponent implements ControlValueAccessor {
 
   showDropdown: boolean = false;
   selected!: string;
-
-  data = [
-    'Entertainment',
-    'Bills',
-    'Groceries',
-    'Dining Out',
-    'Transportation',
-    'Personal Care',
-    'Education',
-  ];
+  @Input() usedCategories!: string[];
+  categories = CATEGORIES;
 
   selectCategory(category: string) {
-    this.selected = category;
-    this.onChange(category);
-    this.onTouched();
+    if (!this.isUsedCategory(category)) {
+      this.selected = category;
+      this.onChange(category);
+      this.onTouched();
+    }
   }
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
+  }
+
+  isUsedCategory(category: string): boolean {
+    return this.usedCategories.some((item) => item === category);
   }
 }

@@ -17,6 +17,7 @@
     </p>
     <ul class="flex flex-d-c gap-200">
       <app-edit-category
+        [usedCategories]="usedCategories"
         formControlName="category"
         [selected]="budget.category"
       ></app-edit-category>
