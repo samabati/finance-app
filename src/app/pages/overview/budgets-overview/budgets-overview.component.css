@@ -6,11 +6,20 @@ section > div {
     width: 35%;
 }
 
+#budgets-loading{
+    display: block;
+    height:52.515rem;
+}
+
+
 /* Tablet */
 
 @media (max-width: 65.94rem){
     section > div{
         width: 25%;
+    }
+    #budgets-loading{
+        height: 34.8rem;
     }
 }
 
@@ -29,5 +38,8 @@ section > div {
         width: 100%;
         grid-template-columns: 1fr 1fr;
         max-height: 102px;
+    }
+    #budgets-loading{
+        height: 45rem;
     }
 }

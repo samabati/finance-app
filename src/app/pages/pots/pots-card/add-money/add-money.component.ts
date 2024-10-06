@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
   styleUrl: './add-money.component.css',
 })
 export class AddMoneyComponent {
-  @Input() index!: number;
+  @Input() id!: number;
   router = inject(Router);
 
   navigateToAdd() {
-    this.router.navigateByUrl(`/pots/${this.index}/add`);
+    this.router.navigateByUrl(`/pots/${this.id}/add`);
   }
 }

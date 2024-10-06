@@ -3,6 +3,11 @@ section{
     grid-template-columns: repeat(2, 1fr);
 }
 
+#pots-card-loading{
+    height: 30.54rem;
+    display: block;
+}
+
 
 /* Tablet */
 

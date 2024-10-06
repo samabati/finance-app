@@ -25,6 +25,9 @@ app-recurring-overview{
     grid-row: 9/12;
 }
 
+
+
+
 /* Tablet */
 
 @media (max-width: 65.94rem){
@@ -48,7 +51,6 @@ app-recurring-overview{
     app-recurring-overview{
         order: 4;
     }
-
 }
 
 /* Mobile */
@@ -71,4 +73,5 @@ app-recurring-overview{
         height: 100%;
         grid-row: 1;
     }
+
 }

@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
   styleUrl: './withdraw.component.css',
 })
 export class WithdrawComponent {
-  @Input() index!: number;
+  @Input() id!: number;
   router = inject(Router);
 
   navigateToWithdraw() {
-    this.router.navigateByUrl(`/pots/${this.index}/withdraw`);
+    this.router.navigateByUrl(`/pots/${this.id}/withdraw`);
   }
 }

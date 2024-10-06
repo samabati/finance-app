@@ -7,35 +7,32 @@ import { TransactionsService } from '../../../services/transactions/transactions
 import { filter, map, Observable, Subscription } from 'rxjs';
 import { Transactions } from '../../../types/transactions';
 import { Router } from '@angular/router';
+import { SkeletonModule } from 'primeng/skeleton';
+import { TransactionSkeletonComponent } from '../../../components/shared/transaction-skeleton/transaction-skeleton/transaction-skeleton.component';
 
 @Component({
   selector: 'app-budgets-card',
   standalone: true,
-  imports: [BudgetsCardItemComponent, CommonModule, EllipsesComponent],
+  imports: [
+    BudgetsCardItemComponent,
+    CommonModule,
+    EllipsesComponent,
+    SkeletonModule,
+    TransactionSkeletonComponent,
+  ],
   templateUrl: './budgets-card.component.html',
   styleUrl: './budgets-card.component.css',
 })
 export class BudgetsCardComponent implements OnInit, OnDestroy {
   @Input() budget!: Budget;
-  @Input() index!: number;
+  @Input() id!: number;
   cardTransactions: Transactions[] = [];
   transactionService = inject(TransactionsService);
   router = inject(Router);
   subscription!: Subscription;
-
   ngOnInit(): void {
     this.subscription = this.transactionService
-      .getRawTransactions()
-      .pipe(
-        map((trans) =>
-          trans.filter((trans) => trans.category == this.budget.category)
-        ),
-        map((trans) =>
-          trans.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-          )
-        )
-      )
+      .fetchTransactions(this.budget.category)
       .subscribe((value) => (this.cardTransactions = value));
   }
 

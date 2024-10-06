@@ -1,5 +1,11 @@
-<!-- Added text-truncate to total savings as temporary solution. Will comeback to fix later on -->
-
+@if(loading){
+<p-skeleton
+  id="pots-loading"
+  height="100%"
+  width="100%"
+  borderRadius="12px"
+></p-skeleton>
+} @else {
 <article class="p-t-4 p-r-4 p-b-4 p-l-4 border-r-150 bg-w">
   <app-overview-card-header
     title="Pots"
@@ -32,3 +38,4 @@
     </div>
   </section>
 </article>
+}

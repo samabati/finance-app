@@ -1,3 +1,11 @@
+@if(loading){
+<p-skeleton
+  id="recurring-summary-loading"
+  height="100%"
+  width="100%"
+  borderRadius="12px"
+></p-skeleton>
+}@else {
 <article
   class="p-t-250 p-r-250 p-b-250 p-l-250 flex flex-d-c bg-w border-r-150"
 >
@@ -25,3 +33,4 @@
     </li>
   </ul>
 </article>
+}

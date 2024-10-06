@@ -74,6 +74,11 @@
       [title]="type === 'add' ? 'Amount to Add' : 'Amount to Withdraw'"
       formControlName="saved"
     ></app-add-spend>
+    @if(error){
+    <p class="color-red font-s-4 font-w-4 font-lh-150">
+      {{ error }}
+    </p>
+    }
     <app-add-button
       [text]="type === 'add' ? 'Confirm Addition' : 'Confirm Withdrawal'"
     ></app-add-button>

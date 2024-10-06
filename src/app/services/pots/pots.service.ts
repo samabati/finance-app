@@ -1,67 +1,94 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Pot } from '../../types/pot';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PotsService {
-  private pots: BehaviorSubject<Pot[]> = new BehaviorSubject<Pot[]>([
-    {
-      name: 'Savings',
-      saved: 150,
-      target: 2000,
-      theme: { name: 'Green', class: 'bg-g', color: '#277C78' },
-    },
-    {
-      name: 'Concert Ticket',
-      saved: 110,
-      target: 150,
-      theme: { name: 'Navy', class: 'bg-navy', color: '#626070' },
-    },
-    {
-      name: 'Gift',
-      saved: 40,
-      target: 60,
-      theme: { name: 'Cyan', class: 'bg-cyan', color: '#82C9D7' },
-    },
-    {
-      name: 'New Laptop',
-      saved: 10,
-      target: 1000,
-      theme: { name: 'Yellow', class: 'bg-yellow', color: '#F2CDAC' },
-    },
-    {
-      name: 'Holiday',
-      saved: 531,
-      target: 1440,
-      theme: { name: 'Purple', class: 'bg-purple', color: '#826CB0' },
-    },
-  ]);
-
+  private pots: BehaviorSubject<Pot[]> = new BehaviorSubject<Pot[]>([]);
   pots$: Observable<Pot[]> = this.pots.asObservable();
 
-  constructor() {}
+  private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
+  loading$ = this.loading.asObservable();
 
+  token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
+  baseURL = 'http://localhost:3000/api/v1/pots';
+  headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+
+  constructor(private http: HttpClient) {
+    setTimeout(() => this.loadPots(), 3000);
+  }
+
+  /* Load all pots */
+  loadPots() {
+    this.loading.next(true);
+    this.http.get<Pot[]>(this.baseURL, { headers: this.headers }).subscribe({
+      next: (pots: Pot[]) => {
+        console.log('Pots loaded successfully', pots);
+        this.pots.next(pots);
+        this.loading.next(false);
+      },
+      error: (e) => {
+        console.log('Error loading pots!', e);
+        this.loading.next(false);
+      },
+    });
+  }
+
+  /* Refresh pots state */
+  refreshPots() {
+    this.loadPots();
+  }
+
+  /* Add pot */
   addPot(pot: Pot) {
-    let tempPots = this.pots.getValue();
-    tempPots.push(pot);
-    this.pots.next(tempPots);
+    this.http
+      .post<any>(this.baseURL, pot, { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          console.log('Pot added successfully!', res);
+          this.refreshPots();
+        },
+        error: (e) => console.log('Error loading pots', e),
+      });
   }
 
-  getPot(index: number) {
-    return this.pots.getValue()[index];
+  getPot(id: number) {
+    return this.pots.getValue().find((pot) => pot.id === id);
   }
 
-  editPot(updates: Partial<Pot>, index: number) {
+  editPot(updates: Partial<Pot>, id: number) {
     let pots = this.pots.getValue();
-    pots[index] = { ...pots[index], ...updates };
-    this.pots.next(pots);
+    let index = pots.findIndex((pot) => pot.id === id);
+    this.http
+      .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          console.log('Pot edited successfully:', res);
+          pots[index] = { ...pots[index], ...updates };
+          this.pots.next(pots);
+        },
+        error: (e) => {
+          console.log('Error editing pot', e);
+        },
+      });
   }
 
-  removePot(index: number) {
-    let newPots = this.pots.getValue().filter((value, i) => i !== index);
-    this.pots.next(newPots);
+  removePot(id: number) {
+    this.http
+      .delete<any>(this.baseURL + `/${id}`, { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          console.log('Pot deleted successfully', res);
+          let pots = this.pots.getValue().filter((pot) => pot.id !== id);
+          this.pots.next(pots);
+        },
+        error: (e) => console.log('Error occured trying to delete pot', e),
+      });
   }
 
   getTotalSaved(): number {
@@ -70,5 +97,47 @@ export class PotsService {
 
   getThemes() {
     return this.pots$.pipe(map((pots) => pots.map((pot) => pot.theme)));
+  }
+
+  addFunds(id: number, saved: number) {
+    let pots = this.pots.getValue();
+    let index = pots.findIndex((pot) => pot.id === id);
+    this.http
+      .patch<any>(
+        this.baseURL + `/${id}/add`,
+        { saved },
+        {
+          headers: this.headers,
+        }
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('Funds added successfully:', res);
+          pots[index] = { ...pots[index], saved };
+          this.pots.next(pots);
+        },
+        error: (e) => console.log('Error adding funds', e),
+      });
+  }
+
+  withdrawFunds(id: number, saved: number) {
+    let pots = this.pots.getValue();
+    let index = pots.findIndex((pot) => pot.id === id);
+    this.http
+      .patch<any>(
+        this.baseURL + `/${id}/withdraw`,
+        { saved },
+        {
+          headers: this.headers,
+        }
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('Funds withdrawn successfully:', res);
+          pots[index] = { ...pots[index], saved };
+          this.pots.next(pots);
+        },
+        error: (e) => console.log('Error withdrawing funds', e),
+      });
   }
 }

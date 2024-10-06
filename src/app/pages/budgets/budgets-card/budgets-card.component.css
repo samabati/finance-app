@@ -21,6 +21,7 @@
     cursor: pointer;
 }
 
+
 /* Mobile */
 
 @media (max-width: 47.125rem){
@@ -35,6 +36,7 @@
     section:nth-of-type(2){
         padding: var(--spacing200) var(--spacing200) var(--spacing200) var(--spacing200)
     }
+
 }
 
 /* Hover styles */
@@ -47,5 +49,6 @@
     .navigate:hover > img{
         filter: brightness(0.5); /* Adjust the value as needed */
     }
+
     
-    }
+}

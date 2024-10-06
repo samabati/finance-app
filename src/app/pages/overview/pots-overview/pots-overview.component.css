@@ -21,6 +21,12 @@ img:nth-of-type(2){
     grid-template-columns: repeat(2, 1fr);
 }
 
+#pots-loading{
+    height: 21rem;
+    display: block;
+}
+
+
 /* Savings breakpoint */
 
 @media (min-width: 66rem) and (max-width: 86.31rem) {
@@ -39,5 +45,8 @@ img:nth-of-type(2){
     section{
         flex-direction: column;
         gap: var(--spacing250);
+    }
+    #pots-loading{
+        height: 31.64rem;
     }
 }

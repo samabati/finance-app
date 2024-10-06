@@ -1,3 +1,11 @@
+@if(loading){
+<p-skeleton
+  id="summary-loading"
+  height="11.94rem"
+  width="100%"
+  borderRadius="12px"
+></p-skeleton>
+}@else{
 <article
   [ngClass]="
     dark
@@ -24,3 +32,4 @@
     {{ amount | currency }}
   </p>
 </article>
+}

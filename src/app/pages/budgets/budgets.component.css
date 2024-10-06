@@ -6,6 +6,11 @@ section > div{
     width: 58.58%;
 }
 
+#budget-card-loading{
+    height: 51.098rem;
+    display: block;
+}
+
 /* Tablet */
 
 @media (max-width: 65.94rem){
@@ -26,3 +31,9 @@ section > div{
     }
 }
 
+/* Mobile*/
+@media (max-width: 47.125rem){
+    #budget-card-loading{
+        height: 48.61rem;
+    }
+}

@@ -1,3 +1,11 @@
+@if(loading){
+<p-skeleton
+  id="budgets-loading"
+  height="100%"
+  width="100%"
+  borderRadius="12px"
+></p-skeleton>
+}@else{
 <article class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 flex flex-d-c">
   <app-overview-card-header
     title="Budgets"
@@ -18,3 +26,4 @@
     </div>
   </section>
 </article>
+}
