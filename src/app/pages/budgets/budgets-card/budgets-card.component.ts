@@ -8,6 +8,7 @@ import { filter, map, Observable, Subscription } from 'rxjs';
 import { Transactions } from '../../../types/transactions';
 import { Router } from '@angular/router';
 import { SkeletonModule } from 'primeng/skeleton';
+import { TransactionSkeletonComponent } from '../../../components/shared/transaction-skeleton/transaction-skeleton/transaction-skeleton.component';
 
 @Component({
   selector: 'app-budgets-card',
@@ -17,6 +18,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     CommonModule,
     EllipsesComponent,
     SkeletonModule,
+    TransactionSkeletonComponent,
   ],
   templateUrl: './budgets-card.component.html',
   styleUrl: './budgets-card.component.css',

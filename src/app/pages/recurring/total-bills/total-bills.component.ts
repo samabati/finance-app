@@ -29,6 +29,7 @@ export class TotalBillsComponent implements OnInit, OnDestroy {
   getTotal() {
     this.subscriptions.add(
       this.recurringService.getBillsSummary().subscribe((value) => {
+        console.log('VALUE', value);
         this.total = value
           .reduce((a, b) => a.plus(new Decimal(b.amount)), new Decimal(0))
           .abs();
@@ -41,7 +42,10 @@ export class TotalBillsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.recurringService.state$
         .pipe(map((state) => state.loading))
-        .subscribe((loading) => (this.loading = loading))
+        .subscribe((loading) => {
+          this.loading = loading;
+          if (loading === false) this.subscriptions.unsubscribe();
+        })
     );
   }
 }

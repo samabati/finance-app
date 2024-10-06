@@ -68,8 +68,16 @@
       </div>
     </header>
     <ul>
-      @for (transaction of this.cardTransactions.slice(0,3); track $index; let
-      count = $count) {
+      @if(transactionService.getBudgetsLoading() | async){ @for(item of [1,2,3];
+      track item; let count = $count){
+      <app-transaction-skeleton></app-transaction-skeleton>
+      @if($index !== $count-1){
+      <img
+        class="m-t-150 m-b-150 w-100"
+        src="assets/budgets/hr.svg"
+        alt="horizontal-line"
+      />} } } @else { @for (transaction of this.cardTransactions.slice(0,3);
+      track $index; let count = $count) {
       <app-budgets-card-item
         [transaction]="transaction"
       ></app-budgets-card-item>
@@ -79,7 +87,7 @@
         src="assets/budgets/hr.svg"
         alt="horizontal-line"
       />
-      } }
+      } } }
     </ul>
   </section>
 </article>

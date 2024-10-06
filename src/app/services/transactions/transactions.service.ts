@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, finalize, map } from 'rxjs';
 import { Transactions } from '../../types/transactions';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -8,7 +8,8 @@ interface State {
   sort: string;
   category: string;
   search: string;
-  loading: boolean;
+  mainLoading: boolean;
+  budgetsLoading: boolean;
 }
 
 interface PageState {
@@ -26,7 +27,8 @@ export class TransactionsService {
     sort: 'Latest',
     category: 'All Transactions',
     search: '',
-    loading: true,
+    mainLoading: true,
+    budgetsLoading: true,
   });
 
   state$ = this.state.asObservable();
@@ -43,14 +45,12 @@ export class TransactionsService {
   http = inject(HttpClient);
 
   constructor() {
-    setTimeout(() => {
-      this.loadTransactions();
-    }, 10000000);
+    setTimeout(() => this.loadTransactions(), 10000);
   }
 
   /* Load transactions for transactions page*/
   loadTransactions() {
-    this.updateLoading(true);
+    this.updateMainLoading(true);
     let params = new HttpParams()
       .set('category', this.state.getValue().category)
       .set('page', this.pageState.getValue().currentPage)
@@ -74,7 +74,7 @@ export class TransactionsService {
       )
       .subscribe((transactions) => {
         this.state.next({ ...this.state.getValue(), transactions });
-        this.updateLoading(false);
+        this.updateMainLoading(false);
       });
   }
 
@@ -84,12 +84,18 @@ export class TransactionsService {
   }
 
   /* Get loading state */
-  getLoading() {
-    return this.state$.pipe(map((state) => state.loading));
+  getMainLoading() {
+    return this.state$.pipe(map((state) => state.mainLoading));
+  }
+
+  /* Get budget loading state */
+  getBudgetsLoading() {
+    return this.state$.pipe(map((state) => state.budgetsLoading));
   }
 
   /* Transactions displayed on budgets page card*/
   fetchTransactions(category: string) {
+    this.updateBudgetsLoading(true);
     let params = new HttpParams()
       .set('category', category)
       .set('page', 1)
@@ -105,7 +111,10 @@ export class TransactionsService {
         params: params,
         headers: headers,
       })
-      .pipe(map((res) => res.transactions));
+      .pipe(
+        map((res) => res.transactions),
+        finalize(() => this.updateBudgetsLoading(false))
+      );
   }
 
   /* Get current sorting */
@@ -162,8 +171,13 @@ export class TransactionsService {
   }
 
   /*Update loading state*/
-  updateLoading(loading: boolean) {
-    this.state.next({ ...this.state.getValue(), loading });
+  updateMainLoading(mainLoading: boolean) {
+    this.state.next({ ...this.state.getValue(), mainLoading });
+  }
+
+  /*Update budgets loading*/
+  updateBudgetsLoading(budgetsLoading: boolean) {
+    this.state.next({ ...this.state.getValue(), budgetsLoading });
   }
 
   /* Update Category */

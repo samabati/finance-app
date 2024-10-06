@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, map, shareReplay, take, tap } from 'rxjs';
+import { BehaviorSubject, finalize, map, shareReplay, take, tap } from 'rxjs';
 import { Transactions } from '../../types/transactions';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -23,7 +23,7 @@ export class RecurringService {
   state$ = this.state.asObservable();
 
   constructor(private http: HttpClient) {
-    setTimeout(() => this.loadBills(), 3000);
+    this.loadBills();
   }
 
   token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
@@ -62,6 +62,10 @@ export class RecurringService {
 
   getBills() {
     return this.state$.pipe(map((state) => state.bills));
+  }
+
+  getLoading() {
+    return this.state$.pipe(map((state) => state.loading));
   }
 
   updateSort(sort: string) {

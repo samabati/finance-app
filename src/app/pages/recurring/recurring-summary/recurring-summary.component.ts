@@ -18,6 +18,7 @@ export class RecurringSummaryComponent implements OnInit, OnDestroy {
   upcomingBills: Array<number> = [];
   dueSoonBills: Array<number> = [];
   recurringService = inject(RecurringService);
+  loadingSubscription = new Subscription();
   subscriptions = new Subscription();
   loading = true;
 
@@ -27,6 +28,7 @@ export class RecurringSummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.loadingSubscription.unsubscribe();
     this.subscriptions.unsubscribe();
     this.dueSoonBills = [];
     this.paidBills = [];
@@ -34,10 +36,13 @@ export class RecurringSummaryComponent implements OnInit, OnDestroy {
   }
 
   getLoading() {
-    this.subscriptions.add(
+    this.loadingSubscription.add(
       this.recurringService.state$
         .pipe(map((state) => state.loading))
-        .subscribe((loading) => (this.loading = loading))
+        .subscribe((loading) => {
+          this.loading = loading;
+          if (loading === false) this.loadingSubscription.unsubscribe();
+        })
     );
   }
 
