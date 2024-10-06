@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { SummaryCardComponent } from './summary-card/summary-card.component';
 import { PotsOverviewComponent } from './pots-overview/pots-overview.component';
 import { BudgetsOverviewComponent } from './budgets-overview/budgets-overview.component';
 import { TransactionsOverviewComponent } from './transactions-overview/transactions-overview.component';
 import { RecurringOverviewComponent } from './recurring-overview/recurring-overview.component';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-overview',
@@ -14,8 +15,11 @@ import { RecurringOverviewComponent } from './recurring-overview/recurring-overv
     BudgetsOverviewComponent,
     TransactionsOverviewComponent,
     RecurringOverviewComponent,
+    SkeletonModule,
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.css',
 })
-export class OverviewComponent {}
+export class OverviewComponent {
+  loading: boolean = true;
+}

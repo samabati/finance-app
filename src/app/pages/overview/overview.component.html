@@ -20,8 +20,35 @@
   ></app-summary-card>
 </section>
 <section class="grid w-100 gap-300">
+  @if(loading){
+  <p-skeleton
+    id="pots-loading"
+    height="21rem"
+    width="100%"
+    borderRadius="12px"
+  ></p-skeleton>
+  <p-skeleton
+    id="budgets-loading"
+    height="100%"
+    width="100%"
+    borderRadius="12px"
+  ></p-skeleton>
+  <p-skeleton
+    id="transactions-loading"
+    height="51.959rem"
+    width="100%"
+    borderRadius="12px"
+  ></p-skeleton>
+  <p-skeleton
+    id="recurring-loading"
+    height="32.7rem"
+    width="100%"
+    borderRadius="12px"
+  ></p-skeleton>
+  }@else{
   <app-pots-overview></app-pots-overview>
-  <app-budgets-overview></app-budgets-overview>
   <app-transactions-overview></app-transactions-overview>
   <app-recurring-overview></app-recurring-overview>
+  <app-budgets-overview></app-budgets-overview>
+  }
 </section>
