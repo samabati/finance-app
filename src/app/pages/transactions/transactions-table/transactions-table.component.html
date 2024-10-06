@@ -6,7 +6,19 @@
     <h3 class="color-g-5 font-s-5 font-w-4 font-lh-150">Amount</h3>
   </header>
   <section class="m-t-3">
-    @for(item of transactions | async; track item.id; let i = $index){
+    @if(transactionService.getLoading() | async){ @for(item of [1,2,3,4,5,6,7];
+    track item; let i = $index){
+    <li class="flex align-c p-l-2 p-r-2">
+      <p-skeleton id="skeleton-circle" shape="circle" size="4rem"></p-skeleton>
+      <div class="flex flex-d-c w-100 m-l-2 gap-100">
+        <p-skeleton></p-skeleton>
+        <p-skeleton></p-skeleton>
+      </div>
+    </li>
+    @if(i !== 7){
+    <img class="w-100 m-t-2 m-b-2" src="assets/overview/hr.svg" alt="" />
+    } } } @else{ @for(item of transactions | async; track item.id; let i =
+    $index){
     <app-table-item
       [src]="item.avatar"
       [name]="item.name"
@@ -16,6 +28,6 @@
     ></app-table-item>
     @if(i !== 9){
     <img class="w-100 m-t-2 m-b-2" src="assets/overview/hr.svg" alt="" />
-    } }
+    } } }
   </section>
 </ul>

@@ -1,13 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  filter,
-  map,
-  Observable,
-  pipe,
-  take,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Transactions } from '../../types/transactions';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -16,6 +8,7 @@ interface State {
   sort: string;
   category: string;
   search: string;
+  loading: boolean;
 }
 
 interface PageState {
@@ -33,6 +26,7 @@ export class TransactionsService {
     sort: 'Latest',
     category: 'All Transactions',
     search: '',
+    loading: true,
   });
 
   state$ = this.state.asObservable();
@@ -48,10 +42,15 @@ export class TransactionsService {
 
   http = inject(HttpClient);
 
-  constructor() {}
+  constructor() {
+    setTimeout(() => {
+      this.loadTransactions();
+    }, 10000000);
+  }
 
   /* Load transactions for transactions page*/
   loadTransactions() {
+    this.updateLoading(true);
     let params = new HttpParams()
       .set('category', this.state.getValue().category)
       .set('page', this.pageState.getValue().currentPage)
@@ -73,14 +72,20 @@ export class TransactionsService {
           return data.transactions;
         })
       )
-      .subscribe((transactions) =>
-        this.state.next({ ...this.state.getValue(), transactions })
-      );
+      .subscribe((transactions) => {
+        this.state.next({ ...this.state.getValue(), transactions });
+        this.updateLoading(false);
+      });
   }
 
   /* Transactions displayed on transactions page */
   getTransactions() {
     return this.state$.pipe(map((state) => state.transactions));
+  }
+
+  /* Get loading state */
+  getLoading() {
+    return this.state$.pipe(map((state) => state.loading));
   }
 
   /* Transactions displayed on budgets page card*/
@@ -154,6 +159,11 @@ export class TransactionsService {
   updateSort(sort: string) {
     this.state.next({ ...this.state.getValue(), sort });
     this.refreshTransactions();
+  }
+
+  /*Update loading state*/
+  updateLoading(loading: boolean) {
+    this.state.next({ ...this.state.getValue(), loading });
   }
 
   /* Update Category */

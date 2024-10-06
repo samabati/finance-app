@@ -11,21 +11,29 @@ export class BudgetsService {
   private budgets: BehaviorSubject<Budget[]> = new BehaviorSubject<Budget[]>(
     []
   );
-
   budgets$: Observable<Budget[]> = this.budgets.asObservable();
+
+  private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
+  loading$ = this.loading.asObservable();
 
   token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
   baseURL = 'http://localhost:3000/api/v1/budgets';
   headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    setTimeout(() => this.loadBudgets(), 3000);
+  }
 
   loadBudgets() {
+    this.loading.next(true);
     this.http
       .get<Budget[]>(this.baseURL, { headers: this.headers })
       .subscribe((budgets) => {
         this.budgets.next(budgets);
         console.log(this.budgets.getValue());
+        this.loading.next(false);
       });
   }
 

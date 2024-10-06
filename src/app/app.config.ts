@@ -17,7 +17,7 @@ import { loggerInterceptor } from './interceptors/logger.interceptor';
 import { BudgetsService } from './services/budgets/budgets.service';
 
 /* APP Initializer */
-
+/*
 export function initializeApp(
   transactionService: TransactionsService,
   budgetService: BudgetsService
@@ -28,6 +28,7 @@ export function initializeApp(
       of(budgetService.loadBudgets()),
     ]);
 }
+    */
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,12 +36,14 @@ export const appConfig: ApplicationConfig = {
     [provideRouter(routes, withPreloading(PreloadAllModules))],
     TransactionsService,
     BudgetsService,
+    /*
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       multi: true,
       deps: [TransactionsService, BudgetsService],
     },
+    */
     provideCharts(withDefaultRegisterables()),
     provideHttpClient(withInterceptors([loggerInterceptor])),
   ],

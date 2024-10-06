@@ -1,3 +1,11 @@
+@if(loading){
+<p-skeleton
+  id="total-bills-loading"
+  height="100%"
+  width="100%"
+  borderRadius="12px"
+></p-skeleton>
+}@else {
 <article
   class="p-t-3 p-r-3 p-b-3 p-l-3 bg-g-9 border-r-150 flex flex-d-c gap-400"
 >
@@ -11,3 +19,4 @@
     </p>
   </section>
 </article>
+}

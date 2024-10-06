@@ -20,6 +20,8 @@ section:nth-of-type(1){
     max-width: 100%;
 }
 
+
+
 /* Mobile */
 @media (max-width: 47.125rem){
     article{

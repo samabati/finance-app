@@ -2,10 +2,27 @@ article{
     height: 100%;
 }
 
+#transactions-loading{
+    height: 100%;
+    display: block;
+}
+
+/* Tablet */
+
+@media (max-width: 65.94rem){
+    #transactions-loading{
+        height: 52.753rem;
+    }
+}
+
 /* Mobile */
 
 @media (max-width: 47.125rem) {
     article{
         padding: var(--spacing300) var(--spacing250) var(--spacing300) var(--spacing250);
     }
+    #transactions-loading{
+        height: 50.828rem;
+    }
+
 }

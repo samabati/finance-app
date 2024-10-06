@@ -1,75 +1,30 @@
 <h1 class="font-s-1 font-lh-120 font-w-7 m-t-1 m-b-1">Overview</h1>
 <section class="w-100 flex m-t-4 m-b-4 gap-300">
-  @if(loading){
-  <p-skeleton
-    id="summary-loading"
-    height="11.94rem"
-    width="100%"
-    borderRadius="12px"
-  ></p-skeleton>
-  <p-skeleton
-    id="summary-loading"
-    height="11.94rem"
-    width="100%"
-    borderRadius="12px"
-  ></p-skeleton>
-  <p-skeleton
-    id="summary-loading"
-    height="11.94rem"
-    width="100%"
-    borderRadius="12px"
-  ></p-skeleton>
-  }@else {
   <app-summary-card
     [dark]="true"
     heading="Current Balance"
     [amount]="4836"
     class="w-100"
+    [loading]="loading"
   ></app-summary-card>
   <app-summary-card
     [dark]="false"
     heading="Income"
     [amount]="3814.25"
     class="w-100"
+    [loading]="loading"
   ></app-summary-card>
   <app-summary-card
     [dark]="false"
     heading="Expenses"
     [amount]="1700.5"
     class="w-100"
+    [loading]="loading"
   ></app-summary-card>
-  }
 </section>
 <section class="grid w-100 gap-300">
-  @if(loading){
-  <p-skeleton
-    id="pots-loading"
-    height="100%"
-    width="100%"
-    borderRadius="12px"
-  ></p-skeleton>
-  <p-skeleton
-    id="budgets-loading"
-    height="100%"
-    width="100%"
-    borderRadius="12px"
-  ></p-skeleton>
-  <p-skeleton
-    id="transactions-loading"
-    height="100%"
-    width="100%"
-    borderRadius="12px"
-  ></p-skeleton>
-  <p-skeleton
-    id="recurring-loading"
-    height="100%"
-    width="100%"
-    borderRadius="12px"
-  ></p-skeleton>
-  }@else{
-  <app-pots-overview></app-pots-overview>
-  <app-transactions-overview></app-transactions-overview>
-  <app-recurring-overview></app-recurring-overview>
-  <app-budgets-overview></app-budgets-overview>
-  }
+  <app-pots-overview [loading]="loading"></app-pots-overview>
+  <app-budgets-overview [loading]="loading"></app-budgets-overview>
+  <app-transactions-overview [loading]="loading"></app-transactions-overview>
+  <app-recurring-overview [loading]="loading"></app-recurring-overview>
 </section>

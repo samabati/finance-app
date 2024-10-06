@@ -4,7 +4,14 @@
 </header>
 
 <section class="m-t-4 grid">
-  @for(pot of potsService.pots$| async; track pot){
+  @if(loading){ @for(skeleton of [1,2,3,4]; track skeleton){
+  <p-skeleton
+    id="pots-card-loading"
+    height="100%"
+    width="100%"
+    borderRadius="12px"
+  ></p-skeleton>
+  } } @for(pot of potsService.pots$| async; track pot.id){
   <app-pots-card [id]="pot.id" [pot]="pot"></app-pots-card>
   }
 </section>

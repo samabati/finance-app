@@ -47,9 +47,11 @@ Light Sand:
 cssCopybackground-color: #faf5ef;
 */
 
+/*
 body .p-component{
   background-color: #e6f7f7;;
 }
+*/
 
 *, *::before, *::after {
     box-sizing: border-box;

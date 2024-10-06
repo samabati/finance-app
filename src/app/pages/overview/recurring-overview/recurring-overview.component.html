@@ -1,3 +1,11 @@
+@if(loading){
+<p-skeleton
+  id="recurring-loading"
+  height="100%"
+  width="100%"
+  borderRadius="12px"
+></p-skeleton>
+} @else {
 <article class="bg-w border-r-150 p-t-4 p-r-4 p-b-4 p-l-4">
   <app-overview-card-header
     title="Recurring Bills"
@@ -15,3 +23,4 @@
     <app-recurring-item title="Due Soon" amount="$59.98"></app-recurring-item>
   </ul>
 </article>
+}

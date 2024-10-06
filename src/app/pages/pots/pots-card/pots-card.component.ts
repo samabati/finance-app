@@ -4,6 +4,7 @@ import { WithdrawComponent } from './withdraw/withdraw.component';
 import { Pot } from '../../../types/pot';
 import { CommonModule } from '@angular/common';
 import { EllipsesComponent } from '../../../components/shared/ellipses/ellipses.component';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-pots-card',

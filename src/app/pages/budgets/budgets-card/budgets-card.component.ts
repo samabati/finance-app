@@ -7,11 +7,17 @@ import { TransactionsService } from '../../../services/transactions/transactions
 import { filter, map, Observable, Subscription } from 'rxjs';
 import { Transactions } from '../../../types/transactions';
 import { Router } from '@angular/router';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-budgets-card',
   standalone: true,
-  imports: [BudgetsCardItemComponent, CommonModule, EllipsesComponent],
+  imports: [
+    BudgetsCardItemComponent,
+    CommonModule,
+    EllipsesComponent,
+    SkeletonModule,
+  ],
   templateUrl: './budgets-card.component.html',
   styleUrl: './budgets-card.component.css',
 })
@@ -22,7 +28,6 @@ export class BudgetsCardComponent implements OnInit, OnDestroy {
   transactionService = inject(TransactionsService);
   router = inject(Router);
   subscription!: Subscription;
-
   ngOnInit(): void {
     this.subscription = this.transactionService
       .fetchTransactions(this.budget.category)

@@ -7,6 +7,7 @@ interface State {
   bills: Transactions[];
   sort: string;
   search: string;
+  loading: boolean;
 }
 @Injectable({
   providedIn: 'root',
@@ -16,12 +17,13 @@ export class RecurringService {
     bills: [],
     sort: 'Latest',
     search: '',
+    loading: true,
   });
 
   state$ = this.state.asObservable();
 
   constructor(private http: HttpClient) {
-    this.loadBills();
+    setTimeout(() => this.loadBills(), 3000);
   }
 
   token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
@@ -29,6 +31,7 @@ export class RecurringService {
   headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
 
   loadBills() {
+    this.updateLoading(true);
     let params = new HttpParams()
       .set('search', this.state.getValue().search)
       .set('sort', this.state.getValue().sort);
@@ -40,9 +43,16 @@ export class RecurringService {
       .subscribe({
         next: (bills) => {
           console.log('Loaded bills successfully:', bills);
-          this.state.next({ ...this.state.getValue(), bills: bills });
+          this.state.next({
+            ...this.state.getValue(),
+            bills: bills,
+            loading: false,
+          });
         },
-        error: (e) => console.log('Error loading bills:', e),
+        error: (e) => {
+          console.log('Error loading bills:', e);
+          this.updateLoading(false);
+        },
       });
   }
 
@@ -73,8 +83,12 @@ export class RecurringService {
 
   getBillsSummary() {
     return this.state.pipe(
-      take(2),
+      take(3),
       map((value) => value.bills)
     );
+  }
+
+  updateLoading(loading: boolean) {
+    this.state.next({ ...this.state.getValue(), loading });
   }
 }

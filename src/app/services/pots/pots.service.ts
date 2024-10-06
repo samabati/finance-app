@@ -8,25 +8,34 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PotsService {
   private pots: BehaviorSubject<Pot[]> = new BehaviorSubject<Pot[]>([]);
-
   pots$: Observable<Pot[]> = this.pots.asObservable();
+
+  private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
+  loading$ = this.loading.asObservable();
 
   token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
   baseURL = 'http://localhost:3000/api/v1/pots';
   headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
 
   constructor(private http: HttpClient) {
-    this.loadPots();
+    setTimeout(() => this.loadPots(), 3000);
   }
 
   /* Load all pots */
   loadPots() {
+    this.loading.next(true);
     this.http.get<Pot[]>(this.baseURL, { headers: this.headers }).subscribe({
       next: (pots: Pot[]) => {
         console.log('Pots loaded successfully', pots);
         this.pots.next(pots);
+        this.loading.next(false);
       },
-      error: (e) => console.log('Error loading pots!', e),
+      error: (e) => {
+        console.log('Error loading pots!', e);
+        this.loading.next(false);
+      },
     });
   }
 

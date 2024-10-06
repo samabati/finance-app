@@ -7,11 +7,12 @@ import {
 import { TableItemComponent } from '../table-item/table-item.component';
 import { TransactionsService } from '../../../services/transactions/transactions.service';
 import { CommonModule } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-transactions-table',
   standalone: true,
-  imports: [TableItemComponent, CommonModule],
+  imports: [TableItemComponent, CommonModule, SkeletonModule],
   templateUrl: './transactions-table.component.html',
   styleUrl: './transactions-table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

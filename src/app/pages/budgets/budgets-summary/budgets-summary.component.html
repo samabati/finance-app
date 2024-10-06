@@ -1,3 +1,11 @@
+@if(loading){
+<p-skeleton
+  id="budget-summary-loading"
+  height="100%"
+  width="100%"
+  borderRadius="12px"
+></p-skeleton>
+}@else{
 <article class="bg-w p-t-4 p-r-4 p-b-4 p-l-4 flex flex-d-c border-r-150">
   <app-budgets-pie></app-budgets-pie>
   <div class="flex m-t-4 flex-d-c">
@@ -18,3 +26,4 @@
     </ul>
   </div>
 </article>
+}
