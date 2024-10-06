@@ -1,5 +1,25 @@
 <h1 class="font-s-1 font-lh-120 font-w-7 m-t-1 m-b-1">Overview</h1>
 <section class="w-100 flex m-t-4 m-b-4 gap-300">
+  @if(loading){
+  <p-skeleton
+    id="summary-loading"
+    height="11.94rem"
+    width="100%"
+    borderRadius="12px"
+  ></p-skeleton>
+  <p-skeleton
+    id="summary-loading"
+    height="11.94rem"
+    width="100%"
+    borderRadius="12px"
+  ></p-skeleton>
+  <p-skeleton
+    id="summary-loading"
+    height="11.94rem"
+    width="100%"
+    borderRadius="12px"
+  ></p-skeleton>
+  }@else {
   <app-summary-card
     [dark]="true"
     heading="Current Balance"
@@ -18,12 +38,13 @@
     [amount]="1700.5"
     class="w-100"
   ></app-summary-card>
+  }
 </section>
 <section class="grid w-100 gap-300">
   @if(loading){
   <p-skeleton
     id="pots-loading"
-    height="21rem"
+    height="100%"
     width="100%"
     borderRadius="12px"
   ></p-skeleton>
@@ -35,13 +56,13 @@
   ></p-skeleton>
   <p-skeleton
     id="transactions-loading"
-    height="51.959rem"
+    height="100%"
     width="100%"
     borderRadius="12px"
   ></p-skeleton>
   <p-skeleton
     id="recurring-loading"
-    height="32.7rem"
+    height="100%"
     width="100%"
     borderRadius="12px"
   ></p-skeleton>

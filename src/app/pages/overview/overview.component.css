@@ -25,6 +25,22 @@ app-recurring-overview, #recurring-loading{
     grid-row: 9/12;
 }
 
+#summary-loading{
+    width: 100%;
+}
+
+#pots-loading{
+    height: 21rem;
+}
+
+#transactions-loading{
+    height: 52.24rem;
+}
+
+#recurring-loading{
+    height: 32.7rem;
+}
+
 /* Tablet */
 
 @media (max-width: 65.94rem){
@@ -74,7 +90,7 @@ app-recurring-overview, #recurring-loading{
         gap: var(--spacing200);
     }
 
-    app-pots-overview, #pots-loading{
+    app-pots-overview{
         grid-column: 1 / 3;
         height: 100%;
         grid-row: 1;
@@ -82,10 +98,12 @@ app-recurring-overview, #recurring-loading{
 
     #pots-loading{
         height: 31.64rem;
+        grid-row: 1;
+        grid-column: 1 / 3;
     }
 
     #transactions-loading{
-        height: 50.409rem;
+        height: 50.828rem;
     }
 
     #budgets-loading{
