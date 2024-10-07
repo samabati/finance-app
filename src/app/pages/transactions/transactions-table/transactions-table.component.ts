@@ -7,7 +7,6 @@ import {
 import { TableItemComponent } from '../table-item/table-item.component';
 import { TransactionsService } from '../../../services/transactions/transactions.service';
 import { CommonModule } from '@angular/common';
-import { SkeletonModule } from 'primeng/skeleton';
 import { TransactionSkeletonComponent } from '../../../components/shared/transaction-skeleton/transaction-skeleton/transaction-skeleton.component';
 
 @Component({
