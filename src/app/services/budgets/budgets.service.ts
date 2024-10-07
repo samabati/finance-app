@@ -21,7 +21,7 @@ export class BudgetsService {
   baseURL = `${environment.apiUrl}/api/v1/budgets`;
 
   constructor(private http: HttpClient) {
-    setTimeout(() => this.loadBudgets(), 3000);
+    this.loadBudgets();
   }
 
   loadBudgets() {

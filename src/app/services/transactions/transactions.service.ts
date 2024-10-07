@@ -48,7 +48,7 @@ export class TransactionsService {
   http = inject(HttpClient);
 
   constructor() {
-    setTimeout(() => this.loadTransactions(), 10000);
+    this.loadTransactions();
   }
 
   /* Load transactions for transactions page*/

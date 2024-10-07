@@ -18,7 +18,7 @@ export class PotsService {
   baseURL = `${environment.apiUrl}/api/v1/pots`;
 
   constructor(private http: HttpClient) {
-    setTimeout(() => this.loadPots(), 3000);
+    this.loadPots();
   }
 
   /* Load all pots */
