@@ -11,11 +11,15 @@
     title="Budgets"
     navTitle="See Details"
   ></app-overview-card-header>
+  @if(budgetService.budgets$ | async; as budgets){ @if(budgets.length === 0){
+  <section class="m-t-250 h-100 flex align-c just-c">
+    <h2>No available budgets</h2>
+  </section>
+  }@else {
   <section class="m-t-250 p-t-1 p-b-1 flex gap-200 h-100 align-c">
     <app-budgets-pie class="w-100 h-100"></app-budgets-pie>
     <div class="w-100 flex flex-d-c gap-200">
-      @for (budget of (budgetService.budgets$ | async)?.slice(0,4); track
-      $index) {
+      @for(budget of budgets?.slice(0,4); track $index; let count = $count){
       <app-pots-savings-micro
         [title]="budget.category"
         [amount]="budget.max"
@@ -25,5 +29,6 @@
       }
     </div>
   </section>
+  } }
 </article>
 }

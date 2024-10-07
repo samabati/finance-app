@@ -3,6 +3,9 @@
   <app-add-pot></app-add-pot>
 </header>
 
+@if(potsService.pots$ | async; as pots){ @if(pots.length == 0 && !loading){
+<h1 class="flex just-c">No pots available</h1>
+}
 <section class="m-t-4 grid">
   @if(loading){ @for(skeleton of [1,2,3,4]; track skeleton){
   <p-skeleton
@@ -11,8 +14,10 @@
     width="100%"
     borderRadius="12px"
   ></p-skeleton>
-  } } @for(pot of potsService.pots$| async; track pot.id){
+  } } @for(pot of pots; track pot.id){
   <app-pots-card [id]="pot.id" [pot]="pot"></app-pots-card>
   }
 </section>
+
+}
 <router-outlet></router-outlet>

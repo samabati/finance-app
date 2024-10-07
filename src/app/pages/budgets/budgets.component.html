@@ -2,6 +2,10 @@
   <h1 class="color-g-9 font-s-1 font-w-7 font-lh-120">Budgets</h1>
   <app-add-budgets></app-add-budgets>
 </header>
+@if(budgetService.budgets$ | async; as budgets){ @if(budgets.length == 0 &&
+!loading){
+<h1 class="flex just-c">No budgets available</h1>
+}
 <section class="m-t-4 flex gap-300">
   <app-budgets-summary [loading]="loading"></app-budgets-summary>
   <div class="flex flex-d-c gap-300">
@@ -12,10 +16,10 @@
       width="100%"
       borderRadius="12px"
     ></p-skeleton>
-    } } @else{ @for(budget of budgetService.budgets$ | async; track budget.id){
+    } } @for(budget of budgets; track budget.id){
     <app-budgets-card [budget]="budget" [id]="budget.id"> </app-budgets-card>
-    } }
+    }
   </div>
 </section>
-
+}
 <router-outlet></router-outlet>

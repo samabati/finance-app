@@ -11,6 +11,12 @@
     title="Pots"
     navTitle="See Details"
   ></app-overview-card-header>
+
+  @if(potService.pots$ | async; as pots){ @if(pots.length==0){
+  <section class="m-t-250 h-100 flex align-c just-c">
+    <h2>No available Pots</h2>
+  </section>
+  } @else {
   <section class="flex m-t-250 gap-250">
     <div
       class="p-t-2 w-100 p-b-2 p-l-2 p-r-2 bg-b-1 border-r-150 flex align-c text-truncate"
@@ -27,7 +33,7 @@
     </div>
     <div class="w-100">
       <div class="grid">
-        @for (pot of (potService.pots$ | async)?.slice(0,4); track $index) {
+        @for (pot of pots?.slice(0,4); track $index) {
         <app-pots-savings-micro
           [title]="pot.name"
           [amount]="pot.saved"
@@ -37,5 +43,6 @@
       </div>
     </div>
   </section>
+  } }
 </article>
 }
