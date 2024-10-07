@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,7 +13,7 @@ import { AddSpendComponent } from '../add-new-budgets/add-spend/add-spend.compon
 import { AddButtonComponent } from '../add-new-budgets/add-button/add-button.component';
 import { PotsService } from '../../services/pots/pots.service';
 import { Theme, THEMES } from '../../types/theme';
-import { map, Subscription, take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'app-add-new-pots',
@@ -69,13 +69,6 @@ export class AddNewPotsComponent implements OnDestroy {
         this.themes.find((theme) => !this.isUsedTheme(theme)),
         Validators.required,
       ],
-    });
-    this.logFormChanges();
-  }
-
-  logFormChanges() {
-    this.addPotForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed: ', value);
     });
   }
 

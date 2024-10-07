@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CATEGORIES } from '../../../types/categories';
 
 @Component({

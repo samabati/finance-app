@@ -14,7 +14,7 @@ import { AddSpendComponent } from '../add-new-budgets/add-spend/add-spend.compon
 import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.component';
 import { Pot } from '../../types/pot';
 import { Subscription, take } from 'rxjs';
-import { Theme, THEMES } from '../../types/theme';
+import { Theme } from '../../types/theme';
 
 @Component({
   selector: 'app-edit-pots',
@@ -99,12 +99,6 @@ export class EditPotsComponent implements OnDestroy {
       target: this.pot.target,
       theme: this.pot.theme,
     });
-
-    this.subscription.add(
-      this.editPotForm.valueChanges.subscribe((value) => {
-        console.log('Form value changed: ', value);
-      })
-    );
   }
 
   submitForm() {

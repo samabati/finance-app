@@ -11,12 +11,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { BudgetsService } from '../../services/budgets/budgets.service';
-import { filter, map, Subscription, take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { Theme, THEMES } from '../../types/theme';
 import { TransactionsService } from '../../services/transactions/transactions.service';
-import { Transactions } from '../../types/transactions';
 import { Budget } from '../../types/budget';
-import Decimal from 'decimal.js';
 import { CATEGORIES } from '../../types/categories';
 
 @Component({
@@ -71,12 +69,6 @@ export class AddNewBudgetsComponent implements OnDestroy {
       this.budgetService.budgets$.pipe(take(2)).subscribe((value: Budget[]) => {
         let usedThemes = value.map((budget) => budget.theme);
         let usedCategories = value.map((budget) => budget.category);
-        console.log(
-          'USED THEMES:',
-          usedThemes,
-          'USED CATEGORIES',
-          usedCategories
-        );
         if (usedThemes) {
           this.usedThemes = usedThemes;
           this.updateForm();
@@ -109,19 +101,12 @@ export class AddNewBudgetsComponent implements OnDestroy {
     }
 
     if (this.usedCategories) {
-      console.log('FUNCTION RAN HERE');
       this.addBudgetForm.patchValue({
         category: this.categories.find(
           (category) => !this.isUsedCategory(category)
         ),
       });
     }
-
-    this.subscription.add(
-      this.addBudgetForm.valueChanges.subscribe((value) => {
-        console.log('Form value changed: ', value);
-      })
-    );
   }
 
   exitPage() {

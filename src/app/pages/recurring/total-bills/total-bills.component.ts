@@ -33,7 +33,6 @@ export class TotalBillsComponent implements OnInit, OnDestroy {
         this.total = value
           .reduce((a, b) => a.plus(new Decimal(b.amount)), new Decimal(0))
           .abs();
-        console.log('total:', this.total);
       })
     );
   }

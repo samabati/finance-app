@@ -1,18 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  forwardRef,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Theme, THEMES } from '../../../types/theme';
 import { Router } from '@angular/router';
 import { BudgetsService } from '../../../services/budgets/budgets.service';
 import { PotsService } from '../../../services/pots/pots.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-theme',
@@ -34,9 +26,7 @@ export class AddThemeComponent implements ControlValueAccessor, OnInit {
   budgetService = inject(BudgetsService);
   potsService = inject(PotsService);
 
-  ngOnInit(): void {
-    console.log('SELECTED VALUE:', this.selected);
-  }
+  ngOnInit(): void {}
 
   onChange = (value: any) => {};
 

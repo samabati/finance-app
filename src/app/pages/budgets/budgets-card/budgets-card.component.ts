@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Budget } from '../../../types/budget';
 import { EllipsesComponent } from '../../../components/shared/ellipses/ellipses.component';
 import { TransactionsService } from '../../../services/transactions/transactions.service';
-import { filter, map, Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Transactions } from '../../../types/transactions';
 import { Router } from '@angular/router';
 import { SkeletonModule } from 'primeng/skeleton';

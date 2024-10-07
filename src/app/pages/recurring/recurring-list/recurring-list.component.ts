@@ -22,7 +22,5 @@ import { TransactionSkeletonComponent } from '../../../components/shared/transac
 export class RecurringListComponent {
   recurringService = inject(RecurringService);
 
-  constructor() {
-    this.recurringService.getBills().subscribe((value) => console.log(value));
-  }
+  constructor() {}
 }

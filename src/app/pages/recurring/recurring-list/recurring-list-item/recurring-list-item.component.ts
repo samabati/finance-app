@@ -1,13 +1,6 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  Input,
-  input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
-import { addDays, isBefore, isSameDay, parseISO, format } from 'date-fns';
+import { Component, Input, OnInit } from '@angular/core';
+import { format } from 'date-fns';
 import { Transactions } from '../../../../types/transactions';
 
 export enum DueDate {

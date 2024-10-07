@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { SaveChangesComponent } from './save-changes/save-changes.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
@@ -11,9 +11,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { BudgetsService } from '../../services/budgets/budgets.service';
-import { map, Subscription, take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { Budget } from '../../types/budget';
-import { Theme, THEMES } from '../../types/theme';
+import { Theme } from '../../types/theme';
 import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.component';
 
 @Component({
@@ -97,12 +97,6 @@ export class EditBudgetsComponent implements OnDestroy {
       spent: this.budget.spent,
       theme: this.budget.theme,
     });
-
-    this.subscription.add(
-      this.editBudgetForm.valueChanges.subscribe((value) => {
-        console.log('Changes made: ', value);
-      })
-    );
   }
 
   saveChanges() {

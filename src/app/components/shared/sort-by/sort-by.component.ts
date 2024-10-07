@@ -51,7 +51,6 @@ export class SortByComponent implements OnInit {
     if (this.type === 'Sort By' && !this.recurring) {
       this.transactionService.updateSort(str);
     } else if (this.type === 'Sort By' && this.recurring) {
-      console.log('UPDATING RECURRING STATE:', str);
       this.recurringService.updateSort(str);
     } else if (this.type === 'Category') {
       this.transactionService.updateCategory(str);

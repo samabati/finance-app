@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SummaryCardComponent } from './summary-card/summary-card.component';
 import { PotsOverviewComponent } from './pots-overview/pots-overview.component';
 import { BudgetsOverviewComponent } from './budgets-overview/budgets-overview.component';

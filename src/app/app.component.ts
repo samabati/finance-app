@@ -1,10 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterOutlet,
-} from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { NavbarService } from './services/navbar.service';
 import { filter } from 'rxjs';
@@ -24,7 +19,6 @@ export class AppComponent implements OnInit {
   router = inject(Router);
   navService = inject(NavbarService);
   authService = inject(AuthService);
-  user = 'not';
 
   ngOnInit(): void {
     this.router.events

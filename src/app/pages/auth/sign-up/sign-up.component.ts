@@ -55,10 +55,6 @@ export class SignUpComponent {
         ],
       ],
     });
-
-    this.signUpForm.valueChanges.subscribe((changes) => {
-      console.log('Sign up from has changes:', changes);
-    });
   }
 
   submitForm() {

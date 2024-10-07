@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RecurringService } from '../../../services/recurring/recurring.service';
-import { map, Subscription, take } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Transactions } from '../../../types/transactions';
 import Decimal from 'decimal.js';
@@ -49,7 +49,6 @@ export class RecurringSummaryComponent implements OnInit, OnDestroy {
   getBillsSummary() {
     this.subscriptions.add(
       this.recurringService.getBillsSummary().subscribe((transactions) => {
-        console.log('TRANSACTIONS: ', transactions);
         let today = new Date().getDate();
         let tempPaid = [];
         let tempDue = [];

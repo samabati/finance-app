@@ -18,7 +18,6 @@ export class NavButtonComponent implements OnInit {
   navService = inject(NavbarService);
 
   buttonClicked() {
-    console.log('Button clicked ran');
     let route = this.name.toLowerCase().split(' ').join('-');
     if (route === 'overview') route = '';
     this.router.navigateByUrl(route);

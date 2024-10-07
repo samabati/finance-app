@@ -31,7 +31,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       .get('inputField')!
       .valueChanges.pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
-        console.log('HELLO:', value);
         this.updateSearch(value);
       });
   }

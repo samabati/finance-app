@@ -88,8 +88,6 @@ export class AddWithdrawComponent implements OnDestroy {
 
   handleFormErrors() {
     const savedError = this.addWithdrawForm.get('saved')?.errors;
-    console.log(savedError);
-
     if (savedError?.['min']) {
       this.error = `Amount to ${this.type} must be greater than 0`;
     } else if (savedError?.['required']) {
