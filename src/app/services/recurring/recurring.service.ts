@@ -23,9 +23,7 @@ export class RecurringService {
 
   state$ = this.state.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.loadBills();
-  }
+  constructor(private http: HttpClient) {}
 
   baseURL = `${environment.apiUrl}/api/v1/transactions/recurring`;
 
