@@ -23,7 +23,7 @@
     "date-fns": "^4.1.0",
     "decimal.js": "^10.4.3",
     "ng2-charts": "^6.0.1",
-    "primeng": "^17.18.11",
+    "primeng": "^17.18.10",
     "rxjs": "~7.8.0",
     "tinycolor2": "^1.6.0",
     "tslib": "^2.3.0",
