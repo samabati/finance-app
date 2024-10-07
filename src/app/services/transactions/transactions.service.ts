@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, map } from 'rxjs';
 import { Transactions } from '../../types/transactions';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 interface State {
   transactions: Transactions[];
@@ -21,6 +22,8 @@ interface PageState {
   providedIn: 'root',
 })
 export class TransactionsService {
+  baseUrl = environment.apiUrl;
+
   /* State */
   private state: BehaviorSubject<State> = new BehaviorSubject<State>({
     transactions: [],
@@ -57,14 +60,9 @@ export class TransactionsService {
       .set('search', this.state.getValue().search)
       .set('sort', this.state.getValue().sort);
 
-    let token =
-      'eyJhbGciOiJIUzI1NiJ9.Mg.eMPD7SfMyy4TR_tWbu_2YkGyIldC1MsQKO26AJj5AvI';
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-
     this.http
-      .get<any>('http://localhost:3000/api/v1/transactions', {
+      .get<any>(`${this.baseUrl}/api/v1/transactions`, {
         params: params,
-        headers: headers,
       })
       .pipe(
         map((data) => {
@@ -102,14 +100,9 @@ export class TransactionsService {
       .set('sort', 'All Transactions')
       .set('search', '');
 
-    let token =
-      'eyJhbGciOiJIUzI1NiJ9.Mg.eMPD7SfMyy4TR_tWbu_2YkGyIldC1MsQKO26AJj5AvI';
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-
     return this.http
-      .get<any>('http://localhost:3000/api/v1/transactions', {
+      .get<any>(`${this.baseUrl}/api/v1/transactions`, {
         params: params,
-        headers: headers,
       })
       .pipe(
         map((res) => res.transactions),

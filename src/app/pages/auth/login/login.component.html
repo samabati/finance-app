@@ -1,0 +1,49 @@
+<form
+  class="p-t-4 p-r-4 p-b-4 p-l-4 bg-w border-r-150 gap-400 flex flex-d-c"
+  [formGroup]="loginForm"
+>
+  <header>
+    <h2 class="color-g-9 font-s-1 font-w-7 font-lh-120">Login</h2>
+    @if(serverError){
+    <h3 class="color-red m-t-1">{{ serverError }}</h3>
+    }
+  </header>
+  <section class="flex flex-d-c gap-200">
+    <app-login-email
+      [error]="emailError"
+      formControlName="email"
+    ></app-login-email>
+    <app-login-password
+      [error]="passwordError"
+      type="login"
+      formControlName="password"
+    >
+    </app-login-password>
+  </section>
+  <app-add-button (click)="submitForm()" text="Login"></app-add-button>
+
+  <section class="flex flex-d-c gap-100">
+    <div class="flex gap-50 just-c align-c">
+      <p class="color-g-5 font-s-4 font-w-4 font-lh-150">
+        Need to create an account?
+      </p>
+      <p
+        style="text-decoration: underline"
+        class="color-g-9 font-s-4 font-w-7 font-lh-150"
+        (click)="navigateToSignup()"
+      >
+        Sign Up
+      </p>
+    </div>
+    <div class="flex gap-50 just-c align-c">
+      <p class="color-g-5 font-s-5 font-w-4 font-lh-150">Just browsing?</p>
+      <p
+        style="text-decoration: underline"
+        class="color-g-9 font-s-5 font-w-7 font-lh-150"
+        (click)="demoLogin()"
+      >
+        Login with demo
+      </p>
+    </div>
+  </section>
+</form>

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Budget } from '../../types/budget';
-import { BehaviorSubject, map, Observable, take } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Theme } from '../../types/theme';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +18,7 @@ export class BudgetsService {
   );
   loading$ = this.loading.asObservable();
 
-  token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
-  baseURL = 'http://localhost:3000/api/v1/budgets';
-  headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+  baseURL = `${environment.apiUrl}/api/v1/budgets`;
 
   constructor(private http: HttpClient) {
     setTimeout(() => this.loadBudgets(), 3000);
@@ -28,39 +26,31 @@ export class BudgetsService {
 
   loadBudgets() {
     this.loading.next(true);
-    this.http
-      .get<Budget[]>(this.baseURL, { headers: this.headers })
-      .subscribe((budgets) => {
-        this.budgets.next(budgets);
-        console.log(this.budgets.getValue());
-        this.loading.next(false);
-      });
+    this.http.get<Budget[]>(this.baseURL).subscribe((budgets) => {
+      this.budgets.next(budgets);
+      console.log(this.budgets.getValue());
+      this.loading.next(false);
+    });
   }
 
   addBudget(newBudget: Budget) {
-    this.http
-      .post<Budget>(this.baseURL, newBudget, {
-        headers: this.headers,
-      })
-      .subscribe({
-        error: (e) => console.log('An error has occurred', e),
-        complete: () => {
-          this.loadBudgets();
-          console.log('Budget added successfully');
-        },
-      });
+    this.http.post<Budget>(this.baseURL, newBudget).subscribe({
+      error: (e) => console.log('An error has occurred', e),
+      complete: () => {
+        this.loadBudgets();
+        console.log('Budget added successfully');
+      },
+    });
   }
 
   removeBudget(id: number) {
     let tempBudget = this.budgets.getValue();
     tempBudget = tempBudget.filter((value) => value.id !== id);
     this.budgets.next(tempBudget);
-    this.http
-      .delete<any>(this.baseURL + `/${id}`, { headers: this.headers })
-      .subscribe({
-        error: (e) => console.log('An error has occurred', e),
-        complete: () => console.log('Budget deleted successfully'),
-      });
+    this.http.delete<any>(this.baseURL + `/${id}`).subscribe({
+      error: (e) => console.log('An error has occurred', e),
+      complete: () => console.log('Budget deleted successfully'),
+    });
   }
 
   getBudget(id: number) {
@@ -78,11 +68,9 @@ export class BudgetsService {
     const budgetIndex = budgets.findIndex((budget) => budget.id === id);
     budgets[budgetIndex] = { ...budgets[budgetIndex], ...updates };
     this.budgets.next(budgets);
-    this.http
-      .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
-      .subscribe({
-        error: (e) => console.log('An error has occurred', e),
-        complete: () => console.log('Budget deleted successfully'),
-      });
+    this.http.patch<any>(this.baseURL + `/${id}`, updates).subscribe({
+      error: (e) => console.log('An error has occurred', e),
+      complete: () => console.log('Budget deleted successfully'),
+    });
   }
 }

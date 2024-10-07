@@ -9,11 +9,13 @@ import { LayoutComponent } from './layout/layout.component';
 import { NavbarService } from './services/navbar.service';
 import { filter } from 'rxjs';
 import NavItems from './types/navItems';
+import { AuthService } from './services/auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LayoutComponent],
+  imports: [RouterOutlet, LayoutComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -21,6 +23,8 @@ export class AppComponent implements OnInit {
   title = 'finance-app';
   router = inject(Router);
   navService = inject(NavbarService);
+  authService = inject(AuthService);
+  user = 'not';
 
   ngOnInit(): void {
     this.router.events

@@ -1,2 +1,4 @@
+@if(authService.getAuthState() | async){
 <app-layout></app-layout>
+}
 <router-outlet></router-outlet>

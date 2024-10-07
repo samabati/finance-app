@@ -1,0 +1,56 @@
+main{
+    height: 100%;
+    width: 100%;
+}
+
+img{
+    height: 21.76px;
+}
+
+aside:nth-of-type(1){
+width: 41.67%;
+}
+
+aside:nth-of-type(2){
+width: 58.33%;
+}
+
+article:nth-of-type(1){
+    background: url('../../../assets/images/illustration-authentication.svg');
+    align-items: flex-start;
+    background-size: cover;
+    background-position: center;
+}
+
+header{
+    display: none;
+}
+
+/* Tablet */
+
+@media (max-width: 65.94rem) {
+    aside:nth-of-type(1){
+        display: none;
+    }
+
+    aside:nth-of-type(2){
+        width: 100%;
+        height: 100%;
+    }
+
+    header{
+        display: flex;
+    }
+    main{
+        flex-direction: column;
+    }
+}
+
+/* Mobile - Previously 600 */
+
+@media (max-width: 47.125rem){
+       aside:nth-of-type(2){
+        padding: var(--spacing300) var(--spacing200) var(--spacing300) var(--spacing200);
+       }
+}
+

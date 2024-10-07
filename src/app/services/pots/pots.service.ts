@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Pot } from '../../types/pot';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +15,7 @@ export class PotsService {
     true
   );
   loading$ = this.loading.asObservable();
-
-  token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
-  baseURL = 'http://localhost:3000/api/v1/pots';
-  headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
+  baseURL = `${environment.apiUrl}/api/v1/pots`;
 
   constructor(private http: HttpClient) {
     setTimeout(() => this.loadPots(), 3000);
@@ -26,7 +24,7 @@ export class PotsService {
   /* Load all pots */
   loadPots() {
     this.loading.next(true);
-    this.http.get<Pot[]>(this.baseURL, { headers: this.headers }).subscribe({
+    this.http.get<Pot[]>(this.baseURL).subscribe({
       next: (pots: Pot[]) => {
         console.log('Pots loaded successfully', pots);
         this.pots.next(pots);
@@ -46,15 +44,13 @@ export class PotsService {
 
   /* Add pot */
   addPot(pot: Pot) {
-    this.http
-      .post<any>(this.baseURL, pot, { headers: this.headers })
-      .subscribe({
-        next: (res) => {
-          console.log('Pot added successfully!', res);
-          this.refreshPots();
-        },
-        error: (e) => console.log('Error loading pots', e),
-      });
+    this.http.post<any>(this.baseURL, pot).subscribe({
+      next: (res) => {
+        console.log('Pot added successfully!', res);
+        this.refreshPots();
+      },
+      error: (e) => console.log('Error loading pots', e),
+    });
   }
 
   getPot(id: number) {
@@ -64,31 +60,27 @@ export class PotsService {
   editPot(updates: Partial<Pot>, id: number) {
     let pots = this.pots.getValue();
     let index = pots.findIndex((pot) => pot.id === id);
-    this.http
-      .patch<any>(this.baseURL + `/${id}`, updates, { headers: this.headers })
-      .subscribe({
-        next: (res) => {
-          console.log('Pot edited successfully:', res);
-          pots[index] = { ...pots[index], ...updates };
-          this.pots.next(pots);
-        },
-        error: (e) => {
-          console.log('Error editing pot', e);
-        },
-      });
+    this.http.patch<any>(this.baseURL + `/${id}`, updates).subscribe({
+      next: (res) => {
+        console.log('Pot edited successfully:', res);
+        pots[index] = { ...pots[index], ...updates };
+        this.pots.next(pots);
+      },
+      error: (e) => {
+        console.log('Error editing pot', e);
+      },
+    });
   }
 
   removePot(id: number) {
-    this.http
-      .delete<any>(this.baseURL + `/${id}`, { headers: this.headers })
-      .subscribe({
-        next: (res) => {
-          console.log('Pot deleted successfully', res);
-          let pots = this.pots.getValue().filter((pot) => pot.id !== id);
-          this.pots.next(pots);
-        },
-        error: (e) => console.log('Error occured trying to delete pot', e),
-      });
+    this.http.delete<any>(this.baseURL + `/${id}`).subscribe({
+      next: (res) => {
+        console.log('Pot deleted successfully', res);
+        let pots = this.pots.getValue().filter((pot) => pot.id !== id);
+        this.pots.next(pots);
+      },
+      error: (e) => console.log('Error occured trying to delete pot', e),
+    });
   }
 
   getTotalSaved(): number {
@@ -102,35 +94,21 @@ export class PotsService {
   addFunds(id: number, saved: number) {
     let pots = this.pots.getValue();
     let index = pots.findIndex((pot) => pot.id === id);
-    this.http
-      .patch<any>(
-        this.baseURL + `/${id}/add`,
-        { saved },
-        {
-          headers: this.headers,
-        }
-      )
-      .subscribe({
-        next: (res) => {
-          console.log('Funds added successfully:', res);
-          pots[index] = { ...pots[index], saved };
-          this.pots.next(pots);
-        },
-        error: (e) => console.log('Error adding funds', e),
-      });
+    this.http.patch<any>(this.baseURL + `/${id}/add`, { saved }).subscribe({
+      next: (res) => {
+        console.log('Funds added successfully:', res);
+        pots[index] = { ...pots[index], saved };
+        this.pots.next(pots);
+      },
+      error: (e) => console.log('Error adding funds', e),
+    });
   }
 
   withdrawFunds(id: number, saved: number) {
     let pots = this.pots.getValue();
     let index = pots.findIndex((pot) => pot.id === id);
     this.http
-      .patch<any>(
-        this.baseURL + `/${id}/withdraw`,
-        { saved },
-        {
-          headers: this.headers,
-        }
-      )
+      .patch<any>(this.baseURL + `/${id}/withdraw`, { saved })
       .subscribe({
         next: (res) => {
           console.log('Funds withdrawn successfully:', res);

@@ -10,22 +10,42 @@ import { EditPotsComponent } from './pages/edit-pots/edit-pots.component';
 import { DeleteComponent } from './pages/delete/delete/delete.component';
 import { AddWithdrawComponent } from './pages/add-withdraw/add-withdraw.component';
 import { RecurringComponent } from './pages/recurring/recurring.component';
+import { AuthComponent } from './pages/auth/auth.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { SignUpComponent } from './pages/auth/sign-up/sign-up.component';
+import { authGuard } from './guards/auth/auth.guard';
+import { loginGuard } from './guards/login/login.guard';
 
 export const routes: Routes = [
   {
     path: '',
+    canActivate: [authGuard],
     component: OverviewComponent,
   },
   {
+    path: 'auth',
+    canActivate: [loginGuard],
+    canActivateChild: [loginGuard],
+    component: AuthComponent,
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignUpComponent },
+    ],
+  },
+  {
     path: 'transactions',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/transactions/transactions.component').then(
         (m) => m.TransactionsComponent
       ),
     data: { preload: true },
   },
+
   {
     path: 'budgets',
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     loadComponent: () =>
       import('./pages/budgets/budgets.component').then(
         (m) => m.BudgetsComponent
@@ -48,6 +68,8 @@ export const routes: Routes = [
   },
   {
     path: 'pots',
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     loadComponent: () =>
       import('./pages/pots/pots.component').then((m) => m.PotsComponent),
     data: { preload: true },
@@ -76,6 +98,7 @@ export const routes: Routes = [
   },
   {
     path: 'recurring-bills',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/recurring/recurring.component').then(
         (m) => m.RecurringComponent

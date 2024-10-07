@@ -15,6 +15,8 @@ import { TransactionsService } from './services/transactions/transactions.servic
 import { forkJoin, Observable, of } from 'rxjs';
 import { loggerInterceptor } from './interceptors/logger.interceptor';
 import { BudgetsService } from './services/budgets/budgets.service';
+import { authInterceptor } from './interceptors/auth.interceptor';
+import { AuthService } from './services/auth/auth.service';
 
 /* APP Initializer */
 /*
@@ -30,12 +32,22 @@ export function initializeApp(
 }
     */
 
+export function initializeAuth(authService: AuthService) {
+  return () => authService.checkStorage(); // Ensure token validation runs before app loads
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     [provideRouter(routes, withPreloading(PreloadAllModules))],
     TransactionsService,
     BudgetsService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAuth,
+      deps: [AuthService],
+      multi: true,
+    },
     /*
     {
       provide: APP_INITIALIZER,
@@ -45,6 +57,6 @@ export const appConfig: ApplicationConfig = {
     },
     */
     provideCharts(withDefaultRegisterables()),
-    provideHttpClient(withInterceptors([loggerInterceptor])),
+    provideHttpClient(withInterceptors([loggerInterceptor, authInterceptor])),
   ],
 };

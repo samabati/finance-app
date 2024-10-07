@@ -311,6 +311,12 @@ body .p-component{
 .m-t-1{
   margin-top: var(--spacing100);
 }
+.m-t-50{
+  margin-top: var(--spacing50);
+}
+.m-t-a{
+  margin-top: auto;
+}
 
 /* Margin bottom */
 .m-b-5{

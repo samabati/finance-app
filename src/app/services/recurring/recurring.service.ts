@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, map, shareReplay, take, tap } from 'rxjs';
 import { Transactions } from '../../types/transactions';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 interface State {
   bills: Transactions[];
@@ -26,9 +27,7 @@ export class RecurringService {
     this.loadBills();
   }
 
-  token = 'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M';
-  baseURL = 'http://localhost:3000/api/v1/transactions/recurring';
-  headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+  baseURL = `${environment.apiUrl}/api/v1/transactions/recurring`;
 
   loadBills() {
     this.updateLoading(true);
@@ -37,7 +36,6 @@ export class RecurringService {
       .set('sort', this.state.getValue().sort);
     this.http
       .get<Transactions[]>(this.baseURL, {
-        headers: this.headers,
         params: params,
       })
       .subscribe({
