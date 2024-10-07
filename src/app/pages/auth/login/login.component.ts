@@ -67,17 +67,12 @@ export class LoginComponent {
         next: (res) => {
           console.log('User logged in successfully:', res);
           this.authService.authenticateUser(res.token);
-          this.navigateToHome();
         },
         error: (err) => {
           console.log('Error logging user in:', err);
           this.serverError = err.error.errors.message;
         },
       });
-  }
-
-  navigateToHome() {
-    this.router.navigateByUrl('/');
   }
 
   navigateToSignup() {
@@ -100,6 +95,5 @@ export class LoginComponent {
 
   demoLogin() {
     this.authService.demoLogin();
-    this.navigateToHome();
   }
 }
