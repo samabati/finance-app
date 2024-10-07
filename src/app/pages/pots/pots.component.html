@@ -4,7 +4,7 @@
 </header>
 
 @if(potsService.pots$ | async; as pots){ @if(pots.length == 0 && !loading){
-<h1 class="flex just-c">No pots available</h1>
+<h1 class="flex just-c m-t-4">No pots available</h1>
 }
 <section class="m-t-4 grid">
   @if(loading){ @for(skeleton of [1,2,3,4]; track skeleton){

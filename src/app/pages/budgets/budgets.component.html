@@ -4,7 +4,7 @@
 </header>
 @if(budgetService.budgets$ | async; as budgets){ @if(budgets.length == 0 &&
 !loading){
-<h1 class="flex just-c">No budgets available</h1>
+<h1 class="flex just-c m-t-4">No budgets available</h1>
 }
 <section class="m-t-4 flex gap-300">
   <app-budgets-summary [loading]="loading"></app-budgets-summary>
