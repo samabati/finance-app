@@ -1,57 +1,92 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Budget } from '../../types/budget';
-import { BehaviorSubject, map, Observable, take } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetsService {
-  private budgets: BehaviorSubject<Budget[]> = new BehaviorSubject<Budget[]>([
-    {
-      category: 'Entertainment',
-      spent: 15,
-      max: 50,
-      theme: { name: 'Green', class: 'bg-g', color: '#277C78' },
-    },
-    {
-      category: 'Bills',
-      spent: 150,
-      max: 750,
-      theme: { name: 'Cyan', class: 'bg-cyan', color: '#82C9D7' },
-    },
-    {
-      category: 'Dining Out',
-      spent: 133.75,
-      max: 75,
-      theme: { name: 'Yellow', class: 'bg-yellow', color: '#F2CDAC' },
-    },
-    {
-      category: 'Personal Care',
-      spent: 40,
-      max: 100,
-      theme: { name: 'Navy', class: 'bg-navy', color: '#626070' },
-    },
-  ]);
-
+  private budgets: BehaviorSubject<Budget[]> = new BehaviorSubject<Budget[]>(
+    []
+  );
   budgets$: Observable<Budget[]> = this.budgets.asObservable();
 
-  constructor() {}
+  private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
+  loading$ = this.loading.asObservable();
+
+  baseURL = `${environment.apiUrl}/api/v1/budgets`;
+
+  authService = inject(AuthService);
+
+  constructor(private http: HttpClient) {
+    this.loadBudgets();
+  }
+
+  loadBudgets() {
+    this.loading.next(true);
+    this.http.get<Budget[]>(this.baseURL).subscribe((budgets) => {
+      this.budgets.next(budgets);
+      console.log(this.budgets.getValue());
+      this.loading.next(false);
+    });
+  }
 
   addBudget(newBudget: Budget) {
-    let tempBudget = this.budgets.getValue();
-    tempBudget.push(newBudget);
-    this.budgets.next(tempBudget);
-    console.log('New Budget list: ', this.budgets.getValue());
+    if (this.authService.getDemo()) {
+      this.demoAdd(newBudget);
+    } else {
+      this.http.post<Budget>(this.baseURL, newBudget).subscribe({
+        error: (e) => console.log('An error has occurred', e),
+        complete: () => {
+          this.loadBudgets();
+          console.log('Budget added successfully');
+        },
+      });
+    }
   }
 
-  removeBudget(index: number) {
-    let tempBudget = this.budgets.getValue();
-    tempBudget = tempBudget.filter((value, i) => i !== index);
-    this.budgets.next(tempBudget);
+  demoAdd(newBudget: Budget) {
+    this.loading.next(true);
+    this.budgets.next([...this.budgets.getValue(), { ...newBudget, id: 0 }]);
+    this.loading.next(false);
   }
 
-  getBudget(index: number) {
-    return this.budgets.getValue()[index];
+  removeBudget(id: number) {
+    if (this.authService.getDemo()) {
+      this.demoRemove(id);
+    } else {
+      this.loading.next(true);
+      let tempBudget = this.budgets.getValue();
+      tempBudget = tempBudget.filter((value) => value.id !== id);
+      this.http.delete<any>(this.baseURL + `/${id}`).subscribe({
+        next: () => {
+          console.log('Budget deleted successfully');
+          this.budgets.next(tempBudget);
+          this.loading.next(false);
+        },
+        error: (e) => {
+          console.log('An error has occurred', e), this.loading.next(false);
+        },
+      });
+    }
+  }
+
+  demoRemove(id: number) {
+    this.loading.next(true);
+    let newBudgets: Budget[] = this.budgets
+      .getValue()
+      .filter((budget) => budget.id !== id);
+    this.budgets.next(newBudgets);
+    this.loading.next(false);
+  }
+
+  getBudget(id: number) {
+    return this.budgets.getValue().find((budget) => budget.id === id);
   }
 
   getThemes() {
@@ -60,10 +95,34 @@ export class BudgetsService {
     );
   }
 
-  updateBudget(updates: Partial<Budget>, index: number) {
+  updateBudget(updates: Partial<Budget>, id: number) {
+    if (this.authService.getDemo()) {
+      this.demoUpdate(updates, id);
+    } else {
+      this.loading.next(true);
+      const budgets = this.budgets.getValue();
+      const budgetIndex = budgets.findIndex((budget) => budget.id === id);
+      budgets[budgetIndex] = { ...budgets[budgetIndex], ...updates };
+      this.http.patch<any>(this.baseURL + `/${id}`, updates).subscribe({
+        next: () => {
+          console.log('Budget deleted successfully');
+          this.budgets.next(budgets);
+          this.loading.next(false);
+        },
+        error: (e) => {
+          console.log('An error has occurred', e);
+          this.loading.next(false);
+        },
+      });
+    }
+  }
+
+  demoUpdate(updates: Partial<Budget>, id: number) {
+    this.loading.next(true);
     const budgets = this.budgets.getValue();
-    const budget = { ...budgets[index], ...updates };
-    budgets[index] = budget;
+    const budgetIndex = budgets.findIndex((budget) => budget.id === id);
+    budgets[budgetIndex] = { ...budgets[budgetIndex], ...updates };
     this.budgets.next(budgets);
+    this.loading.next(false);
   }
 }

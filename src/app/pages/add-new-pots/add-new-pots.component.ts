@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,7 +13,7 @@ import { AddSpendComponent } from '../add-new-budgets/add-spend/add-spend.compon
 import { AddButtonComponent } from '../add-new-budgets/add-button/add-button.component';
 import { PotsService } from '../../services/pots/pots.service';
 import { Theme, THEMES } from '../../types/theme';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'app-add-new-pots',
@@ -34,15 +34,33 @@ export class AddNewPotsComponent implements OnDestroy {
   addPotForm!: FormGroup;
   potsService = inject(PotsService);
   fb = inject(FormBuilder);
-  usedThemes!: Theme[];
+  usedThemes: Theme[] = [];
   themes = THEMES;
-  subscription!: Subscription;
+  subscription = new Subscription();
+  error!: string;
 
   constructor() {
-    this.subscription = this.potsService.getThemes().subscribe((value) => {
-      this.usedThemes = value;
-    });
+    this.loadForm();
+    this.loadThemes();
+  }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  loadThemes() {
+    this.subscription.add(
+      this.potsService.pots$.pipe(take(2)).subscribe((pots) => {
+        let usedThemes = pots.map((pots) => pots.theme);
+        if (usedThemes.length > 0) {
+          this.usedThemes = usedThemes;
+          this.updateForm();
+        }
+      })
+    );
+  }
+
+  loadForm() {
     this.addPotForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(30)]],
       saved: [0],
@@ -52,14 +70,12 @@ export class AddNewPotsComponent implements OnDestroy {
         Validators.required,
       ],
     });
-
-    this.addPotForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed: ', value);
-    });
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  updateForm() {
+    this.addPotForm.patchValue({
+      theme: this.themes.find((theme) => !this.isUsedTheme(theme)),
+    });
   }
 
   submitForm() {
@@ -68,7 +84,7 @@ export class AddNewPotsComponent implements OnDestroy {
       this.potsService.addPot(this.addPotForm.value);
       this.exitPage();
     } else {
-      console.log('Form is invalid');
+      this.setError();
     }
   }
 
@@ -80,5 +96,16 @@ export class AddNewPotsComponent implements OnDestroy {
     return this.usedThemes.some(
       (used) => used.name === theme.name && used.class === theme.class
     );
+  }
+
+  setError() {
+    let errorArr = [];
+    if (this.addPotForm.get('name')?.errors) errorArr.push('Name');
+    if (this.addPotForm.get('target')?.errors) errorArr.push('Target');
+    if (errorArr.length > 1) {
+      this.error = `Name and Target are required`;
+    } else {
+      this.error = `${errorArr[0]} is required`;
+    }
   }
 }

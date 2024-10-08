@@ -14,10 +14,20 @@ app-recurring-item:nth-of-type(3){
     border-radius: 8px;
 }
 
+
+#recurring-loading{
+    height: 32.7rem;
+    display: block;
+}
+
 /* Mobile */
 
 @media (max-width: 47.125rem){
     article{
         padding: var(--spacing300) var(--spacing250) var(--spacing300) var(--spacing250);
+    }
+
+    #recurring-loading{
+        height: 31.1rem;
     }
 }

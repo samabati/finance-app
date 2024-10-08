@@ -4,6 +4,7 @@ import { SortByComponent } from '../../../components/shared/sort-by/sort-by.comp
 import { RecurringListItemComponent } from './recurring-list-item/recurring-list-item.component';
 import { RecurringService } from '../../../services/recurring/recurring.service';
 import { CommonModule } from '@angular/common';
+import { TransactionSkeletonComponent } from '../../../components/shared/transaction-skeleton/transaction-skeleton/transaction-skeleton.component';
 
 @Component({
   selector: 'app-recurring-list',
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
     SortByComponent,
     RecurringListItemComponent,
     CommonModule,
+    TransactionSkeletonComponent,
   ],
   templateUrl: './recurring-list.component.html',
   styleUrl: './recurring-list.component.css',
@@ -20,7 +22,5 @@ import { CommonModule } from '@angular/common';
 export class RecurringListComponent {
   recurringService = inject(RecurringService);
 
-  constructor() {
-    this.recurringService.getBills().subscribe((value) => console.log(value));
-  }
+  constructor() {}
 }

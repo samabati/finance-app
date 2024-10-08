@@ -1,67 +1,131 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Pot } from '../../types/pot';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PotsService {
-  private pots: BehaviorSubject<Pot[]> = new BehaviorSubject<Pot[]>([
-    {
-      name: 'Savings',
-      saved: 150,
-      target: 2000,
-      theme: { name: 'Green', class: 'bg-g', color: '#277C78' },
-    },
-    {
-      name: 'Concert Ticket',
-      saved: 110,
-      target: 150,
-      theme: { name: 'Navy', class: 'bg-navy', color: '#626070' },
-    },
-    {
-      name: 'Gift',
-      saved: 40,
-      target: 60,
-      theme: { name: 'Cyan', class: 'bg-cyan', color: '#82C9D7' },
-    },
-    {
-      name: 'New Laptop',
-      saved: 10,
-      target: 1000,
-      theme: { name: 'Yellow', class: 'bg-yellow', color: '#F2CDAC' },
-    },
-    {
-      name: 'Holiday',
-      saved: 531,
-      target: 1440,
-      theme: { name: 'Purple', class: 'bg-purple', color: '#826CB0' },
-    },
-  ]);
-
+  private pots: BehaviorSubject<Pot[]> = new BehaviorSubject<Pot[]>([]);
   pots$: Observable<Pot[]> = this.pots.asObservable();
 
-  constructor() {}
+  private loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true
+  );
+  loading$ = this.loading.asObservable();
+  baseURL = `${environment.apiUrl}/api/v1/pots`;
 
+  authService = inject(AuthService);
+
+  constructor(private http: HttpClient) {
+    this.loadPots();
+  }
+
+  /* Load all pots */
+  loadPots() {
+    this.loading.next(true);
+    this.http.get<Pot[]>(this.baseURL).subscribe({
+      next: (pots: Pot[]) => {
+        console.log('Pots loaded successfully', pots);
+        this.pots.next(pots);
+        this.loading.next(false);
+      },
+      error: (e) => {
+        console.log('Error loading pots!', e);
+        this.loading.next(false);
+      },
+    });
+  }
+
+  /* Refresh pots state */
+  refreshPots() {
+    this.loadPots();
+  }
+
+  /* Add pot */
   addPot(pot: Pot) {
-    let tempPots = this.pots.getValue();
-    tempPots.push(pot);
-    this.pots.next(tempPots);
+    if (this.authService.getDemo()) {
+      this.demoAdd(pot);
+    } else {
+      this.http.post<any>(this.baseURL, pot).subscribe({
+        next: (res) => {
+          console.log('Pot added successfully!', res);
+          this.refreshPots();
+        },
+        error: (e) => console.log('Error loading pots', e),
+      });
+    }
   }
 
-  getPot(index: number) {
-    return this.pots.getValue()[index];
+  demoAdd(pot: Pot) {
+    this.loading.next(true);
+    this.pots.next([...this.pots.getValue(), { ...pot, id: 0 }]);
+    this.loading.next(false);
   }
 
-  editPot(updates: Partial<Pot>, index: number) {
+  getPot(id: number) {
+    return this.pots.getValue().find((pot) => pot.id === id);
+  }
+
+  editPot(updates: Partial<Pot>, id: number) {
+    if (this.authService.getDemo()) {
+      this.demoEdit(updates, id);
+    } else {
+      this.loading.next(true);
+      let pots = this.pots.getValue();
+      let index = pots.findIndex((pot) => pot.id === id);
+      this.http.patch<any>(this.baseURL + `/${id}`, updates).subscribe({
+        next: (res) => {
+          console.log('Pot edited successfully:', res);
+          pots[index] = { ...pots[index], ...updates };
+          this.pots.next(pots);
+          this.loading.next(false);
+        },
+        error: (e) => {
+          console.log('Error editing pot', e);
+          this.loading.next(false);
+        },
+      });
+    }
+  }
+
+  demoEdit(updates: Partial<Pot>, id: number) {
+    this.loading.next(true);
     let pots = this.pots.getValue();
+    let index = pots.findIndex((pot) => pot.id === id);
     pots[index] = { ...pots[index], ...updates };
     this.pots.next(pots);
+    this.loading.next(false);
   }
 
-  removePot(index: number) {
-    let newPots = this.pots.getValue().filter((value, i) => i !== index);
-    this.pots.next(newPots);
+  removePot(id: number) {
+    if (this.authService.getDemo()) {
+      this.demoRemove(id);
+    } else {
+      this.loading.next(true);
+      this.http.delete<any>(this.baseURL + `/${id}`).subscribe({
+        next: (res) => {
+          console.log('Pot deleted successfully', res);
+          let pots = this.pots.getValue().filter((pot) => pot.id !== id);
+          this.pots.next(pots);
+          this.loading.next(false);
+        },
+        error: (e) => {
+          console.log('Error occurred trying to delete pot', e);
+          this.loading.next(false);
+        },
+      });
+    }
+  }
+
+  demoRemove(id: number) {
+    this.loading.next(true);
+    let pots = this.pots.getValue().filter((pot) => pot.id !== id);
+    this.pots.next(pots);
+    this.loading.next(false);
   }
 
   getTotalSaved(): number {
@@ -70,5 +134,69 @@ export class PotsService {
 
   getThemes() {
     return this.pots$.pipe(map((pots) => pots.map((pot) => pot.theme)));
+  }
+
+  addFunds(id: number, saved: number) {
+    if (this.authService.getDemo()) {
+      this.demoAddFunds(id, saved);
+    } else {
+      this.loading.next(true);
+      let pots = this.pots.getValue();
+      let index = pots.findIndex((pot) => pot.id === id);
+      this.http.patch<any>(this.baseURL + `/${id}/add`, { saved }).subscribe({
+        next: (res) => {
+          console.log('Funds added successfully:', res);
+          pots[index] = { ...pots[index], saved };
+          this.pots.next(pots);
+          this.loading.next(false);
+        },
+        error: (e) => {
+          console.log('Error adding funds', e);
+          this.loading.next(false);
+        },
+      });
+    }
+  }
+
+  demoAddFunds(id: number, saved: number) {
+    this.loading.next(true);
+    let pots = this.pots.getValue();
+    let index = pots.findIndex((pot) => pot.id === id);
+    pots[index] = { ...pots[index], saved };
+    this.pots.next(pots);
+    this.loading.next(false);
+  }
+
+  withdrawFunds(id: number, saved: number) {
+    if (this.authService.getDemo()) {
+      this.demoWithDrawFunds(id, saved);
+    } else {
+      this.loading.next(true);
+      let pots = this.pots.getValue();
+      let index = pots.findIndex((pot) => pot.id === id);
+      this.http
+        .patch<any>(this.baseURL + `/${id}/withdraw`, { saved })
+        .subscribe({
+          next: (res) => {
+            console.log('Funds withdrawn successfully:', res);
+            pots[index] = { ...pots[index], saved };
+            this.pots.next(pots);
+            this.loading.next(false);
+          },
+          error: (e) => {
+            console.log('Error withdrawing funds', e);
+            this.loading.next(false);
+          },
+        });
+    }
+  }
+
+  demoWithDrawFunds(id: number, saved: number) {
+    this.loading.next(true);
+    let pots = this.pots.getValue();
+    let index = pots.findIndex((pot) => pot.id === id);
+    pots[index] = { ...pots[index], saved };
+    this.pots.next(pots);
+    this.loading.next(false);
   }
 }

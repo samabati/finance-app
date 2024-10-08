@@ -11,3 +11,16 @@ export enum Categories {
   SHOPPING = 'Shopping',
   GENERAL = 'General',
 }
+
+export const CATEGORIES = [
+  'Entertainment',
+  'Bills',
+  'Groceries',
+  'Dining Out',
+  'Transportation',
+  'Personal Care',
+  'Education',
+  'Lifestyle',
+  'Shopping',
+  'General',
+];

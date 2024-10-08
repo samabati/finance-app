@@ -1,3 +1,8 @@
+#total-bills-loading{
+    height: 19.04rem;
+    display: block;
+}
+
 /* Mobile */
 
 @media (max-width: 47.125rem){
@@ -7,5 +12,8 @@ article{
     flex-direction: row;
     align-items: center;
     gap: var(--spacing250);
+}
+#total-bills-loading{
+    height: 11.84rem;
 }
 }

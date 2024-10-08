@@ -17,6 +17,7 @@
     </p>
     <ul class="flex flex-d-c gap-200">
       <app-edit-category
+        [usedCategories]="usedCategories"
         formControlName="category"
         [selected]="budget.category"
       ></app-edit-category>
@@ -27,6 +28,11 @@
       <app-add-theme formControlName="theme" [usedThemes]="usedThemes">
       </app-add-theme>
     </ul>
+    @if(error){
+    <p class="color-red font-s-4 font-w-4 font-lh-150">
+      {{ error }}
+    </p>
+    }
     <app-save-changes></app-save-changes>
   </form>
 </section>

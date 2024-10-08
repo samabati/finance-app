@@ -14,7 +14,7 @@ import { AddSpendComponent } from '../add-new-budgets/add-spend/add-spend.compon
 import { AddThemeComponent } from '../add-new-budgets/add-theme/add-theme.component';
 import { Pot } from '../../types/pot';
 import { Subscription, take } from 'rxjs';
-import { Theme, THEMES } from '../../types/theme';
+import { Theme } from '../../types/theme';
 
 @Component({
   selector: 'app-edit-pots',
@@ -35,30 +35,27 @@ export class EditPotsComponent implements OnDestroy {
   editPotForm!: FormGroup;
   potService = inject(PotsService);
   fb = inject(FormBuilder);
-  pot!: Pot;
-  index!: number;
+  pot: Pot = {
+    id: 0,
+    name: '',
+    saved: 0,
+    target: 0,
+    theme: {
+      color: '',
+      class: '',
+      name: '',
+    },
+  };
+  id!: number;
   activatedRoute = inject(ActivatedRoute);
   usedThemes!: Theme[];
-  subscription!: Subscription;
+  subscription = new Subscription();
+  error = '';
 
   constructor() {
     this.loadIndex();
+    this.buildForm();
     this.loadPot();
-
-    this.subscription = this.potService.getThemes().subscribe((value) => {
-      this.usedThemes = value;
-    });
-
-    this.editPotForm = this.fb.group({
-      name: [this.pot.name, [Validators.required, Validators.maxLength(30)]],
-      saved: [this.pot.saved],
-      target: [this.pot.target, [Validators.required, Validators.min(1)]],
-      theme: [this.pot.theme, Validators.required],
-    });
-
-    this.editPotForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed: ', value);
-    });
   }
 
   ngOnDestroy(): void {
@@ -66,22 +63,60 @@ export class EditPotsComponent implements OnDestroy {
   }
 
   loadIndex() {
-    this.activatedRoute.paramMap.pipe(take(1)).subscribe((value) => {
-      this.index = Number(value.get('index'));
-    });
+    this.subscription.add(
+      this.activatedRoute.paramMap.pipe(take(1)).subscribe((value) => {
+        this.id = Number(value.get('index'));
+      })
+    );
   }
 
   loadPot() {
-    this.pot = this.potService.getPot(this.index);
+    this.subscription.add(
+      this.potService.pots$.pipe(take(2)).subscribe((pots) => {
+        let pot = pots.find((pot) => pot.id === this.id);
+        if (pot) {
+          this.pot = pot;
+          this.updateForm();
+        }
+        this.usedThemes = pots.map((pot) => pot.theme);
+      })
+    );
+  }
+
+  buildForm() {
+    this.editPotForm = this.fb.group({
+      name: ['', [Validators.required, Validators.maxLength(30)]],
+      saved: [''],
+      target: ['', [Validators.required, Validators.min(1)]],
+      theme: ['', Validators.required],
+    });
+  }
+
+  updateForm() {
+    this.editPotForm.patchValue({
+      name: this.pot.name,
+      saved: this.pot.saved,
+      target: this.pot.target,
+      theme: this.pot.theme,
+    });
   }
 
   submitForm() {
-    if (this.editPotForm.valid) {
+    if (this.editPotForm.pristine) {
+      this.error = 'No changes have been made';
+    } else if (this.editPotForm.valid) {
       console.log('Pot being added:', this.editPotForm.value);
-      this.potService.editPot(this.editPotForm.value, this.index);
+      this.potService.editPot(this.editPotForm.value, this.id);
       this.exitPage();
     } else {
-      console.log('Form is invalid');
+      let errors = [];
+      if (this.editPotForm.get('target')?.errors) errors.push('Target');
+      if (this.editPotForm.get('name')?.errors) errors.push('Name');
+      if (errors.length > 1) {
+        this.error = 'Target and Name are required';
+      } else {
+        this.error = `${errors[0]} is required`;
+      }
     }
   }
 

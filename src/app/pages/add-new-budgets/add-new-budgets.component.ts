@@ -11,8 +11,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { BudgetsService } from '../../services/budgets/budgets.service';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { Theme, THEMES } from '../../types/theme';
+import { TransactionsService } from '../../services/transactions/transactions.service';
+import { Budget } from '../../types/budget';
+import { CATEGORIES } from '../../types/categories';
 
 @Component({
   selector: 'app-add-new-budgets',
@@ -29,36 +32,22 @@ import { Theme, THEMES } from '../../types/theme';
 })
 export class AddNewBudgetsComponent implements OnDestroy {
   router = inject(Router);
-  addBudgetForm: FormGroup;
+  addBudgetForm!: FormGroup;
   budgetService = inject(BudgetsService);
+  transactionService = inject(TransactionsService);
   fb = inject(FormBuilder);
-  subscription!: Subscription;
+  subscription = new Subscription();
   usedThemes!: Theme[];
+  usedCategories!: string[];
   themes = THEMES;
+  categories = CATEGORIES;
+  errors: any = '';
 
   constructor() {
-    this.subscription = this.budgetService.getThemes().subscribe((value) => {
-      console.log('USED THEMES:', value);
-      this.usedThemes = value;
-    });
-
-    this.addBudgetForm = this.fb.group({
-      category: ['Entertainment', Validators.required],
-      spent: [0],
-      max: [
-        '',
-        [Validators.required, Validators.min(1), Validators.max(9999999)],
-      ],
-      theme: [
-        this.themes.find((theme) => !this.isUsedTheme(theme)),
-        Validators.required,
-      ],
-    });
-
-    this.addBudgetForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed: ', value);
-    });
+    this.loadForm();
+    this.loadThemesAndCategories();
   }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -69,7 +58,54 @@ export class AddNewBudgetsComponent implements OnDestroy {
       this.budgetService.addBudget(this.addBudgetForm.value);
       this.exitPage();
     } else {
-      console.log('Form is invalid');
+      if (this.addBudgetForm.get('max')?.errors) {
+        this.errors = 'Maximum spend is required';
+      }
+    }
+  }
+
+  loadThemesAndCategories() {
+    this.subscription.add(
+      this.budgetService.budgets$.pipe(take(2)).subscribe((value: Budget[]) => {
+        let usedThemes = value.map((budget) => budget.theme);
+        let usedCategories = value.map((budget) => budget.category);
+        if (usedThemes) {
+          this.usedThemes = usedThemes;
+          this.updateForm();
+        }
+        if (usedCategories) {
+          this.usedCategories = usedCategories;
+          this.updateForm();
+        }
+      })
+    );
+  }
+
+  loadForm() {
+    this.addBudgetForm = this.fb.group({
+      category: ['', Validators.required],
+      spent: [0],
+      max: [
+        '',
+        [Validators.required, Validators.min(1), Validators.max(9999999)],
+      ],
+      theme: [' ', Validators.required],
+    });
+  }
+
+  updateForm() {
+    if (this.usedThemes) {
+      this.addBudgetForm.patchValue({
+        theme: this.themes.find((theme) => !this.isUsedTheme(theme)),
+      });
+    }
+
+    if (this.usedCategories) {
+      this.addBudgetForm.patchValue({
+        category: this.categories.find(
+          (category) => !this.isUsedCategory(category)
+        ),
+      });
     }
   }
 
@@ -79,5 +115,9 @@ export class AddNewBudgetsComponent implements OnDestroy {
 
   isUsedTheme(theme: Theme): boolean {
     return this.usedThemes.some((used) => used.name == theme.name);
+  }
+
+  isUsedCategory(category: string): boolean {
+    return this.usedCategories.some((used) => used == category);
   }
 }

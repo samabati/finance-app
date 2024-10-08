@@ -12,7 +12,6 @@ export class AddPotComponent {
   router = inject(Router);
 
   navigateToAdd() {
-    console.log('Function ran');
     this.router.navigateByUrl('pots/add');
   }
 }

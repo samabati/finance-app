@@ -14,10 +14,8 @@ button{
     padding: 0;
 }
 
-img{
+svg{
     cursor: pointer;
-    height: var(--spacing200);
-    width: var(--spacing200);
 }
 
 /* Hover styles */
@@ -27,5 +25,4 @@ img{
         border-color: var(--grey900);
     }
 
-    
 }

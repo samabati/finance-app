@@ -1,4 +1,5 @@
 export interface Transactions {
+  id: number;
   avatar: string;
   name: string;
   category: string;

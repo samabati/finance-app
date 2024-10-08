@@ -47,22 +47,6 @@ export class PageNumberListComponent implements OnInit, OnDestroy {
     );
 
     this.generateMobileArray();
-
-    /*
-    this.subscription.add(
-      this.transactionService.totalPages$.subscribe((value) => {
-        this.totalPages = value.length;
-        this.generateMobileArray();
-      })
-    );
-
-    this.subscription.add(
-      this.transactionService.pageNumber$.subscribe((value) => {
-        this.pageNumber = value;
-        this.generateMobileArray();
-      })
-    );
-    */
   }
 
   ngOnDestroy(): void {
@@ -78,11 +62,9 @@ export class PageNumberListComponent implements OnInit, OnDestroy {
   }
 
   generateMobileArray() {
-    console.log(this.pageNumber);
     let pageNumber = this.pageNumber;
     if (pageNumber === 1) {
       this.mobileArray = [1, 2, 'e', this.totalPages];
-      console.log(this.mobileArray);
     } else if (
       pageNumber == this.totalPages ||
       pageNumber == this.totalPages - 1 ||
@@ -102,17 +84,5 @@ export class PageNumberListComponent implements OnInit, OnDestroy {
 
   shiftArray() {
     this.transactionService.incrementPage();
-    /*
-    let newArr = [
-      this.mobileArray[0] + 1,
-      this.mobileArray[1] + 1,
-      this.mobileArray[1] + 2,
-      this.totalPages,
-    ];
-    if (newArr[2] !== Number(this.totalPages) - 1) {
-      newArr[2] = 'e';
-    }
-    this.mobileArray = newArr;
-    */
   }
 }

@@ -16,6 +16,20 @@
     }
 }
 
+#budget-summary-loading{
+    height: 57.85rem;
+    display: block;
+}
+
+
+/* Tablet */
+
+@media (max-width: 65.94rem){
+    #budget-summary-loading{
+        height: 56.675rem;
+    }
+}
+
 /* Mobile */
 
 @media (max-width: 47.125rem){
