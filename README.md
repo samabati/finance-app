@@ -13,7 +13,7 @@ Welcome to the ultimate personal finance management solution! This full-stack ap
 
 ## 🚀 Live Demo
 
-[Check out the live application here!]((https://sams-finance-app.onrender.com/))
+[Check out the live application here!](https://sams-finance-app.onrender.com/)
 
 > **Note**: The application is hosted on Render, which may spin down the server after periods of inactivity. If it seems a bit slow at first, give it a moment to wake up!
 
