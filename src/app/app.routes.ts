@@ -15,12 +15,21 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { SignUpComponent } from './pages/auth/sign-up/sign-up.component';
 import { authGuard } from './guards/auth/auth.guard';
 import { loginGuard } from './guards/login/login.guard';
+import { LayoutComponent } from './layout/layout.component';
 
 export const routes: Routes = [
   {
     path: '',
     canActivate: [authGuard],
-    component: OverviewComponent,
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full',
+      },
+      { path: 'overview', component: OverviewComponent },
+    ],
   },
   {
     path: 'auth',
