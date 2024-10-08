@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 interface authState {
   authenticated: boolean;
   token: string;
+  demo: boolean;
 }
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class AuthService {
     new BehaviorSubject<authState>({
       authenticated: false,
       token: '',
+      demo: false,
     });
 
   authState$ = this.authState.asObservable();
@@ -36,7 +38,11 @@ export class AuthService {
       this.http.get<any>(this.baseUrl + 'me', { headers }).subscribe({
         next: (res) => {
           console.log('Valid token, user logged in!');
-          this.authState.next({ authenticated: true, token });
+          let demo = false;
+          if (res.id === 1) {
+            demo = true;
+          }
+          this.authState.next({ authenticated: true, token, demo });
         },
         error: (err) => {
           console.log('Invalid token, unable to login user!', err);
@@ -53,9 +59,9 @@ export class AuthService {
     return this.http.post<any>(this.baseUrl + 'login', { email, password });
   }
 
-  authenticateUser(token: string) {
+  authenticateUser(token: string, demo: boolean = false) {
     localStorage.setItem('token', token);
-    this.authState.next({ authenticated: true, token });
+    this.authState.next({ authenticated: true, token, demo });
   }
 
   signUpUser(name: string, email: string, password: string) {
@@ -66,9 +72,14 @@ export class AuthService {
     });
   }
 
+  getDemo(): boolean {
+    return this.authState.getValue().demo;
+  }
+
   demoLogin() {
     this.authenticateUser(
-      'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M'
+      'eyJhbGciOiJIUzI1NiJ9.MQ.SOe1LgGnUiHHaf5bFaE_BNCePG45InyS_0UbS8lb25M',
+      true
     );
   }
 }
